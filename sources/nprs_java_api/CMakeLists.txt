@@ -14,6 +14,7 @@ set (sources
 
 set (dependencies 
 	recognition_system
+	common
 )
 
 foreach(dep ${dependencies})
@@ -30,4 +31,4 @@ endif()
 #make sure to used shared in in the jni library, as this will be loaded by
 #java
 add_library(${projname} SHARED ${headers} ${sources})
-target_link_libraries(${projname} ${dependencies})
+target_link_libraries(${projname} ${dependencies} )
