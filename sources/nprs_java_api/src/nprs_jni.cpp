@@ -17,11 +17,8 @@ static jobject createNumberPlateInstance(JNIEnv *env, const pNumberPlate &numPla
 
 jobject Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
     RecognitionSystem recognitionSystem;
-    std::cout << "i'm here" << std::endl;
     pRecognitionResults results = recognitionSystem.recognize(Image<float>(10, 10, ColorInfo(COLORFORMAT_RGB, 3)));
-    std::cout << "i'm here 1" << std::endl;
     jobject resultsJava = createRecResultsInstance(env, results);
-    std::cout << "i'm here 2" << std::endl;
     return resultsJava;
 }
 
