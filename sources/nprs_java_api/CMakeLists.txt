@@ -32,3 +32,5 @@ endif()
 #java
 add_library(${projname} SHARED ${headers} ${sources})
 target_link_libraries(${projname} ${dependencies} )
+
+INSTALL(TARGETS nprs_java_api DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

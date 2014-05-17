@@ -1,4 +1,5 @@
 #include "nprs_jni.h"
+
 #include <rec_system/RecognitionSystem.h>
 #include <rec_system/common_structures/RecognitionResults.h>
 #include <rec_system/common_structures/NumberPlate.h>
@@ -9,17 +10,18 @@
 
 const char RR_CLASS_NAME[] = "com/nprs/app/recognition/common_structures/RecognitionResults";
 const char NUM_PLATE_CLASS_NAME[] = "com/nprs/app/recognition/common_structures/NumberPlate";
-const char NUM_PLATE_CHAR_CLASS_NAME[] = "com/nprs/app/recognition/common_structures/NumberPlateCharacter";
-
 using namespace nprs;
 
 static jobject createRecResultsInstance(JNIEnv *env, const pRecognitionResults &results);
 static jobject createNumberPlateInstance(JNIEnv *env, const pNumberPlate &numPlate);
 
-jobject Java_com_nprs_app_recognition_jni_NativeRecognizer_recognizeNative(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
+jobject Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
     RecognitionSystem recognitionSystem;
+    std::cout << "i'm here" << std::endl;
     pRecognitionResults results = recognitionSystem.recognize(Image<float>(10, 10, ColorInfo(COLORFORMAT_RGB, 3)));
+    std::cout << "i'm here 1" << std::endl;
     jobject resultsJava = createRecResultsInstance(env, results);
+    std::cout << "i'm here 2" << std::endl;
     return resultsJava;
 }
 
