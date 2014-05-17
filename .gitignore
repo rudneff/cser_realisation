@@ -3,3 +3,5 @@
 /android/*
 /sources/libs/*
 /make/*
+msvc12/
+bin/

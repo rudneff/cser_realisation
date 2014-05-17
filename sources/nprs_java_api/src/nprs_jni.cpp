@@ -38,7 +38,7 @@ static jobject createRecResultsInstance(JNIEnv *env, const pRecognitionResults &
 
     for (auto numPlate : results->numberPlates()) {
         jobject numPlateJava = createNumberPlateInstance(env, numPlate);
-        env->CallVoidMethod(recResultsClass, recResultsAdd, numPlateJava);
+        env->CallVoidMethod(result, recResultsAdd, numPlateJava);
     }
 
     return result;
