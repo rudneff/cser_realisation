@@ -37,3 +37,4 @@ endforeach()
 #make sure to used shared in in the jni library, as this will be loaded by
 #java
 add_library(${projname} ${headers} ${sources})
+INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

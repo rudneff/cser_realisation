@@ -5,6 +5,8 @@
 #include <vector>
 #include <common/image/Image.h>
 
+using uchar = unsigned char;
+
 namespace nprs {
 
 class RecognitionResults; using pRecognitionResults = std::shared_ptr<RecognitionResults>;
@@ -14,10 +16,7 @@ public:
     RecognitionSystem();
     ~RecognitionSystem();
 
-    pRecognitionResults recognize(const Image<float> &image) const;
-
-private:
-
+    pRecognitionResults recognize(const Image<uchar> &image) const;
 };
 
 }

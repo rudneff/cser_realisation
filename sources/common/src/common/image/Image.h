@@ -9,12 +9,17 @@ namespace nprs {
 template <typename TPix>
 class Image {
 public:
+    Image(const TPix *data, int width, int height, int nChannels, ColorInfo colorInfo)
+    {
+        
+    }
+
     Image(int width, int height, ColorInfo colorInfo)
         : _width(width), _height(height), _colorInfo(colorInfo), _channels(colorInfo.numChannels())
     {}
 
     TPix getValue(int x, int y, int channel) const {
-        return _data[mapCoord(x, y) + channel];
+        return _data[(y * _width + x) * _channels + channel];
     }
 
     void setValue(int x, int y, int channel, TPix value) {

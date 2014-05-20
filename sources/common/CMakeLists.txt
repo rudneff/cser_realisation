@@ -4,17 +4,35 @@ set(projname common)
 
 project(${projname})
 
-file (GLOB_RECURSE headers
-	src/*.h
+#file (GLOB_RECURSE headers
+#	src/*.h
+#)
+#
+#file (GLOB_RECURSE sources
+#	src/*.cpp
+#)
+
+set (headers 
+    src/common/image/Color.h
+    src/common/image/Image.h
+
+    src/common/CommonDefinitions.h
+    src/common/Rectangle.h
+    src/common/exceptions/NprsException.h
+    src/common/exceptions/ArgumentException.h
 )
 
-file (GLOB_RECURSE sources
-	src/*.cpp
+set (sources
+    src/common/image/Image.cpp
+
+    src/common/exceptions/NprsException.cpp
+    src/common/exceptions/ArgumentException.cpp
 )
 
 set (directories
     src/common
     src/common/image
+    src/common/exceptions
 )
 
 INCLUDE_DIRECTORIES(src)
@@ -26,7 +44,5 @@ foreach(directory ${directories})
 	source_group(${convdir} FILES ${dir_headers} ${dir_sources})
 endforeach()
 
-
-#make sure to used shared in in the jni library, as this will be loaded by
-#java
 add_library(${projname} ${headers} ${sources})
+INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)
