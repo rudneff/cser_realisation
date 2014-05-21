@@ -4,6 +4,8 @@
 #include <vector>
 #include "Color.h"
 
+using uchar = unsigned char;
+
 namespace nprs {
 
 template <typename TPix>
@@ -11,7 +13,7 @@ class Image {
 public:
     Image(const TPix *data, int width, int height, int nChannels, ColorInfo colorInfo)
     {
-        
+        memcpy(_data, data, width * height * sizeof(TPix));
     }
 
     Image(int width, int height, ColorInfo colorInfo)

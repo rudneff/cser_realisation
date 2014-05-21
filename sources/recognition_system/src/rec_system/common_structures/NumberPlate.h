@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <common/Rectangle.h>
+#include <vector>
 
 namespace nprs {
 

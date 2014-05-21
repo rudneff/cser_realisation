@@ -4,20 +4,46 @@ set(projname recognition_system)
 
 project(${projname})
 
-file (GLOB_RECURSE headers
-	src/*.h
+set (headers 
+    src/rec_system/RecognitionSystem.h
+
+    src/rec_system/common_structures/NumberPlate.h
+    src/rec_system/common_structures/NumberPlateCharacter.h
+    src/rec_system/common_structures/RecognitionResults.h
+
+    src/rec_system/image_processing/region_detection/cser/CSERDetector.h
+    src/rec_system/image_processing/region_detection/cser/ExtremalRegion.h
+    src/rec_system/image_processing/region_detection/cser/ERFilter.h
+    src/rec_system/image_processing/region_detection/cser/ERFilter
+    src/rec_system/image_processing/region_detection/cser/ERFilterLight.h
+    src/rec_system/image_processing/region_detection/cser/ERFilterHeavy.h
 )
 
-file (GLOB_RECURSE sources
-	src/*.cpp
+set (sources
+    src/rec_system/RecognitionSystem.cpp
+
+    src/rec_system/image_processing/region_detection/cser/CSERDetector.cpp
+    src/rec_system/image_processing/region_detection/cser/ExtremalRegion.cpp
+    src/rec_system/image_processing/region_detection/cser/ERFilterLight.cpp
+    src/rec_system/image_processing/region_detection/cser/ERFilterHeavy.cpp
 )
+
+set (source_files ${sources} ${headers})
+
+foreach(file ${source_files})
+    if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+        file(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")
+    endif()
+endforeach()
+
+include_directories(src)
 
 set (directories
     src/rec_system
     src/rec_system/common_structures
+    src/rec_system/image_processing
+    src/rec_system/image_processing/region_detection/cser
 )
-
-include_directories(src)
 
 foreach(directory ${directories})
 	file(GLOB dir_headers "${directory}/*.h")

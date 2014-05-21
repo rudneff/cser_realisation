@@ -15,15 +15,21 @@ project(${projname})
 set (headers 
     src/common/image/Color.h
     src/common/image/Image.h
+    src/common/image/ImageConverter.h
 
     src/common/CommonDefinitions.h
     src/common/Rectangle.h
+    src/common/Line.h
+
+    src/common/Matrix.h
+
     src/common/exceptions/NprsException.h
     src/common/exceptions/ArgumentException.h
 )
 
 set (sources
     src/common/image/Image.cpp
+    src/common/image/ImageConverter.cpp
 
     src/common/exceptions/NprsException.cpp
     src/common/exceptions/ArgumentException.cpp
@@ -35,7 +41,15 @@ set (directories
     src/common/exceptions
 )
 
-INCLUDE_DIRECTORIES(src)
+set (source_files ${sources} ${headers})
+
+foreach(file ${source_files})
+    if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+        file(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")
+    endif()
+endforeach()
+
+include_directories(src)
 
 foreach(directory ${directories})
 	file(GLOB dir_headers "${directory}/*.h")
