@@ -25,6 +25,7 @@ set (headers
 
     src/common/exceptions/NprsException.h
     src/common/exceptions/ArgumentException.h
+    src/common/exceptions/NotSupportedException.h
 )
 
 set (sources
@@ -33,6 +34,7 @@ set (sources
 
     src/common/exceptions/NprsException.cpp
     src/common/exceptions/ArgumentException.cpp
+    src/common/exceptions/NotSupportedException.cpp
 )
 
 set (directories

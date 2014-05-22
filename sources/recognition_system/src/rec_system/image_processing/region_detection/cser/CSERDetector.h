@@ -4,11 +4,14 @@
 #include <vector>
 #include <memory>
 #include "common/image/Image.h"
+#include "common/Matrix.h"
 
 namespace nprs {
 
-class ExtremalRegion; using pExtremalRegion = std::shared_ptr<ExtremalRegion>;
+class ExtremalRegion;
 class ERFilter; using pERFilter = std::shared_ptr<ERFilter>;
+class ERDescriptor; using pERDescirptor = std::shared_ptr<ERDescriptor>;
+class Point;
 
 class CSERDetector {
 public:
@@ -19,6 +22,10 @@ public:
 
 private:
     std::vector<pERFilter> _filters;
+
+    ERDescriptor newRegion(const Point& p);
+    ERDescriptor addPointToRegion(const Point &p);
+    ERDescriptor mergeRegions(const ERDescriptor& r1, const ERDescriptor &r2);
 };
 
 }

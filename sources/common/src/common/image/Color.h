@@ -4,12 +4,12 @@
 namespace nprs {
 
 enum ColorFormat {
-    COLORFORMAT_RGB,
-    COLORFORMAT_RGB_NORM,
-    COLORFORMAT_GRAY,
-    COLORFORMAT_GRAY_NORM,
-    COLORFORMAT_BGRA,
-    COLORFORMAT_BGRA_NORM
+    COLORFORMAT_RGB255,
+    COLORFORMAT_I255,
+    COLORFORMAT_BGRA255,
+    COLORFORMAT_RGB1,
+    COLORFORMAT_I1,
+    COLORFORMAT_BGRA1
 };
 
 class ColorInfo {
@@ -18,8 +18,8 @@ public:
         : _format(format), _numChannels(numChannels)
     {}
 
-    int numChannels() { return _numChannels; }
-    ColorFormat format() { return _format; }
+    int numChannels() const { return _numChannels; }
+    ColorFormat format() const { return _format; }
 
 private:
     int _numChannels;

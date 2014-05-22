@@ -6,12 +6,13 @@
 
 namespace nprs {
 
-template <typename T> using pImage = std::shared_ptr<Image<T> >;
+template <typename T> class Image;
 
 class ImageConverter {
 public:
-    static pImage<float> bgraByte255ToLumFloat1(const pImage<uchar> &image);
-    static pImage<float> rgbaByte255ToLumFloat1(const pImage<uchar> &image);
+    static void bgraByte255ToLumFloat1(Image<float> &result, const Image<uchar> &image);
+    static void rgbaByte255ToLumFloat1(Image<float> &result,const Image<uchar> &image);
+    static void bgraByte255ToLumByte255(Image<uchar> &result, const Image<uchar> &image);
 };
 
 }

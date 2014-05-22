@@ -27,3 +27,7 @@ void conditionsTest() {
     bool res = filter.isRegion(er);
     std::cout << res << std::endl;
 }
+
+void imageTest() {
+    
+}

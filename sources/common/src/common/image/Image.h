@@ -20,6 +20,14 @@ public:
         : _width(width), _height(height), _colorInfo(colorInfo), _channels(colorInfo.numChannels())
     {}
 
+    TPix & operator() (int x, int y, int channel) {
+        return _data[(y * _width + x) * _channels + channel];
+    }
+
+    TPix operator() (int x, int y, int channel) const {
+        return _data[(y * _width + x) * _channels + channel];
+    }
+
     TPix getValue(int x, int y, int channel) const {
         return _data[(y * _width + x) * _channels + channel];
     }
@@ -30,6 +38,7 @@ public:
 
     int width() const { return _width; }
     int height() const { return _height; }
+    ColorInfo const& getColorInfo() const { return _colorInfo; }
 
 private:
     ColorInfo _colorInfo;
