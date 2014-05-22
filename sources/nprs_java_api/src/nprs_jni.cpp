@@ -17,7 +17,7 @@ static jobject createNumberPlateInstance(JNIEnv *env, const pNumberPlate &numPla
 
 jobject Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
     RecognitionSystem recognitionSystem;
-    pRecognitionResults results = recognitionSystem.recognize(Image<float>(10, 10, ColorInfo(COLORFORMAT_RGB, 3)));
+    pRecognitionResults results = recognitionSystem.recognize(Image<uchar>(10, 10, ColorInfo(COLORFORMAT_RGB, 3)));
     jobject resultsJava = createRecResultsInstance(env, results);
     return resultsJava;
 }
