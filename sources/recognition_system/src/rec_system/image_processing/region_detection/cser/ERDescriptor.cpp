@@ -22,5 +22,4 @@ nprs::ERDescriptor::ERDescriptor(Rectangle bounds,
       _eulerNumber(eulerNumber), 
       _crossings(crossings)
 {
-    
 }

@@ -3,23 +3,19 @@
 
 #include "rec_system/image_processing/region_detection/cser/ERFilter.h"
 #include <vector>
+#include <memory>
+#include <functional>
 
 namespace nprs {
 
-class Condition;
-
 class ERFilterConditional : public ERFilter {
 public:
-    ERFilterConditional(const std::vector<Condition> &conditions);
+    explicit ERFilterConditional(const std::vector<std::function<bool(const ERDescriptor&)>> &conditions);
 
     bool isRegion(ERDescriptor const& region) override;
 
 private:
-    std::vector<Condition> _conditions;
-};
-
-class Condition {
-
+    std::vector<std::function<bool (const ERDescriptor&)>> _conditions;
 };
 
 }

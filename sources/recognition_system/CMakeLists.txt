@@ -19,7 +19,7 @@ set (headers
 
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.h
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterThreshold.h
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.h
 )
 
 set (sources
@@ -31,7 +31,7 @@ set (sources
 
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.cpp
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.cpp
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterThreshold.cpp
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.cpp
 )
 
 set (source_files ${sources} ${headers})
@@ -60,7 +60,7 @@ foreach(directory ${directories})
 endforeach()
 
 set (dependencies
-	common
+    common
 )
 
 foreach(dep ${dependencies})
@@ -70,4 +70,5 @@ endforeach()
 #make sure to used shared in in the jni library, as this will be loaded by
 #java
 add_library(${projname} ${headers} ${sources})
+target_link_libraries(${projname} ${dependencies})
 INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

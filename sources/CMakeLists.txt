@@ -21,6 +21,7 @@ endif()
 
 add_subdirectory(common)
 add_subdirectory(recognition_system)
+add_subdirectory(console_tests)
 
 if (JAVA)
 add_subdirectory(nprs_java_api)
