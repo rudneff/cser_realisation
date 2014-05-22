@@ -8,6 +8,8 @@
 
 namespace nprs {
 
+class ERDescriptor;
+
 class ERFilterConditional : public ERFilter {
 public:
     explicit ERFilterConditional(const std::vector<std::function<bool(const ERDescriptor&)>> &conditions);

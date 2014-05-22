@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
 }
 
 void conditionsTest() {
-    std::vector<std::function<bool(const nprs::ERDescriptor&)>> conditions{
+    std::vector<std::function<bool(const nprs::ERDescriptor&)>> conditions {
         [](const nprs::ERDescriptor&) { return true; },
         [](const nprs::ERDescriptor&) { return true; },
         [](const nprs::ERDescriptor&) { return true; }
