@@ -7,7 +7,8 @@ namespace nprs {
 
 class ArgumentException : public NprsException {
 public:
-    ArgumentException(std::string const& message);
+    explicit ArgumentException(std::string const& message);
+    ArgumentException(std::string const& message, std::exception_ptr innerException);
 };
 
 }
