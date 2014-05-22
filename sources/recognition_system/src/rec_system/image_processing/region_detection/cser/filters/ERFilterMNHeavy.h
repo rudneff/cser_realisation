@@ -5,9 +5,9 @@
 
 namespace nprs {
 
-class ERFilterHeavy : public ERFilter {
+class ERFilterMNHeavy : public ERFilter {
 public:
-    bool isRegion(ExtremalRegion const& region) override;
+    bool isRegion(ERDescriptor const& region) override;
 };
 
 }

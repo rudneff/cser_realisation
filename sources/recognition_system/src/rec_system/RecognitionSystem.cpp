@@ -11,7 +11,7 @@ RecognitionSystem::RecognitionSystem() {
 }
 
 RecognitionSystem::~RecognitionSystem() {
- 
+
 }
 
 pRecognitionResults RecognitionSystem::recognize(const Image<uchar> &image) const {

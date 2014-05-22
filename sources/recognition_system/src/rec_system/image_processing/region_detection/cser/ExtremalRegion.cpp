@@ -1,5 +1,5 @@
 #include "ExtremalRegion.h"
 
-nprs::ExtremalRegion::ExtremalRegion(Rectangle const& rectangle)
-    : _bounds(rectangle) 
+nprs::ExtremalRegion::ExtremalRegion(Rectangle const& bounds)
+    : _bounds(bounds) 
 {}

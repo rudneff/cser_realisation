@@ -4,6 +4,7 @@
 nprs::CSERDetector::CSERDetector(std::vector<pERFilter> const& filters)
     : _filters(filters)
 {
+    
 }
 
 nprs::CSERDetector::~CSERDetector() {

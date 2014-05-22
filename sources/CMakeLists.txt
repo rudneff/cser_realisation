@@ -25,3 +25,8 @@ add_subdirectory(recognition_system)
 if (JAVA)
 add_subdirectory(nprs_java_api)
 endif()
+
+find_package(OpenCV)
+if (OpenCV_FOUND)
+    add_subdirectory(ocv_textdetection_sample)
+endif()

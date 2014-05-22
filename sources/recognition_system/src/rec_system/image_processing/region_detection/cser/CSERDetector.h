@@ -7,7 +7,7 @@
 
 namespace nprs {
 
-class ExtremalRegion; 
+class ExtremalRegion; using pExtremalRegion = std::shared_ptr<ExtremalRegion>;
 class ERFilter; using pERFilter = std::shared_ptr<ERFilter>;
 
 class CSERDetector {

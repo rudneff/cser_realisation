@@ -3,12 +3,12 @@
 
 namespace nprs {
 
-class ExtremalRegion;
+class ERDescriptor;
 
 class ERFilter {
 public:
     virtual ~ERFilter() {}
-    virtual bool isRegion(const ExtremalRegion &region) = 0;
+    virtual bool isRegion(const ERDescriptor &region) = 0;
 };
 
 }

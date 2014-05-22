@@ -15,8 +15,11 @@ set (headers
     src/rec_system/image_processing/region_detection/cser/ExtremalRegion.h
     src/rec_system/image_processing/region_detection/cser/ERFilter.h
     src/rec_system/image_processing/region_detection/cser/ERFilter
-    src/rec_system/image_processing/region_detection/cser/ERFilterLight.h
-    src/rec_system/image_processing/region_detection/cser/ERFilterHeavy.h
+    src/rec_system/image_processing/region_detection/cser/ERDescriptor.h
+
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.h
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterThreshold.h
 )
 
 set (sources
@@ -24,8 +27,11 @@ set (sources
 
     src/rec_system/image_processing/region_detection/cser/CSERDetector.cpp
     src/rec_system/image_processing/region_detection/cser/ExtremalRegion.cpp
-    src/rec_system/image_processing/region_detection/cser/ERFilterLight.cpp
-    src/rec_system/image_processing/region_detection/cser/ERFilterHeavy.cpp
+    src/rec_system/image_processing/region_detection/cser/ERDescriptor.cpp
+
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.cpp
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.cpp
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterThreshold.cpp
 )
 
 set (source_files ${sources} ${headers})
@@ -43,6 +49,7 @@ set (directories
     src/rec_system/common_structures
     src/rec_system/image_processing
     src/rec_system/image_processing/region_detection/cser
+    src/rec_system/image_processing/region_detection/cser/filters
 )
 
 foreach(directory ${directories})

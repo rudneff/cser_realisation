@@ -14,7 +14,7 @@ public:
             : _numberPlates(numberPlates)
     {}
 
-    std::vector<pNumberPlate> const & numberPlates() const { return _numberPlates; }
+    const std::vector<pNumberPlate>& numberPlates() const { return _numberPlates; }
 
 private:
     std::vector<pNumberPlate> _numberPlates;

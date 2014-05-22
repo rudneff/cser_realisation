@@ -20,7 +20,7 @@ set (headers
     src/common/CommonDefinitions.h
     src/common/Rectangle.h
     src/common/Line.h
-
+    src/common/Point.h
     src/common/Matrix.h
 
     src/common/exceptions/NprsException.h
