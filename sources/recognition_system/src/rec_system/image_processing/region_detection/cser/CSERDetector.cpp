@@ -18,17 +18,10 @@ std::vector<nprs::ExtremalRegion> nprs::CSERDetector::detect(Image<uchar> const&
         throw NotSupportedException("CSERDetector::detect(): Only I255 ColorFormat supported for this algorithm");
     }
 
-    Matrix<pERDescirptor> erMap(image.width(), image.height());
+    Matrix<pERDescriptor> erMap(image.width(), image.height());
+    CserContext ctx;
+    ctx.erMap = &erMap;
     for (int i = 0; i < 255; i++) {
         
     }
-}
-
-nprs::ERDescriptor nprs::CSERDetector::newRegion(Point const& p) {
-}
-
-nprs::ERDescriptor nprs::CSERDetector::mergeRegions(ERDescriptor const& r1, ERDescriptor const& r2) {
-}
-
-nprs::ERDescriptor nprs::CSERDetector::addPointToRegion(Point const& p) {
 }

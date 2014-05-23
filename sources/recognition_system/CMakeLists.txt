@@ -20,6 +20,8 @@ set (headers
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.h
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.h
+
+    src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.h
 )
 
 set (sources
@@ -32,6 +34,8 @@ set (sources
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.cpp
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.cpp
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.cpp
+
+    src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.cpp
 )
 
 set (source_files ${sources} ${headers})
@@ -50,6 +54,7 @@ set (directories
     src/rec_system/image_processing
     src/rec_system/image_processing/region_detection/cser
     src/rec_system/image_processing/region_detection/cser/filters
+    src/rec_system/image_processing/region_detection/cser/algorithm
 )
 
 foreach(directory ${directories})

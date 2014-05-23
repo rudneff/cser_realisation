@@ -11,14 +11,15 @@ namespace nprs {
 template <typename TPix>
 class Image {
 public:
-    Image(const TPix *data, int width, int height, int nChannels, ColorInfo colorInfo)
+    Image(const TPix *data, int width, int height, const ColorInfo &colorInfo)
+        : _width(width), _height(height), _channels(colorInfo.numChannels()), _colorInfo(colorInfo)
     {
-        memcpy(_data, data, width * height * sizeof(TPix));
     }
 
-    Image(int width, int height, ColorInfo colorInfo)
-        : _width(width), _height(height), _colorInfo(colorInfo), _channels(colorInfo.numChannels())
-    {}
+    Image(int width, int height, const ColorInfo &colorInfo)
+        : _width(width), _height(height), _colorInfo(colorInfo), _channels(colorInfo.numChannels()), _data(width * height * colorInfo.numChannels())
+    {
+    }
 
     TPix & operator() (int x, int y, int channel) {
         return _data[(y * _width + x) * _channels + channel];
@@ -42,7 +43,7 @@ public:
 
 private:
     ColorInfo _colorInfo;
-    TPix *_data;
+    std::vector<TPix> _data;
 
     int _width;
     int _height;

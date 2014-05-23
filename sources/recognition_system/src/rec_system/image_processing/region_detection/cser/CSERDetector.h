@@ -10,7 +10,7 @@ namespace nprs {
 
 class ExtremalRegion;
 class ERFilter; using pERFilter = std::shared_ptr<ERFilter>;
-class ERDescriptor; using pERDescirptor = std::shared_ptr<ERDescriptor>;
+class ERDescriptor; using pERDescriptor = std::shared_ptr<ERDescriptor>;
 class Point;
 
 class CSERDetector {
@@ -21,11 +21,11 @@ public:
     std::vector<ExtremalRegion> detect(const Image<uchar> &image);
 
 private:
-    std::vector<pERFilter> _filters;
+    struct CserContext {
+        Matrix<pERDescriptor> *erMap = nullptr;
+    };
 
-    ERDescriptor newRegion(const Point& p);
-    ERDescriptor addPointToRegion(const Point &p);
-    ERDescriptor mergeRegions(const ERDescriptor& r1, const ERDescriptor &r2);
+    std::vector<pERFilter> _filters;
 };
 
 }
