@@ -10,7 +10,7 @@ nprs::ERDescriptor::ERDescriptor(const Point &p)
     
 }
 
-nprs::ERDescriptor::ERDescriptor(Rectangle bounds, 
+nprs::ERDescriptor::ERDescriptor(Rectangle const& bounds, 
                                  float area, 
                                  float perimeter, 
                                  float eulerNumber, 

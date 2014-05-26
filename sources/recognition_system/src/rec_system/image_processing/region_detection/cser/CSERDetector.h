@@ -18,13 +18,9 @@ public:
     explicit CSERDetector(const std::vector<pERFilter> &filters);
     ~CSERDetector();
 
-    std::vector<ExtremalRegion> detect(const Image<uchar> &image);
+    std::vector<ExtremalRegion> detect(Image<uchar> const& image);
 
 private:
-    struct CserContext {
-        Matrix<pERDescriptor> *erMap = nullptr;
-    };
-
     std::vector<pERFilter> _filters;
 };
 

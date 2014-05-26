@@ -6,6 +6,7 @@ project(${projname})
 
 set (headers 
     src/rec_system/RecognitionSystem.h
+    src/rec_system/Algorithm.h
 
     src/rec_system/common_structures/NumberPlate.h
     src/rec_system/common_structures/NumberPlateCharacter.h
@@ -22,10 +23,17 @@ set (headers
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.h
 
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.h
+
+    src/rec_system/image_processing/region_detection/cser/features/ERFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ERAreaFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ERPerimeterFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ERBoundsFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ERHorizontalCrossingsFeature.h
 )
 
 set (sources
     src/rec_system/RecognitionSystem.cpp
+    src/rec_system/Algorithm.cpp
 
     src/rec_system/image_processing/region_detection/cser/CSERDetector.cpp
     src/rec_system/image_processing/region_detection/cser/ExtremalRegion.cpp
@@ -55,6 +63,7 @@ set (directories
     src/rec_system/image_processing/region_detection/cser
     src/rec_system/image_processing/region_detection/cser/filters
     src/rec_system/image_processing/region_detection/cser/algorithm
+    src/rec_system/image_processing/region_detection/cser/features
 )
 
 foreach(directory ${directories})

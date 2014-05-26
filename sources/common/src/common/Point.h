@@ -12,6 +12,10 @@ public:
     float x() const { return _x; }
     float y() const  { return _y; }
 
+    Point operator+ (Point const& p1) const {
+        return Point(_x + p1._x , _y + p1._y);
+    }
+
 private:
     float _x;
     float _y;
