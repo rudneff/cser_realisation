@@ -1,23 +1,20 @@
-#ifndef RECSYSTEM_ERHORIZONTALCROSSINGSFEATURE_
-#define RECSYSTEM_ERHORIZONTALCROSSINGSFEATURE_
-
+#ifndef RECSYSTEM_ERNUMHOLESFEATURE_H
+#define RECSYSTEM_ERNUMHOLESFEATURE_H
 #include <rec_system/image_processing/region_detection/cser/features/ERFeature.h>
 
 namespace nprs {
 
-class ERHorizontalCrossingsFeature : public ERFeature {
+class ERNumHolesFeature : public ERFeature {
 public:
-    explicit ERHorizontalCrossingsFeature(Point const& p)
+    explicit ERNumHolesFeature(Point const& p)
         : ERFeature(p) {}
 
     ERFeature* attachPoint(Point const& p, Matrix<ERDescriptor*> const& erMap) override;
     ERFeature* merge() override;
     float getValue() override;
-
-private:
-    
 };
 
 }
 
-#endif // RECSYSTEM_ERHORIZONTALCROSSINGSFEATURE_
+
+#endif // RECSYSTEM_ERNUMHOLESFEATURE_H

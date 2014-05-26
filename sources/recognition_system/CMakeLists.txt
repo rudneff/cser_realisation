@@ -25,10 +25,10 @@ set (headers
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.h
 
     src/rec_system/image_processing/region_detection/cser/features/ERFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ERAreaFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ERPerimeterFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ERBoundsFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ERAspectRatioFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ERCompactnessFeature.h
     src/rec_system/image_processing/region_detection/cser/features/ERHorizontalCrossingsFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ERNumHolesFeature.h
 )
 
 set (sources
@@ -44,6 +44,11 @@ set (sources
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.cpp
 
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.cpp
+
+    src/rec_system/image_processing/region_detection/cser/features/ERAspectRatioFeature.cpp
+    src/rec_system/image_processing/region_detection/cser/features/ERCompactnessFeature.cpp
+    src/rec_system/image_processing/region_detection/cser/features/ERHorizontalCrossingsFeature.cpp
+    src/rec_system/image_processing/region_detection/cser/features/ERNumHolesFeature.cpp
 )
 
 set (source_files ${sources} ${headers})

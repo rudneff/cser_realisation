@@ -8,7 +8,6 @@ namespace nprs {
 
 class Point;
 class ERDescriptor;
-template <typename T> 
 
 class ERFeature {
 public:
@@ -17,7 +16,7 @@ public:
 
     virtual ERFeature* attachPoint(const Point &p, const Matrix<ERDescriptor*> &erMap) = 0;
     virtual ERFeature* merge() = 0;
-    virtual float value() = 0;
+    virtual float getValue() = 0;
 };
 
 }
