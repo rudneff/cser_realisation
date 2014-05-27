@@ -12,8 +12,9 @@ template <typename TPix>
 class Image {
 public:
     Image(const TPix *data, int width, int height, const ColorInfo &colorInfo)
-        : _width(width), _height(height), _channels(colorInfo.numChannels()), _colorInfo(colorInfo)
+        : _width(width), _height(height), _channels(colorInfo.numChannels()), _colorInfo(colorInfo), _data(width * height * colorInfo.numChannels())
     {
+        std::memcpy(&_data[0], data, width * height * colorInfo.numChannels() * sizeof(TPix));
     }
 
     Image(int width, int height, const ColorInfo &colorInfo)

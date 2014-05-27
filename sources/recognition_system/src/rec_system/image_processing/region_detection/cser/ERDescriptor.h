@@ -9,33 +9,30 @@
 namespace nprs {
 
 class Point;
-class ERDescriptor; using pERDescriptor = std::shared_ptr<ERDescriptor>;
+class ERDescriptor;
+class ICFeature;
 
 class ERDescriptor {
 public:
-    explicit ERDescriptor(const Point& p);
+    static const int FEATURE_ASPECTRATIO = 0;
+    static const int FEATURE_COMPACTNESS = 1;
 
-    ERDescriptor(Rectangle const& bounds, 
-                 float area, 
-                 float perimeter, 
-                 float eulerNumber, 
-                 const std::vector<int> &crossings);
+    ERDescriptor(const Point& p, const std::vector<ICFeature*> &featureComputers);
+
+    ERDescriptor *attachPoint(const Point &p);
+    ERDescriptor *combine(const ERDescriptor *other);
 
     Rectangle const& bounds() const { return _bounds; }
-    float area() const { return _area; }
-    float perimeter() const { return _perimeter; }
-    float eulerNumber() const { return _eulerNumber; }
-    std::vector<int> const& crossings() const { return _crossings; }
-
+    int getFeature(int f) const  { return _features[f]; }
+    
 private:
-    Rectangle _bounds;
-    float _area;
-    float _perimeter;
-    float _eulerNumber;
-    std::vector<int> _crossings;
+    explicit ERDescriptor(const std::vector<ICFeature*> &featureComputers);
 
-    ERDescriptor *_next;
-    ERDescriptor *_prev;
+    const std::vector<ICFeature*> _featureComputers;
+    std::vector<float> _features;
+    Rectangle _bounds;
+
+    ERDescriptor *_parent;
 };
 
 }

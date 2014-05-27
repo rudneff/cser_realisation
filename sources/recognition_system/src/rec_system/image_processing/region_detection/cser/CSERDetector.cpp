@@ -19,6 +19,13 @@ std::vector<nprs::ExtremalRegion> nprs::CSERDetector::detect(Image<uchar> const&
         throw NotSupportedException("CSERDetector::detect(): Only I255 ColorFormat supported for this algorithm");
     }
 
+    
     CserAlgorithm algorithm(image, 0, _filters);
     std::vector<ERDescriptor*> descriptors = algorithm.perform();
+    std::vector<ExtremalRegion> result;
+    for (auto desc : descriptors) {
+        result.push_back(ExtremalRegion(desc));
+    }
+
+    return result;
 }

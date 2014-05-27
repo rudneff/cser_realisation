@@ -24,11 +24,11 @@ set (headers
 
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.h
 
-    src/rec_system/image_processing/region_detection/cser/features/ERFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ERAspectRatioFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ERCompactnessFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ERHorizontalCrossingsFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ERNumHolesFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ICFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ICAspectRatioFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.h
+    src/rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.h
 )
 
 set (sources
@@ -45,10 +45,10 @@ set (sources
 
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.cpp
 
-    src/rec_system/image_processing/region_detection/cser/features/ERAspectRatioFeature.cpp
-    src/rec_system/image_processing/region_detection/cser/features/ERCompactnessFeature.cpp
-    src/rec_system/image_processing/region_detection/cser/features/ERHorizontalCrossingsFeature.cpp
-    src/rec_system/image_processing/region_detection/cser/features/ERNumHolesFeature.cpp
+    src/rec_system/image_processing/region_detection/cser/features/ICAspectRatioFeature.cpp
+    src/rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.cpp
+    src/rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.cpp
+    src/rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.cpp
 )
 
 set (source_files ${sources} ${headers})
@@ -86,8 +86,6 @@ foreach(dep ${dependencies})
 	include_directories("../${dep}/src")
 endforeach()
 
-#make sure to used shared in in the jni library, as this will be loaded by
-#java
 add_library(${projname} ${headers} ${sources})
 target_link_libraries(${projname} ${dependencies})
 INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

@@ -12,12 +12,12 @@ class ERDescriptor;
 
 class ERFilterConditional : public ERFilter {
 public:
-    explicit ERFilterConditional(const std::vector<std::function<bool(const ERDescriptor&)>> &conditions);
+    ERFilterConditional(std::function<bool(const ERDescriptor&)> &condition);
 
     bool isRegion(ERDescriptor const& region) override;
 
 private:
-    std::vector<std::function<bool (const ERDescriptor&)>> _conditions;
+    std::function<bool (const ERDescriptor&)> _condition;
 };
 
 }

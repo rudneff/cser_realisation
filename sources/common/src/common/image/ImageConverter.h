@@ -12,7 +12,7 @@ class ImageConverter {
 public:
     static void bgraByte255ToLumFloat1(Image<float> &result, const Image<uchar> &image);
     static void rgbaByte255ToLumFloat1(Image<float> &result,const Image<uchar> &image);
-    static void bgraByte255ToLumByte255(Image<uchar> &result, const Image<uchar> &image);
+    static Image<uchar> bgraByte255ToLumByte255(const Image<uchar> &image);
 };
 
 }

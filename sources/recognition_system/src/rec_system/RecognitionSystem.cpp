@@ -3,8 +3,15 @@
 #include "common_structures/NumberPlate.h"
 #include "common_structures/NumberPlateCharacter.h"
 #include "common/Rectangle.h"
+#include <rec_system/image_processing/region_detection/cser/CSERDetector.h>
+#include <rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.h>
+#include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
+#include "image_processing/region_detection/cser/ExtremalRegion.h"
+#include <common/image/ImageConverter.h>
 
 namespace nprs {
+
+using pERFilterConditional = std::shared_ptr<ERFilterConditional>;
 
 RecognitionSystem::RecognitionSystem() {
 
@@ -15,17 +22,20 @@ RecognitionSystem::~RecognitionSystem() {
 }
 
 pRecognitionResults RecognitionSystem::recognize(const Image<uchar> &image) const {
-    std::vector<pNumberPlate> numberPlates = 
-        {
-            pNumberPlate(
-                new NumberPlate(
-                {
-                    pNumberPlateCharacter(new NumberPlateCharacter('a', Rectangle(10, 10, 20, 20))),
-                    pNumberPlateCharacter(new NumberPlateCharacter('1', Rectangle(25, 10, 20, 20)))
-                },
-                Rectangle(10, 10, 90, 20)
-            ))
-        };
+    std::vector<pERFilter> filters { 
+        pERFilter(new ERFilterConditional(std::function<bool(const ERDescriptor&)>([](const ERDescriptor& e) { return true; })))
+    };
+
+    Image<uchar> converted = ImageConverter::bgraByte255ToLumByte255(image);
+
+    CSERDetector detector(filters);
+    auto results = detector.detect(converted);
+    
+    std::vector<pNumberPlate> numberPlates;
+    for (auto res : results) {
+        pNumberPlate np(new NumberPlate(std::vector<pNumberPlateCharacter>(), res.getBounds()));
+        numberPlates.push_back(np);
+    }
 
     return pRecognitionResults(new RecognitionResults(numberPlates));
 }

@@ -12,8 +12,7 @@ extern "C" {
  * Method:    recognize
  * Signature: ([III)Lcom/nprs/app/recognition/common_structures/RecognitionResults;
  */
-JNIEXPORT jobject JNICALL Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize
-        (JNIEnv *, jobject, jintArray, jint, jint);
+JNIEXPORT jobject JNICALL Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *, jobject, jintArray, jint, jint);
 
 #ifdef __cplusplus
 }

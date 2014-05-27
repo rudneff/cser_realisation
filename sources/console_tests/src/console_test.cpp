@@ -15,18 +15,20 @@ int main(int argc, char** argv) {
 
 void conditionsTest() {
     std::vector<std::function<bool(const nprs::ERDescriptor&)>> conditions {
-        [](const nprs::ERDescriptor&) { return true; },
-        [](const nprs::ERDescriptor&) { return true; },
-        [](const nprs::ERDescriptor&) { return true; }
+        [](const nprs::ERDescriptor& e) { return true; },
+        [](const nprs::ERDescriptor& e) { return true; },
+        [](const nprs::ERDescriptor& e) { return true; }
     };
 
-    nprs::ERDescriptor er(nprs::Point(10, 10));
+    nprs::ERDescriptor er(nprs::Point(10, 10), std::vector<nprs::ICFeature*>());
 
     for (auto c : conditions) {
         std::cout << c(er) << std::endl;
     }
 
-    nprs::ERFilterConditional filter(conditions);
+    std::function<bool(const nprs::ERDescriptor&)> condition = [](const nprs::ERDescriptor& e) { return true; };
+
+    nprs::ERFilterConditional filter(condition);
     bool res = filter.isRegion(er);
     std::cout << res << std::endl;
 }
