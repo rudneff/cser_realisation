@@ -1,0 +1,6 @@
+.gradle
+/local.properties
+/.idea/workspace.xml
+.DS_Store
+nprs_desktop/.idea/workspace.xml
+nprs_win/NumberPlateRecognition/packages/
