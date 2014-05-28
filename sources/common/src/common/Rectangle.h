@@ -3,6 +3,7 @@
 
 #include <common/Point.h>
 #include <algorithm>
+#include <math.h>
 
 namespace nprs {
 

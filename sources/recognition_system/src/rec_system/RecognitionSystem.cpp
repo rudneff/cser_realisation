@@ -8,6 +8,7 @@
 #include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
 #include "image_processing/region_detection/cser/ExtremalRegion.h"
 #include <common/image/ImageConverter.h>
+#include <rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h>
 
 namespace nprs {
 
@@ -22,8 +23,8 @@ RecognitionSystem::~RecognitionSystem() {
 }
 
 pRecognitionResults RecognitionSystem::recognize(const Image<uchar> &image) const {
-    std::vector<pERFilter> filters { 
-        pERFilter(new ERFilterConditional(std::function<bool(const ERDescriptor&)>([](const ERDescriptor& e) { return true; })))
+    std::vector<pERFilter> filters {
+        pERFilter(new ERFilterMNLight())
     };
 
     Image<uchar> converted = ImageConverter::bgraByte255ToLumByte255(image);
