@@ -14,11 +14,11 @@ namespace nprs {
 using pERFilterConditional = std::shared_ptr<ERFilterConditional>;
 
 RecognitionSystem::RecognitionSystem() {
-
+    
 }
 
 RecognitionSystem::~RecognitionSystem() {
-
+    
 }
 
 pRecognitionResults RecognitionSystem::recognize(const Image<uchar> &image) const {
