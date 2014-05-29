@@ -51,16 +51,18 @@ SET (sources
     src/rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.cpp
 )
 
+# create missing files
 SET (source_files ${sources} ${headers})
-
 FOREACH(file ${source_files})
     if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
         FILE(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")
     ENDIF()
 ENDFOREACH()
+# --
 
 INCLUDE_DIRECTORIES(src)
 
+# create directories in XCode and Visual Studio
 SET(directories
     src/rec_system
     src/rec_system/common_structures
@@ -77,6 +79,7 @@ FOREACH(directory ${directories})
 	STRING(REGEX REPLACE "/" "\\\\\\\\" convdir ${directory})
 	SOURCE_GROUP(${convdir} FILES ${dir_headers} ${dir_sources})
 ENDFOREACH()
+# --
 
 SET(dependencies
     common
