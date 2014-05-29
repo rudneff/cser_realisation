@@ -71,9 +71,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Development\numplaterec\nprs_cpp\sources\nprs_cs_api\src;C:\Development\numplaterec\nprs_cpp\sources\recognition_system\src;C:\Development\numplaterec\nprs_cpp\sources\common\src;$(IncludePath)</IncludePath>
-    <SourcePath>C:\Development\numplaterec\nprs_cpp\sources\recognition_system\src;$(SourcePath)</SourcePath>
-    <LibraryPath>C:\Development\numplaterec\nprs_cpp\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Development\numplaterec\nprs_cpp\nprs_lib\sources\common\src;C:\Development\numplaterec\nprs_cpp\nprs_lib\sources\recognition_system\src;$(IncludePath)</IncludePath>
+    <SourcePath>..\..\..\nprs_lib\sources;$(SourcePath)</SourcePath>
+    <LibraryPath>..\..\..\nprs_lib\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>

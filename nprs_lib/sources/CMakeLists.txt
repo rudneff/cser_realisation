@@ -26,3 +26,7 @@ add_subdirectory(console_tests)
 if (JAVA)
 add_subdirectory(nprs_java_api)
 endif()
+
+IF (MSVC)
+	ADD_SUBDIRECTORY(nprs_cs_api)
+ENDIF()
