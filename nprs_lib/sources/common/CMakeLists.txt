@@ -1,18 +1,10 @@
-cmake_minimum_required(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-set(projname common)
+SET(projname common)
 
-project(${projname})
+PROJECT(${projname})
 
-#file (GLOB_RECURSE headers
-#	src/*.h
-#)
-#
-#file (GLOB_RECURSE sources
-#	src/*.cpp
-#)
-
-set (headers 
+SET (headers 
     src/common/image/Color.h
     src/common/image/Image.h
     src/common/image/ImageConverter.h
@@ -28,7 +20,7 @@ set (headers
     src/common/exceptions/NotSupportedException.h
 )
 
-set (sources
+SET (sources
     src/common/image/Image.cpp
     src/common/image/ImageConverter.cpp
 
@@ -37,28 +29,28 @@ set (sources
     src/common/exceptions/NotSupportedException.cpp
 )
 
-set (directories
+SET (directories
     src/common
     src/common/image
     src/common/exceptions
 )
 
-set (source_files ${sources} ${headers})
+SET (source_files ${sources} ${headers})
 
-foreach(file ${source_files})
-    if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-        file(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")
-    endif()
-endforeach()
+FOREACH(file ${source_files})
+    IF(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+        FILE(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")
+    ENDIF()
+ENDFOREACH()
 
-include_directories(src)
+INCLUDE_DIRECTORIES(src)
 
-foreach(directory ${directories})
-	file(GLOB dir_headers "${directory}/*.h")
-	file(GLOB dir_sources "${directory}/*.cpp")
-	string(REGEX REPLACE "/" "\\\\\\\\" convdir ${directory})
-	source_group(${convdir} FILES ${dir_headers} ${dir_sources})
-endforeach()
+FOREACH(directory ${directories})
+	FILE(GLOB dir_headers "${directory}/*.h")
+	FILE(GLOB dir_sources "${directory}/*.cpp")
+	STRING(REGEX REPLACE "/" "\\\\\\\\" convdir ${directory})
+	SOURCE_GROUP(${convdir} FILES ${dir_headers} ${dir_sources})
+ENDFOREACH()
 
-add_library(${projname} ${headers} ${sources})
+ADD_LIBRARY(${projname} ${headers} ${sources})
 INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)
