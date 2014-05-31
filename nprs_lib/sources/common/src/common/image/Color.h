@@ -3,27 +3,36 @@
 
 namespace nprs {
 
-enum ColorFormat {
-    COLORFORMAT_RGB255,
-    COLORFORMAT_I255,
-    COLORFORMAT_BGRA255,
-    COLORFORMAT_RGB1,
-    COLORFORMAT_I1,
-    COLORFORMAT_BGRA1
+enum class ColorFormat {
+    RGB255, I255, BGRA255, RGB1, I1, BGRA1
+};
+
+
+class Color {
+public:
+    
+private:
+    
 };
 
 class ColorInfo {
 public:
-    ColorInfo(ColorFormat format, int numChannels)
-        : _format(format), _numChannels(numChannels)
+    static ColorInfo RgbByte255();
+    static ColorInfo BgraByte255();
+
+public:
+    ColorInfo(ColorFormat format, int numChannels, int bytesPerPixel)
+        : _format(format), _numChannels(numChannels), _bpp(bytesPerPixel)
     {}
 
     int numChannels() const { return _numChannels; }
     ColorFormat format() const { return _format; }
+    int bytesPerPixel() const { return _bpp; }
 
 private:
     int _numChannels;
     ColorFormat _format;
+    int _bpp;
 };
 
 }

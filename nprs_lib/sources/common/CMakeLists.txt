@@ -23,6 +23,7 @@ SET (headers
 SET (sources
     src/common/image/Image.cpp
     src/common/image/ImageConverter.cpp
+	src/common/image/Color.cpp
 
     src/common/exceptions/NprsException.cpp
     src/common/exceptions/ArgumentException.cpp

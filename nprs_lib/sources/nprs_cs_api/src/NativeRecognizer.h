@@ -21,6 +21,10 @@ template <typename T> using ptr = std::shared_ptr<T>;
 
 namespace NprsCppApi {
 
+public enum class PixelFormat {
+    RGB24, BGRA32
+};
+
 public ref class NativeRecognizer
 {
 public:
@@ -30,11 +34,11 @@ public:
     ~NativeRecognizer() {
     }
 
-    RecognitionResults^ Recognize(array<Byte>^ image, int width, int height) {
+    RecognitionResults^ Recognize(array<Byte>^ image, PixelFormat pixelFormat, int width, int height) {
         nprs::RecognitionSystem recSystem;
         pin_ptr<Byte> ptr = &image[0];
         uchar* imgData = ptr;
-        nprs::pRecognitionResults results = recSystem.recognize(nprs::Image<uchar>(imgData, width, height, nprs::ColorInfo(nprs::COLORFORMAT_BGRA255, 4)));
+        nprs::pRecognitionResults results = recSystem.recognize(nprs::Image<uchar>(imgData, width, height, PixFormatToColorInfo(pixelFormat)));
 
         return ConvertResults(results);
     }
@@ -46,7 +50,9 @@ private:
             numPlates->Add(ConvertNumberPlate(numPlate));
         }
 
-        return gcnew RecognitionResults(numPlates);
+        array<Byte>^ image = gcnew array<Byte>(src->resultImage().width() * src->resultImage().height() * src->resultImage().getColorInfo().numChannels());
+
+        return gcnew RecognitionResults(numPlates, image);
     }
 
     NumberPlate^ ConvertNumberPlate(ptr<nprs::NumberPlate> src) {
@@ -65,6 +71,15 @@ private:
 
     Rectangle^ ConvertRectangle(const nprs::Rectangle &src) {
         return gcnew Rectangle(src.x(), src.y(), src.width(), src.height());
+    }
+
+    nprs::ColorInfo PixFormatToColorInfo(PixelFormat pf) {
+        switch (pf) {
+        case PixelFormat::RGB24:
+            return nprs::ColorInfo::RgbByte255();
+        case PixelFormat::BGRA32:
+            return nprs::ColorInfo::BgraByte255();
+        }
     }
 };
 

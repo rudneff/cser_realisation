@@ -10,9 +10,12 @@ template <typename T> class Image;
 
 class ImageConverter {
 public:
-    static void bgraByte255ToLumFloat1(Image<float> &result, const Image<uchar> &image);
-    static void rgbaByte255ToLumFloat1(Image<float> &result,const Image<uchar> &image);
-    static Image<uchar> bgraByte255ToLumByte255(const Image<uchar> &image);
+    static Image<uchar> toLum255(const Image<uchar> &image);
+    static Image<uchar> toInt255(const Image<uchar> &image);
+
+private:
+    static Image<uchar> rgbToLum255(const Image<uchar> &image);
+    static Image<uchar> bgraToLum255(const Image<uchar> &image);
 };
 
 }

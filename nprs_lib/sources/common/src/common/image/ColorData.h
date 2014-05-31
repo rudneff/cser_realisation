@@ -1,5 +1,5 @@
-#ifndef COMMON_IMAGE_H
-#define COMMON_IMAGE_H
+#ifndef COMMON_COLORDATA_H
+#define COMMON_COLORDATA_H
 
 #include <vector>
 #include "Color.h"
@@ -9,15 +9,15 @@ using uchar = unsigned char;
 namespace nprs {
 
 template <typename TPix>
-class Image {
+class ColorData {
 public:
-    Image(const TPix *data, int width, int height, const ColorInfo &colorInfo)
+    ColorData(const TPix *data, int width, int height, const ColorInfo &colorInfo)
         : _width(width), _height(height), _channels(colorInfo.numChannels()), _colorInfo(colorInfo), _data(width * height * colorInfo.numChannels())
     {
         std::memcpy(&_data[0], data, width * height * colorInfo.numChannels() * sizeof(TPix));
     }
 
-    Image(int width, int height, const ColorInfo &colorInfo)
+    ColorData(int width, int height, const ColorInfo &colorInfo)
         : _width(width), _height(height), _colorInfo(colorInfo), _channels(colorInfo.numChannels()), _data(width * height * colorInfo.numChannels())
     {
     }
@@ -38,14 +38,10 @@ public:
         _data[(y * _width + x) * _channels + channel] = value;
     }
 
-    const TPix* data() {
-        return _data.data();
-    }
-
     int width() const { return _width; }
     int height() const { return _height; }
     ColorInfo const& getColorInfo() const { return _colorInfo; }
-
+    
 private:
     ColorInfo _colorInfo;
     std::vector<TPix> _data;
@@ -60,4 +56,5 @@ private:
 };
 
 }
-#endif // COMMON_IMAGE_H
+
+#endif

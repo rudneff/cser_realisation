@@ -7,10 +7,9 @@ class ERDescriptor;
 
 class ERFilter {
 public:
-    virtual ~ERFilter() {}
+    virtual ~ERFilter() {};
     virtual bool isRegion(const ERDescriptor &region) = 0;
 };
-
 }
 
 #endif // RECSYSTEM_ERFILTER

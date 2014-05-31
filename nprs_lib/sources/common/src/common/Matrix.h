@@ -30,6 +30,10 @@ public:
         _data[row * _width + col] = value;
     }
 
+    bool isInBounds(int x, int y) {
+        return x >= 0 && x < _width && y >= 0 && y < _height;
+    }
+
 private:
     int _width;
     int _height;

@@ -20,6 +20,6 @@ private:
     float _perimeter;
 };
 
-}
+} 
 
 #endif // RECSYSTEM_ERAREAFEATURE_H

@@ -9,4 +9,4 @@ nprs::ERFilterConditional::ERFilterConditional(std::function<bool(ERDescriptor c
 bool nprs::ERFilterConditional::isRegion(const ERDescriptor &region) {
     return _condition(region);
 }
-	
+
