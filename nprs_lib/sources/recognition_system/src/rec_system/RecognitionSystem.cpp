@@ -23,11 +23,10 @@ RecognitionSystem::~RecognitionSystem() {
 }
 
 pRecognitionResults RecognitionSystem::recognize(const Image<uchar> &image) const {
-    std::vector<pERFilter> filters {
-        pERFilter(new ERFilterMNLight())
-    };
+    std::vector<pERFilter> filters;
+    filters.push_back(pERFilter(new ERFilterMNLight()));
 
-    Image<uchar> converted = ImageConverter::bgraByte255ToLumByte255(image);
+    Image<uchar> converted = ImageConverter::toLum255(image);
 
     CSERDetector detector(filters);
     auto results = detector.detect(converted);
@@ -38,7 +37,7 @@ pRecognitionResults RecognitionSystem::recognize(const Image<uchar> &image) cons
         numberPlates.push_back(np);
     }
 
-    return pRecognitionResults(new RecognitionResults(numberPlates));
+    return pRecognitionResults(new RecognitionResults(numberPlates, converted));
 }
 
 }

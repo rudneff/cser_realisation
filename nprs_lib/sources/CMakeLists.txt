@@ -24,8 +24,15 @@ ADD_SUBDIRECTORY(recognition_system)
 ADD_SUBDIRECTORY(console_tests)
 
 IF (JAVA)
-ADD_SUBDIRECTORY(nprs_java_api)
+	ADD_SUBDIRECTORY(nprs_java_api)
 ENDIF()
+
+FIND_PACKAGE(Qt5Core)
+FIND_PACKAGE(Qt5Widgets)
+
+#IF (Qt5Core_FOUND AND Qt5Widgets_FOUND)
+#	ADD_SUBDIRECTORY(qt_test_gui)
+#ENDIF()
 
 IF (MSVC)
 	ADD_SUBDIRECTORY(nprs_cs_api)

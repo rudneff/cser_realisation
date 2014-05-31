@@ -8,14 +8,13 @@
 nprs::CSERDetector::CSERDetector(std::vector<pERFilter> const& filters)
     : _filters(filters)
 {
-    
 }
 
 nprs::CSERDetector::~CSERDetector() {
 }
 
 std::vector<nprs::ExtremalRegion> nprs::CSERDetector::detect(Image<uchar> const& image) {
-    if (image.getColorInfo().format() != COLORFORMAT_I255) {
+    if (image.getColorInfo().format() != ColorFormat::I255) {
         throw NotSupportedException("CSERDetector::detect(): Only I255 ColorFormat supported for this algorithm");
     }
 

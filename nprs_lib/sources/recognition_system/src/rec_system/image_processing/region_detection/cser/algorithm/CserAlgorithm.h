@@ -40,8 +40,6 @@ private:
     ERDescriptor* combineRegions(const Point &p, ERDescriptor *er1, ERDescriptor *er2); 
     ERDescriptor* attachPoint(ERDescriptor *er, const Point &p);
     std::set<ERDescriptor*> findNeighbors(Point const& p);
-    
-    std::vector<int> mergeCrossings(const std::vector<int> &er1, const std::vector<int> &er2);
 };
 
 }

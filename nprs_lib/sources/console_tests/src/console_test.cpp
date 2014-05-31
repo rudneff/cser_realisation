@@ -48,5 +48,5 @@ struct tpix {
 };
 
 void imageTest() {
-    nprs::Image<tpix> img(2,2, nprs::ColorInfo(nprs::COLORFORMAT_I255, 1));
+    nprs::Image<tpix> img(2,2, nprs::ColorInfo(nprs::ColorInfo::RgbByte255()));
 }

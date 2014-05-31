@@ -11,13 +11,19 @@ namespace NprsCppApi {
 public ref class RecognitionResults
 {
 public:
-    RecognitionResults(List<NumberPlate^>^ numberPlates) 
-        : _numberPlates(numberPlates)
+    RecognitionResults(List<NumberPlate^>^ numberPlates, array<Byte> ^image) 
+        : _numberPlates(numberPlates), _image(image)
     {}
 
     property List<NumberPlate^>^ NumberPlates {
         List<NumberPlate^>^ get() {
             return _numberPlates;
+        }
+    }
+
+    property array<Byte>^ Image {
+        array<Byte>^ get() {
+            return _image;
         }
     }
 
@@ -35,6 +41,7 @@ public:
 
 private:
     List<NumberPlate^>^ _numberPlates;
+    array<Byte>^ _image;
 };
 
 }

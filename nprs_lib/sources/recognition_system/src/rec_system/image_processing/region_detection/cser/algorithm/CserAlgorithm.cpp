@@ -14,7 +14,8 @@ nprs::CserAlgorithm::CserAlgorithm(Image<uchar> const& image,
      : _image(image), 
        _erMap(image.width(), image.height()), 
        _filters(filters), 
-       _hist(255)
+       _hist(255),
+       _channel(channel)
 {
 }
 
@@ -32,11 +33,10 @@ nprs::CserAlgorithm::~CserAlgorithm() {
 
 std::vector<nprs::ERDescriptor*> nprs::CserAlgorithm::perform() {
     computeHist(_image);
-    for (int i = 0; i < 255; i++) {
+    for (int i = 0; i < 150; i++) {
         increment(i);
     }
-
-    return {};
+    return _allRegions;
 }
 
 void nprs::CserAlgorithm::increment(int threshold) {
@@ -72,14 +72,30 @@ ERDescriptor* nprs::CserAlgorithm::newRegion(Point const& p) {
 ERDescriptor* CserAlgorithm::attachPoint(ERDescriptor *er, Point const& p) {
     ERDescriptor *newReg = er->attachPoint(p);
     _allRegions.push_back(newReg);
-    _erMap(p.x(), p.y()) = newReg;
+
+    for (int x = newReg->bounds().x(); x < newReg->bounds().x1(); x++) {
+        for (int y = newReg->bounds().y(); y < newReg->bounds().y1(); y++) {
+            if (_erMap(x, y) == er) {
+                _erMap.setValue(x, y, newReg);
+            }
+        }
+    }
+
     return newReg;
 }
 
 ERDescriptor* CserAlgorithm::combineRegions(const Point &p, ERDescriptor *er1, ERDescriptor *er2) {
     ERDescriptor *newReg = er1->combine(er2);
     _allRegions.push_back(newReg);
-    _erMap(p.x(), p.y()) = newReg;
+
+    for (int x = newReg->bounds().x(); x < newReg->bounds().x1(); x++) {
+        for (int y = newReg->bounds().y(); y < newReg->bounds().y1(); y++) {
+            if (_erMap(x, y) == er1 || _erMap(x, y) == er2) {
+                _erMap.setValue(x, y, newReg);
+            }
+        }
+    }
+
     return newReg;
 }
 
@@ -89,7 +105,9 @@ std::set<ERDescriptor*> CserAlgorithm::findNeighbors(Point const& p) {
 
     for (Point n : { Point(-1,0), Point(1,0), Point(0,1), Point(0,-1) }) {
         Point q = n + p;
-        ERDescriptor *nd = _erMap(q.x(), q.y());
+        if (_erMap.isInBounds(q.x(), q.y())) {
+            ERDescriptor *nd = _erMap(q.x(), q.y());
+        }
     }
 
     return nbs;
@@ -102,8 +120,4 @@ void CserAlgorithm::computeHist(Image<uchar> const& image) {
             _hist[intensity].push_back(Point(x,y));
         }
     }
-}
-
-std::vector<int> CserAlgorithm::mergeCrossings(const std::vector<int> &c1, const std::vector<int> &c2) {
-    return std::vector<int>();
 }

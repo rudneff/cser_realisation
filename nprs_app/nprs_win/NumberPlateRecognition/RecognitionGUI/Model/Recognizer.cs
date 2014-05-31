@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using NprsCppApi;
 
@@ -13,7 +14,7 @@ namespace RecognitionGUI.Model
 			Task.Factory.StartNew(
 				() =>
 				{
-					var results = _recognizer.Recognize(image, width, height);
+					var results = _recognizer.Recognize(image, NprsCppApi.PixelFormat.BGRA32, width, height);
 					callback(results, null);
 				}
 			);
