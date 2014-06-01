@@ -53,7 +53,7 @@ private:
         }
 
         array<Byte>^ image = gcnew array<Byte>(src->resultImage().width() * src->resultImage().height() * 4);
-        std::vector<uchar> converted = nprs::ImageConverter::grayImageToRawBgra(src->resultImage());
+        std::vector<uchar> converted = nprs::ImageConverter::imageToRawBgra(src->resultImage());
         pin_ptr<Byte> ptr = &converted[0];
         Marshal::Copy((IntPtr)ptr, image, 0, image->Length);
 

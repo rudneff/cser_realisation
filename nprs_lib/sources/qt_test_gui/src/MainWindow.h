@@ -17,7 +17,7 @@ public:
     ~MainWindow();
 
 public slots:
-    void newFrame(const QPixmap &pixmap);
+    void newFrame(const QImage &image);
     void loadFile();
     void exit();
 
