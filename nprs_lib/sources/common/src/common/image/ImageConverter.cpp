@@ -13,7 +13,7 @@ Image ImageConverter::convertRaw(unsigned char const* data, int width, int heigh
     }
 }
 
-std::vector<uchar> ImageConverter::grayImageToRawBgra(Image const& image) {
+std::vector<uchar> ImageConverter::imageToRawBgra(Image const& image) {
     std::vector<uchar> result(image.width() * image.height() * 4);
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height(); y++) {
@@ -25,7 +25,8 @@ std::vector<uchar> ImageConverter::grayImageToRawBgra(Image const& image) {
     return result;
 }
 
-void ImageConverter::imageToRawRgb(Image const& image, uchar* data) {
+std::vector<uchar> ImageConverter::imageToRawRgb(const Image &image) {
+    std::vector<uchar> data(image.width() * image.height() * 3);
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height(); y++) {
             data[(y * image.width() + x) * 3 + 0] = image(x, y, 0) * 255;
@@ -33,6 +34,7 @@ void ImageConverter::imageToRawRgb(Image const& image, uchar* data) {
             data[(y * image.width() + x) * 3 + 2] = image(x, y, 0) * 255;
         }
     }
+    return data;
 }
 
 Image ImageConverter::bgraToInt(const uchar *data, int width, int height) {
@@ -44,7 +46,7 @@ Image ImageConverter::bgraToInt(const uchar *data, int width, int height) {
             uchar g = data[p + 1];
             uchar b = data[p + 0];
 
-            result(x, y, 0) = (0, 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0);
+            result(x, y, 0) = 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0;
         }
     }
     return result;
@@ -60,7 +62,7 @@ Image ImageConverter::rgbToInt(const uchar *data, int width, int height) {
             uchar g = data[p + 1];
             uchar b = data[p + 2];
 
-            result(x, y, 0) = (0, 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0);
+            result(x, y, 0) = 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0;
         }
     }
 

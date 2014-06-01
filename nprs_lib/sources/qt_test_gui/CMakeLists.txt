@@ -5,11 +5,13 @@ PROJECT(${projname})
 
 SET(headers
 	src/MainWindow.h
+	src/FrameView.h
 )
 
 SET(sources
 	src/main.cpp
 	src/MainWindow.cpp
+	src/FrameView.cpp
 )
 
 SET(forms

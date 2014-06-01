@@ -10,8 +10,8 @@ namespace nprs {
 class ImageConverter {
 public:
     static Image convertRaw(const unsigned char *data, int width, int height, ColorFormat colorFormat);
-    static std::vector<uchar> grayImageToRawBgra(const Image &image);
-    static void imageToRawRgb(const Image &image, uchar *data);
+    static std::vector<uchar> imageToRawBgra(const Image &image);
+    static std::vector<uchar> imageToRawRgb(const Image &image);
 
 private:
     static Image rgbToInt(const uchar *data, int width, int height);
