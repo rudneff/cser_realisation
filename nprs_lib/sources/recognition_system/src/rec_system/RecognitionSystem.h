@@ -16,7 +16,7 @@ public:
     RecognitionSystem();
     ~RecognitionSystem();
 
-    pRecognitionResults recognize(const Image<uchar> &image) const;
+    pRecognitionResults recognize(const uchar *data, int width, int height, ColorInfo cf) const;
 };
 
 }

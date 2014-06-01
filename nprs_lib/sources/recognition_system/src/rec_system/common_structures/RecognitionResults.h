@@ -11,16 +11,16 @@ class NumberPlate; using pNumberPlate = std::shared_ptr<NumberPlate>;
 
 class RecognitionResults {
 public:
-    RecognitionResults(const std::vector<pNumberPlate> &numberPlates, const Image<uchar> resultImage)
+    RecognitionResults(const std::vector<pNumberPlate> &numberPlates, const Image resultImage)
             : _numberPlates(numberPlates), _resultImage(resultImage)
     {}
 
     const std::vector<pNumberPlate>& numberPlates() const { return _numberPlates; }
-    const Image<uchar> & resultImage() const { return _resultImage; }
+    const Image & resultImage() const { return _resultImage; }
 
 private:
     std::vector<pNumberPlate> _numberPlates;
-    Image<uchar> _resultImage;
+    Image _resultImage;
 };
 
 }

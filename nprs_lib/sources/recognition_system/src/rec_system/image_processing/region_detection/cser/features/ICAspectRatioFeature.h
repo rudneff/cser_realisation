@@ -7,7 +7,7 @@ namespace nprs {
 
 class ICAspectRatioFeature : public ICFeature {
 public:
-    ICAspectRatioFeature(const Matrix<ERDescriptor*> *erMap, const Image<uchar> *image, int channel);
+    ICAspectRatioFeature(const Matrix<ERDescriptor*> *erMap, const Image *image, int channel);
 
     void init(Point const& p, ERDescriptor const* reg) override;
     void increment(Point const& p, ERDescriptor const* reg) override;

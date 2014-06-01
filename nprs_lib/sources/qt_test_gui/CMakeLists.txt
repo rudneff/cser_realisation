@@ -4,12 +4,23 @@ SET(projname qt_test_gui)
 PROJECT(${projname})
 
 SET(headers
-	
+	src/MainWindow.h
 )
 
 SET(sources
-	main.cpp
+	src/main.cpp
+	src/MainWindow.cpp
 )
+
+SET(forms
+	src/MainWindow.ui
+)
+
+QT5_WRAP_CPP(qt_moc src/MainWindow.h)
+QT5_WRAP_UI(qt_ui_headers src/MainWindow.ui)
+
+SET(headers ${headers} ${qt_ui_headers})
+#SET(sources ${sources} ${qt_moc})
 
 SET(dependencies
 	common
@@ -24,10 +35,9 @@ INCLUDE_DIRECTORIES(src)
 INCLUDE_DIRECTORIES("../../libs")
 
 FOREACH(directory ${directories})
-	FILE(GLOB dir_headers "${directory}/*.cpp")
-	FILE(GLOB dir_sources "${directory}/*.h")
+	FILE(GLOB dir_files "${directory}/*")
 	STRING(REGEX REPLACE "/" "\\\\\\\\" convdir ${directory}) 
-	SOURCE_GROUP(${convdir} FILES ${dir_headers} ${dir_sources})
+	SOURCE_GROUP(${convdir} FILES ${dir_files})
 ENDFOREACH()
 
 FOREACH(dependency ${dependencies})
@@ -43,7 +53,7 @@ FIND_PACKAGE(Qt5Core)
 FIND_PACKAGE(Qt5Gui)
 FIND_PACKAGE(Qt5Widgets)
 
-ADD_EXECUTABLE(${projname} ${headers} ${source})
+ADD_EXECUTABLE(${projname} ${headers} ${sources})
 TARGET_LINK_LIBRARIES(${projname} ${dependencies} Qt5::Core Qt5::Widgets)
 TARGET_LINK_LIBRARIES(${projname} ${Boost_LIBRARIES})
 

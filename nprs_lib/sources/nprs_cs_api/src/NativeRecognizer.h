@@ -9,10 +9,12 @@
 #include <rec_system/common_structures/NumberPlate.h>
 #include <rec_system/common_structures/NumberPlateCharacter.h>
 #include <common/image/Image.h>
+#include <common/image/ImageConverter.h>
 
 using namespace System;
 using namespace System::Collections;
 using namespace System::Drawing;
+using namespace System::Runtime::InteropServices;
 
 #pragma comment(lib, "recognition_system.lib")
 #pragma comment(lib, "common.lib")
@@ -38,7 +40,7 @@ public:
         nprs::RecognitionSystem recSystem;
         pin_ptr<Byte> ptr = &image[0];
         uchar* imgData = ptr;
-        nprs::pRecognitionResults results = recSystem.recognize(nprs::Image<uchar>(imgData, width, height, PixFormatToColorInfo(pixelFormat)));
+        nprs::pRecognitionResults results = recSystem.recognize(imgData, width, height, PixFormatToColorInfo(pixelFormat));
 
         return ConvertResults(results);
     }
@@ -50,7 +52,10 @@ private:
             numPlates->Add(ConvertNumberPlate(numPlate));
         }
 
-        array<Byte>^ image = gcnew array<Byte>(src->resultImage().width() * src->resultImage().height() * src->resultImage().getColorInfo().numChannels());
+        array<Byte>^ image = gcnew array<Byte>(src->resultImage().width() * src->resultImage().height() * 4);
+        std::vector<uchar> converted = nprs::ImageConverter::grayImageToRawBgra(src->resultImage());
+        pin_ptr<Byte> ptr = &converted[0];
+        Marshal::Copy((IntPtr)ptr, image, 0, image->Length);
 
         return gcnew RecognitionResults(numPlates, image);
     }
@@ -76,9 +81,9 @@ private:
     nprs::ColorInfo PixFormatToColorInfo(PixelFormat pf) {
         switch (pf) {
         case PixelFormat::RGB24:
-            return nprs::ColorInfo::RgbByte255();
+            return nprs::ColorInfo(nprs::ColorFormat::RGB, 3);
         case PixelFormat::BGRA32:
-            return nprs::ColorInfo::BgraByte255();
+            return nprs::ColorInfo(nprs::ColorFormat::BGRA, 4);
         }
     }
 };

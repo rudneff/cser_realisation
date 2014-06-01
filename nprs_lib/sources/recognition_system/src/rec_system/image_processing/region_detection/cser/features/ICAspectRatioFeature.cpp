@@ -4,7 +4,7 @@
 using namespace nprs;
 using namespace std;
 
-ICAspectRatioFeature::ICAspectRatioFeature(Matrix<ERDescriptor*> const* erMap, Image<uchar> const* image, int channel) 
+ICAspectRatioFeature::ICAspectRatioFeature(Matrix<ERDescriptor*> const* erMap, Image const* image, int channel) 
     : ICFeature(erMap, image, channel)
 {}
 

@@ -3,7 +3,7 @@
 
 using namespace nprs;
 
-ICCompactnessFeature::ICCompactnessFeature(Matrix<ERDescriptor*> const* erMap,  Image<uchar> const* img,  int channel)
+ICCompactnessFeature::ICCompactnessFeature(Matrix<ERDescriptor*> const* erMap,  Image const* img,  int channel)
     : ICFeature(erMap, img, channel),
       _area(0), _perimeter(0)
 {
@@ -20,8 +20,10 @@ void ICCompactnessFeature::increment(Point const& p, ERDescriptor const* reg) {
 
     int sum = 0;
     for (Point q : { Point(-1, 0), Point(1, 0), Point(0, 1), Point(0, -1) }) {
-        if ((*getImage())(q.x(), q.y(), 0) <= (*getImage())(p.x(), p.y(), 0)) {
-            sum++;
+        if (q.x() >= 0 && q.x() < getImage()->width() && q.y() >= 0 && q.y() < getImage()->height()) {
+            if ((*getImage())(q.x(), q.y(), 0) <= (*getImage())(p.x(), p.y(), 0)) {
+                sum++;
+            }
         }
     }
 

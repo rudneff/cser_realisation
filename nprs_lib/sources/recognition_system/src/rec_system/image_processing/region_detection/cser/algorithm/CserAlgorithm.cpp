@@ -8,7 +8,7 @@
 
 using namespace nprs;
 
-nprs::CserAlgorithm::CserAlgorithm(Image<uchar> const& image, 
+nprs::CserAlgorithm::CserAlgorithm(Image const& image, 
                                    int channel, 
                                    std::vector<pERFilter> const& filters)
      : _image(image), 
@@ -20,15 +20,11 @@ nprs::CserAlgorithm::CserAlgorithm(Image<uchar> const& image,
 }
 
 nprs::CserAlgorithm::~CserAlgorithm() {
-    for (ERDescriptor *r : _allRegions) {
-        if (r) 
-            delete r;
-    }
+    for (ERDescriptor *r : _allRegions)
+        delete r;
 
-    for (ICFeature *f : _features) {
-        if (f) 
-            delete f;
-    }
+    for (ICFeature *f : _features)
+        delete f;
 }
 
 std::vector<nprs::ERDescriptor*> nprs::CserAlgorithm::perform() {
@@ -105,18 +101,18 @@ std::set<ERDescriptor*> CserAlgorithm::findNeighbors(Point const& p) {
 
     for (Point n : { Point(-1,0), Point(1,0), Point(0,1), Point(0,-1) }) {
         Point q = n + p;
-        if (_erMap.isInBounds(q.x(), q.y())) {
-            ERDescriptor *nd = _erMap(q.x(), q.y());
+        if (_erMap.isInBounds(q.x(), q.y()) && _erMap(q.x(), q.y())) {
+            nbs.insert(_erMap(q.x(), q.y()));
         }
     }
 
     return nbs;
 }
 
-void CserAlgorithm::computeHist(Image<uchar> const& image) {
+void CserAlgorithm::computeHist(Image const& image) {
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height(); y++) {
-            uchar intensity = image(x,y,_channel);
+            int intensity = image(x,y,_channel) * 255;
             _hist[intensity].push_back(Point(x,y));
         }
     }

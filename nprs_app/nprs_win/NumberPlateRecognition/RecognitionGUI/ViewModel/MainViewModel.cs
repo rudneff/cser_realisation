@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
@@ -35,6 +36,7 @@ namespace RecognitionGUI.ViewModel
 						pixels, _image.PixelWidth, _image.PixelHeight,
 						(res, e) => _dispatcher.Invoke(() =>
 						{
+							_image.WritePixels(new Int32Rect(0, 0, _image.PixelWidth, _image.PixelHeight), res.Image, _image.PixelWidth * _image.Format.BitsPerPixel / 8, 0);
 							foreach (var numPlate in res.NumberPlates)
 							{
 								_image.DrawRectangle((int)numPlate.Bounds.X, (int)numPlate.Bounds.Y, (int)(numPlate.Bounds.X + numPlate.Bounds.Width), (int)(numPlate.Bounds.Y + numPlate.Bounds.Height), Colors.Red);
@@ -91,6 +93,7 @@ namespace RecognitionGUI.ViewModel
 		public MainViewModel(IRecognizer recognizer)
 		{
 			_recognizer = recognizer;
+			Image = new WriteableBitmap(new BitmapImage(new Uri(@"file:\\C:\numplates\mul.jpg")));
 		}
 		#endregion
 	}

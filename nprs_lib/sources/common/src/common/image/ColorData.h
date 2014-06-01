@@ -1,58 +1,25 @@
 #ifndef COMMON_COLORDATA_H
 #define COMMON_COLORDATA_H
 
-#include <vector>
-#include "Color.h"
-
-using uchar = unsigned char;
-
 namespace nprs {
 
-template <typename TPix>
 class ColorData {
-public:
-    ColorData(const TPix *data, int width, int height, const ColorInfo &colorInfo)
-        : _width(width), _height(height), _channels(colorInfo.numChannels()), _colorInfo(colorInfo), _data(width * height * colorInfo.numChannels())
-    {
-        std::memcpy(&_data[0], data, width * height * colorInfo.numChannels() * sizeof(TPix));
-    }
+    virtual ~ColorData() {}
 
-    ColorData(int width, int height, const ColorInfo &colorInfo)
-        : _width(width), _height(height), _colorInfo(colorInfo), _channels(colorInfo.numChannels()), _data(width * height * colorInfo.numChannels())
-    {
-    }
+    virtual const void* getRawData() = 0;
+    virtual float getValue(int x, int y, int channel) const = 0;
+    virtual float setValue(int x, int y, int channel, float value) const = 0;
 
-    TPix & operator() (int x, int y, int channel) {
-        return _data[(y * _width + x) * _channels + channel];
-    }
+    float operator() (int x, int y, int channel);
+    int getDataSize() { return _dataSize; }
 
-    TPix operator() (int x, int y, int channel) const {
-        return _data[(y * _width + x) * _channels + channel];
-    }
-
-    TPix getValue(int x, int y, int channel) const {
-        return _data[(y * _width + x) * _channels + channel];
-    }
-
-    void setValue(int x, int y, int channel, TPix value) {
-        _data[(y * _width + x) * _channels + channel] = value;
-    }
-
-    int width() const { return _width; }
-    int height() const { return _height; }
-    ColorInfo const& getColorInfo() const { return _colorInfo; }
-    
-private:
-    ColorInfo _colorInfo;
-    std::vector<TPix> _data;
+protected:
+    ColorData(int width, int height, int numChannels, int dataSize);
 
     int _width;
     int _height;
-    int _channels;
-
-    int mapCoord(int x, int y) const {
-        return (y * _width + x) * _channels;
-    }
+    int _numChannels;
+    int _dataSize;
 };
 
 }

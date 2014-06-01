@@ -22,19 +22,22 @@ RecognitionSystem::~RecognitionSystem() {
     
 }
 
-pRecognitionResults RecognitionSystem::recognize(const Image<uchar> &image) const {
+pRecognitionResults RecognitionSystem::recognize(const uchar *data, int width, int height, ColorInfo cf) const {
     std::vector<pERFilter> filters;
     filters.push_back(pERFilter(new ERFilterMNLight()));
 
-    Image<uchar> converted = ImageConverter::toLum255(image);
+    Image converted = ImageConverter::convertRaw(data, width, height, cf.format());
 
     CSERDetector detector(filters);
     auto results = detector.detect(converted);
     
     std::vector<pNumberPlate> numberPlates;
     for (auto res : results) {
-        pNumberPlate np(new NumberPlate(std::vector<pNumberPlateCharacter>(), res.getBounds()));
+        pNumberPlate np = pNumberPlate(new NumberPlate(std::vector<pNumberPlateCharacter>(), res.getBounds()));
         numberPlates.push_back(np);
+    }
+
+    for (auto res: results) {
     }
 
     return pRecognitionResults(new RecognitionResults(numberPlates, converted));

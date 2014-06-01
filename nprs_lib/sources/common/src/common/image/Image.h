@@ -8,56 +8,31 @@ using uchar = unsigned char;
 
 namespace nprs {
 
-template <typename TPix>
-class Image {
+class Image final {
 public:
-    Image(const TPix *data, int width, int height, const ColorInfo &colorInfo)
-        : _width(width), _height(height), _channels(colorInfo.numChannels()), _colorInfo(colorInfo), _data(width * height * colorInfo.numChannels())
-    {
-        std::memcpy(&_data[0], data, width * height * colorInfo.numChannels() * sizeof(TPix));
-    }
-
-    Image(int width, int height, const ColorInfo &colorInfo)
-        : _width(width), _height(height), _colorInfo(colorInfo), _channels(colorInfo.numChannels()), _data(width * height * colorInfo.numChannels())
-    {
-    }
-
-    TPix & operator() (int x, int y, int channel) {
-        return _data[(y * _width + x) * _channels + channel];
-    }
-
-    TPix operator() (int x, int y, int channel) const {
-        return _data[(y * _width + x) * _channels + channel];
-    }
-
-    TPix getValue(int x, int y, int channel) const {
-        return _data[(y * _width + x) * _channels + channel];
-    }
-
-    void setValue(int x, int y, int channel, TPix value) {
-        _data[(y * _width + x) * _channels + channel] = value;
-    }
-
-    const TPix* data() {
-        return _data.data();
-    }
+    Image(int width, int height, ColorInfo colorInfo);
+    
+    float getValue(int x, int y, int c) const { return _data[ind(x, y, c)]; }
+    float& operator() (int x, int y, int c) { return _data[ind(x, y, c)]; }
+    float operator() (int x, int y, int c) const { return _data[ind(x, y, c)]; }
+    float setValue(int x, int y, int c, float value) { _data[ind(x, y, c)] = value; }
 
     int width() const { return _width; }
     int height() const { return _height; }
-    ColorInfo const& getColorInfo() const { return _colorInfo; }
+
+    const ColorInfo& colorInfo() const { return _colorInfo; }
+    const std::vector<float> & data() { return _data; }
 
 private:
-    ColorInfo _colorInfo;
-    std::vector<TPix> _data;
-
     int _width;
     int _height;
-    int _channels;
+    int _bytesPerValue;
+    std::vector<float> _data;
+    ColorInfo _colorInfo;
 
-    int mapCoord(int x, int y) const {
-        return (y * _width + x) * _channels;
-    }
+    int ind(int x, int y, int channel) const { return (y * _width + x) * _colorInfo.numChannels() + channel; }
 };
 
 }
+
 #endif // COMMON_IMAGE_H

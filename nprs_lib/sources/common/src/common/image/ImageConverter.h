@@ -3,19 +3,19 @@
 
 #include "Image.h"
 #include <memory>
+#include <vector>
 
 namespace nprs {
 
-template <typename T> class Image;
-
 class ImageConverter {
 public:
-    static Image<uchar> toLum255(const Image<uchar> &image);
-    static Image<uchar> toInt255(const Image<uchar> &image);
+    static Image convertRaw(const unsigned char *data, int width, int height, ColorFormat colorFormat);
+    static std::vector<uchar> grayImageToRawBgra(const Image &image);
+    static void imageToRawRgb(const Image &image, uchar *data);
 
 private:
-    static Image<uchar> rgbToLum255(const Image<uchar> &image);
-    static Image<uchar> bgraToLum255(const Image<uchar> &image);
+    static Image rgbToInt(const uchar *data, int width, int height);
+    static Image bgraToInt(const uchar *data, int width, int height);
 };
 
 }

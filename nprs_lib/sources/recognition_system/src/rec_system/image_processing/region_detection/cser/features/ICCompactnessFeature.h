@@ -7,7 +7,7 @@ namespace nprs {
 
 class ICCompactnessFeature : public ICFeature {
 public:
-    ICCompactnessFeature(const Matrix<ERDescriptor*> *erMap, const Image<uchar> *img, int channel);
+    ICCompactnessFeature(const Matrix<ERDescriptor*> *erMap, const Image *img, int channel);
 
     void init(Point const& p, ERDescriptor const* reg) override;
     void increment(Point const& p, ERDescriptor const* reg) override;

@@ -48,5 +48,6 @@ struct tpix {
 };
 
 void imageTest() {
-    nprs::Image<tpix> img(2,2, nprs::ColorInfo(nprs::ColorInfo::RgbByte255()));
+    using namespace nprs;
+    Image image(100, 100, ColorInfo(ColorFormat::INT, 1));
 }

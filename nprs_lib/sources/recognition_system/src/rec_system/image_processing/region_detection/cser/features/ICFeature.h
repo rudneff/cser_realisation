@@ -13,7 +13,7 @@ class ERDescriptor;
 // Incrementally computable feature
 class ICFeature {
 public:
-    ICFeature(const Matrix<ERDescriptor*> *erMap,  const Image<uchar> *image, int channel)
+    ICFeature(const Matrix<ERDescriptor*> *erMap,  const Image *image, int channel)
         : _image(image), _erMap(erMap), _channel(channel)
     {}
 
@@ -27,11 +27,11 @@ public:
 
 protected:
     const Matrix<ERDescriptor*> * getMap() { return _erMap; }
-    const Image<uchar> * getImage() { return _image; }
+    const Image * getImage() { return _image; }
 
 private:
     const Matrix<ERDescriptor*> *_erMap;
-    const Image<uchar> *_image;
+    const Image *_image;
     int _channel;
 };
 

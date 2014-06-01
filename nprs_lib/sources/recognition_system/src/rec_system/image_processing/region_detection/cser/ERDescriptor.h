@@ -27,6 +27,7 @@ public:
     
 private:
     explicit ERDescriptor(const std::vector<ICFeature*> &featureComputers);
+    ERDescriptor(const std::vector<ICFeature*> &featureComputers, Rectangle bounds);
 
     const std::vector<ICFeature*> _featureComputers;
     std::vector<float> _features;
