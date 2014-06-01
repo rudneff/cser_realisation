@@ -19,6 +19,7 @@ public:
 public slots:
     void newFrame(const QPixmap &pixmap);
     void loadFile();
+    void exit();
 
 private:
     Ui::MainWindow *ui;
