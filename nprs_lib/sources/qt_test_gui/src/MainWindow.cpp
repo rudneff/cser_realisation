@@ -35,6 +35,7 @@ void MainWindow::newFrame(const QImage &frame) {
     std::vector<uchar> data = ImageConverter::imageToRawRgb(results->resultImage());
     QImage result(&data[0], results->resultImage().width(), results->resultImage().height(), QImage::Format_RGB888);
     painter.begin(&result);
+    painter.setPen(QPen(QColor::fromRgb(255, 0, 0)));
     for (pNumberPlate np : results->numberPlates()) {
         nprs::Rectangle bounds = np->bounds();
         if (bounds.width() > 5 && bounds.height() > 7) {
