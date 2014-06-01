@@ -14,9 +14,10 @@ nprs::CserAlgorithm::CserAlgorithm(Image const& image,
      : _image(image), 
        _erMap(image.width(), image.height()), 
        _filters(filters), 
-       _hist(255),
+       _hist(256),
        _channel(channel)
 {
+    memset(_erMap.data(), 0, _erMap.width() * _erMap.height() * sizeof(ERDescriptor*));
 }
 
 nprs::CserAlgorithm::~CserAlgorithm() {
@@ -29,7 +30,7 @@ nprs::CserAlgorithm::~CserAlgorithm() {
 
 std::vector<nprs::ERDescriptor*> nprs::CserAlgorithm::perform() {
     computeHist(_image);
-    for (int i = 0; i < 150; i++) {
+    for (int i = 0; i < 255; i++) {
         increment(i);
     }
     return _allRegions;
@@ -68,13 +69,11 @@ ERDescriptor* nprs::CserAlgorithm::newRegion(Point const& p) {
 ERDescriptor* CserAlgorithm::attachPoint(ERDescriptor *er, Point const& p) {
     ERDescriptor *newReg = er->attachPoint(p);
     _allRegions.push_back(newReg);
+    _erMap(p.x(), p.y()) = newReg;
+    const Rectangle &bounds = newReg->bounds();
 
-    for (int x = newReg->bounds().x(); x < newReg->bounds().x1(); x++) {
-        for (int y = newReg->bounds().y(); y < newReg->bounds().y1(); y++) {
-            if (_erMap(x, y) == er) {
-                _erMap.setValue(x, y, newReg);
-            }
-        }
+    for (Point p : *(newReg->points())) {
+        _erMap(p.x(), p.y()) = newReg;
     }
 
     return newReg;
@@ -84,12 +83,8 @@ ERDescriptor* CserAlgorithm::combineRegions(const Point &p, ERDescriptor *er1, E
     ERDescriptor *newReg = er1->combine(er2);
     _allRegions.push_back(newReg);
 
-    for (int x = newReg->bounds().x(); x < newReg->bounds().x1(); x++) {
-        for (int y = newReg->bounds().y(); y < newReg->bounds().y1(); y++) {
-            if (_erMap(x, y) == er1 || _erMap(x, y) == er2) {
-                _erMap.setValue(x, y, newReg);
-            }
-        }
+    for (Point p : *(newReg->points())) {
+        _erMap(p.x(), p.y()) = newReg;
     }
 
     return newReg;
