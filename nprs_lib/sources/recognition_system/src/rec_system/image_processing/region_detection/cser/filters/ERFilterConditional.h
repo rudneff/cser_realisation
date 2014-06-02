@@ -8,17 +8,7 @@
 
 namespace nprs {
 
-class ERDescriptor;
 
-class ERFilterConditional : public ERFilter {
-public:
-    ERFilterConditional(std::function<bool(const ERDescriptor&)> &condition);
-
-    bool isRegion(ERDescriptor const& region) override;
-
-private:
-    std::function<bool (const ERDescriptor&)> _condition;
-};
 
 }
 

@@ -22,9 +22,9 @@ public:
     ERDescriptor(const Point& p, const std::vector<ICFeature*> &featureComputers);
     ~ERDescriptor();
 
-    ERDescriptor *attachPoint(const Point &p);
-    ERDescriptor *combine(ERDescriptor *other);
-
+    ERDescriptor * attachPoint(const Point &p);
+    ERDescriptor * combine(ERDescriptor *other);
+    
     Rectangle const& bounds() const { return _bounds; }
     int getFeature(int f) const  { return _features[f]; }
 

@@ -33,8 +33,6 @@ ERDescriptor* ERDescriptor::attachPoint(const Point &p) {
         fc->increment(p, this);
     }
 
-
-
     Rectangle newBounds = Rectangle::fromPoints(fmin(p.x(), _bounds.x()),
                                                 fmin(p.y(), _bounds.y()),
                                                 fmax(p.x() + 1, _bounds.x1()),

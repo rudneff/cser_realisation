@@ -41,9 +41,7 @@ void MainWindow::performRecognition(QImage& frame) {
     painter.setPen(QPen(QColor::fromRgb(255, 0, 0)));
     for (pNumberPlate np : results->numberPlates()) {
         nprs::Rectangle bounds = np->bounds();
-        if (bounds.width() > 5 && bounds.height() > 7) {
-            painter.drawRect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
-        }
+        painter.drawRect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
     }
     painter.end();
     ui->widget->newFrame(result.copy());

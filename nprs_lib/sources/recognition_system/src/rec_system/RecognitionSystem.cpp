@@ -12,8 +12,6 @@
 
 namespace nprs {
 
-using pERFilterConditional = std::shared_ptr<ERFilterConditional>;
-
 RecognitionSystem::RecognitionSystem() {
     
 }

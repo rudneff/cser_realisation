@@ -17,6 +17,7 @@ class CserAlgorithm {
 public:
     CserAlgorithm(Image const& image, int channel, const std::vector<pERFilter> &filters);
     CserAlgorithm(const CserAlgorithm&) = delete;
+    CserAlgorithm& operator= (const CserAlgorithm& other) = delete;
     ~CserAlgorithm();
 
     std::vector<ERDescriptor*> perform();
@@ -34,6 +35,7 @@ private:
 
     void increment(int threshold);
     void computeHist(Image const& image);
+
     ERDescriptor* newRegion(Point const& p);
     ERDescriptor* combineRegions(const Point &p, ERDescriptor *er1, ERDescriptor *er2); 
     ERDescriptor* attachPoint(ERDescriptor *er, const Point &p);

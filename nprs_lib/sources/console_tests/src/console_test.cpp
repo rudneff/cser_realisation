@@ -25,12 +25,6 @@ void conditionsTest() {
     for (auto c : conditions) {
         std::cout << c(er) << std::endl;
     }
-
-    std::function<bool(const nprs::ERDescriptor&)> condition = [](const nprs::ERDescriptor& e) { return true; };
-
-    nprs::ERFilterConditional filter(condition);
-    bool res = filter.isRegion(er);
-    std::cout << res << std::endl;
 }
 
 struct tpix {

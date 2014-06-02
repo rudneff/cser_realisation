@@ -5,6 +5,7 @@
 #include "rec_system/image_processing/region_detection/cser/features/ICFeature.h"
 #include <rec_system/image_processing/region_detection/cser/features/ICAspectRatioFeature.h>
 #include <rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.h>
+#include <rec_system/image_processing/region_detection/cser/ERFilter.h>
 
 using namespace nprs;
 
@@ -28,15 +29,21 @@ nprs::CserAlgorithm::~CserAlgorithm() {
         delete f;
 }
 
-std::vector<nprs::ERDescriptor*> nprs::CserAlgorithm::perform() {
+std::vector<ERDescriptor*> CserAlgorithm::perform() {
     computeHist(_image);
     for (int i = 0; i < 255; i++) {
         increment(i);
     }
-    return _allRegions;
+
+    _filteredRegions = _allRegions;
+    for (pERFilter const& filter : _filters) {
+        _filteredRegions = filter->perform(_filteredRegions);
+    }
+
+    return _filteredRegions;
 }
 
-void nprs::CserAlgorithm::increment(int threshold) {
+void CserAlgorithm::increment(int threshold) {
     for (Point p : _hist[threshold]) {
         auto neighbors = findNeighbors(p);
         if (neighbors.size() == 0) {
@@ -54,7 +61,7 @@ void nprs::CserAlgorithm::increment(int threshold) {
     }
 }
 
-ERDescriptor* nprs::CserAlgorithm::newRegion(Point const& p) {
+ERDescriptor* CserAlgorithm::newRegion(Point const& p) {
     std::vector<ICFeature*> featureComputers(2);
     ICFeature *ar = new ICAspectRatioFeature(&_erMap, &_image, _channel);
     ICFeature *cmp = new ICCompactnessFeature(&_erMap, &_image, _channel);
@@ -87,10 +94,6 @@ ERDescriptor* CserAlgorithm::attachPoint(ERDescriptor *er, Point const& p) {
 ERDescriptor* CserAlgorithm::combineRegions(const Point &p, ERDescriptor *er1, ERDescriptor *er2) {
     ERDescriptor *newReg = er1->combine(er2);
     _allRegions.push_back(newReg);
-
-//    for (Point p : *(newReg->points())) {
-//        _erMap(p.x(), p.y()) = newReg;
-//    }
     
     ERDescriptor temp = *er1;
     *er1 = *newReg;

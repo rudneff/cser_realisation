@@ -7,7 +7,7 @@ namespace nprs {
 
 class ERFilterMNHeavy : public ERFilter {
 public:
-    bool isRegion(ERDescriptor const& region) override;
+    std::vector<ERDescriptor*> perform(const std::vector<ERDescriptor*> &regions) override;
 };
 
 }
