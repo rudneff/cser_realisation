@@ -17,7 +17,9 @@ static jobject createNumberPlateInstance(JNIEnv *env, const pNumberPlate &numPla
 
 jobject Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
     RecognitionSystem recognitionSystem;
-    pRecognitionResults results = recognitionSystem.recognize(Image<uchar>(10, 10, ColorInfo(COLORFORMAT_BGRA255, 3)));
+    jboolean isCopy;
+    uchar *data = reinterpret_cast<uchar*>(env->GetIntArrayElements(pixels, &isCopy));
+    pRecognitionResults results = recognitionSystem.recognize(data, width, height, nprs::ColorInfo(nprs::ColorFormat::RGBA, 3));
     jobject resultsJava = createRecResultsInstance(env, results);
     return resultsJava;
 }
@@ -33,9 +35,18 @@ static jobject createRecResultsInstance(JNIEnv *env, const pRecognitionResults &
 
     jobject result = env->NewObject(recResultsClass, recResultsConstructor);
 
+    int count = 0;
     for (auto numPlate : results->numberPlates()) {
-        jobject numPlateJava = createNumberPlateInstance(env, numPlate);
-        env->CallVoidMethod(result, recResultsAdd, numPlateJava);
+        if (count > 250)
+            break;
+
+        if (numPlate->bounds().width() > 5 && numPlate->bounds().width() < 30 &&
+            numPlate->bounds().height() > 5 && numPlate->bounds().height() < 30)
+        {
+            count++;
+            jobject numPlateJava = createNumberPlateInstance(env, numPlate);
+            env->CallVoidMethod(result, recResultsAdd, numPlateJava);
+        }
     }
 
     return result;

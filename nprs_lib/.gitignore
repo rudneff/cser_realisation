@@ -8,3 +8,5 @@ bin/
 /xcode/*
 /qtc_build/*
 /sources-build/*
+/android-build/*
+/build/*

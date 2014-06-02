@@ -16,6 +16,7 @@ public:
 private:
     static Image rgbToInt(const uchar *data, int width, int height);
     static Image bgraToInt(const uchar *data, int width, int height);
+    static Image rgbaToInt(const uchar* data, int width, int height);
 };
 
 }

@@ -60,3 +60,4 @@ TARGET_LINK_LIBRARIES(${projname} ${dependencies} Qt5::Core Qt5::Widgets)
 TARGET_LINK_LIBRARIES(${projname} ${Boost_LIBRARIES})
 
 QT5_USE_MODULES(${projname} Core Widgets)
+INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

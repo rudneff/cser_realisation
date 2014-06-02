@@ -8,6 +8,7 @@ Image ImageConverter::convertRaw(unsigned char const* data, int width, int heigh
     switch (colorFormat) {
     case ColorFormat::RGB: return rgbToInt(data, width, height);
     case ColorFormat::BGRA: return bgraToInt(data, width, height);
+    case ColorFormat::RGBA: return rgbaToInt(data, width, height);
     default:
         throw ArgumentException("Color format not supported");
     }
@@ -58,6 +59,23 @@ Image ImageConverter::rgbToInt(const uchar *data, int width, int height) {
     for (int x = 0; x < result.width(); x++) {
         for (int y = 0; y < result.height(); y++) {
             int p = (y * width + x) * 3;
+            uchar r = data[p + 0];
+            uchar g = data[p + 1];
+            uchar b = data[p + 2];
+
+            result(x, y, 0) = 0.333 * r / 255.0 + 0.333 * g / 255.0 + 0.333 * b / 255.0;
+        }
+    }
+
+    return result;
+}
+
+Image ImageConverter::rgbaToInt(const uchar *data, int width, int height) {
+    Image result(width, height, ColorInfo(ColorFormat::INT, 1));
+
+    for (int x = 0; x < result.width(); x++) {
+        for (int y = 0; y < result.height(); y++) {
+            int p = (y * width + x) * 4;
             uchar r = data[p + 0];
             uchar g = data[p + 1];
             uchar b = data[p + 2];
