@@ -46,7 +46,7 @@ Image ImageConverter::bgraToInt(const uchar *data, int width, int height) {
             uchar g = data[p + 1];
             uchar b = data[p + 0];
 
-            result(x, y, 0) = 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0;
+            result(x, y, 0) = 0.333 * r / 255.0 + 0.333 * g / 255.0 + 0.333 * b / 255.0;
         }
     }
     return result;
@@ -62,7 +62,7 @@ Image ImageConverter::rgbToInt(const uchar *data, int width, int height) {
             uchar g = data[p + 1];
             uchar b = data[p + 2];
 
-            result(x, y, 0) = 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0;
+            result(x, y, 0) = 0.333 * r / 255.0 + 0.333 * g / 255.0 + 0.333 * b / 255.0;
         }
     }
 
