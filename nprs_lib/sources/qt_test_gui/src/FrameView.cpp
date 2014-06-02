@@ -11,7 +11,7 @@ FrameView::FrameView(QWidget *parent)
 void FrameView::paintEvent(QPaintEvent* e) {
     QPainter painter;
     painter.begin(this);
-    QPixmap scaled = QPixmap::fromImage(_frame).scaled(width(), height(), Qt::KeepAspectRatioByExpanding);
+    QPixmap scaled = QPixmap::fromImage(_frame).scaled(width(), height(), Qt::KeepAspectRatio);
     painter.drawPixmap((width() - scaled.width()) / 2, 0, scaled);
 }
 
