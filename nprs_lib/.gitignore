@@ -5,3 +5,6 @@
 /make/*
 msvc12/
 bin/
+/xcode/*
+/qtc_build/*
+/sources-build/*

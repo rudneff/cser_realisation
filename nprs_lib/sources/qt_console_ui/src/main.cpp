@@ -10,11 +10,13 @@ using namespace nprs;
 void performRecognition(QImage &image);
 
 int main(int argc, char **argv) {
-    QImage image = QImage("C:/numplates/mul.jpg").convertToFormat(QImage::Format_RGB888);
+    QImage image = QImage("/Users/vardan/video/frames/images00135.png").convertToFormat(QImage::Format_RGB888);
     
     for (int i = 0; i < 100; i++) {
         performRecognition(image);
     }
+
+    return 0;
 }
 
 void performRecognition(QImage &image) {

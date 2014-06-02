@@ -56,8 +56,14 @@ void nprs::CserAlgorithm::increment(int threshold) {
 
 ERDescriptor* nprs::CserAlgorithm::newRegion(Point const& p) {
     std::vector<ICFeature*> featureComputers(2);
-    featureComputers[ERDescriptor::FEATURE_ASPECTRATIO] = new ICAspectRatioFeature(&_erMap, &_image, _channel);
-    featureComputers[ERDescriptor::FEATURE_COMPACTNESS] = new ICCompactnessFeature(&_erMap, &_image, _channel);
+    ICFeature *ar = new ICAspectRatioFeature(&_erMap, &_image, _channel);
+    ICFeature *cmp = new ICCompactnessFeature(&_erMap, &_image, _channel);
+
+    featureComputers[ERDescriptor::FEATURE_ASPECTRATIO] = ar;
+    featureComputers[ERDescriptor::FEATURE_COMPACTNESS] = cmp;
+
+    _features.push_back(ar);
+    _features.push_back(cmp);
 
     ERDescriptor *reg = new ERDescriptor(p, featureComputers);
 
