@@ -27,13 +27,11 @@ public:
 
     Rectangle const& bounds() const { return _bounds; }
     int getFeature(int f) const  { return _features[f]; }
-    std::vector<Point> * points() { return _points; }
 
 private:
-    ERDescriptor(const std::vector<ICFeature*> &featureComputers, Rectangle bounds, std::vector<Point> * points);
+    ERDescriptor(const std::vector<ICFeature*> &featureComputers, Rectangle bounds);
 
-    const std::vector<ICFeature*> _featureComputers;
-    std::vector<Point> *_points;
+    std::vector<ICFeature*> _featureComputers;
 
     std::vector<float> _features;
     Rectangle _bounds;

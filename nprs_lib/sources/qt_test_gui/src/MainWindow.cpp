@@ -7,6 +7,8 @@
 #include <qfiledialog.h>
 #include <qdebug.h>
 #include <qpainter.h>
+#include <chrono>
+#include <future>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -15,22 +17,23 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(loadFile()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exit()));
+    connect(ui->actionRecognize, SIGNAL(triggered()), this, SLOT(recognize()));
     newFrame(QImage("C:\\numplates\\mul.jpg"));
 }
 
-void MainWindow::exit() {
-    close();
+void MainWindow::recognize() {
+    performRecognition(ui->widget->frame());
 }
 
-MainWindow::~MainWindow() 
-{
-    delete ui;
-}
-
-void MainWindow::newFrame(const QImage &frame) {
+void MainWindow::performRecognition(QImage& frame) {
     using namespace nprs;
-    QImage image = frame.convertToFormat(QImage::Format_RGB888);
-    pRecognitionResults results = _recSystem.recognize(image.bits(), image.width(), image.height(), ColorInfo(ColorFormat::RGB, 3));
+    auto before = std::chrono::high_resolution_clock::now();
+    pRecognitionResults results = _recSystem.recognize(frame.bits(), frame.width(), frame.height(), ColorInfo(ColorFormat::RGB, 3));
+    auto after = std::chrono::high_resolution_clock::now();
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(after - before);
+
+    qDebug() << "recognition took " << ms.count() << " ms";
+
     QPainter painter;
     std::vector<uchar> data = ImageConverter::imageToRawRgb(results->resultImage());
     QImage result(&data[0], results->resultImage().width(), results->resultImage().height(), QImage::Format_RGB888);
@@ -43,7 +46,20 @@ void MainWindow::newFrame(const QImage &frame) {
         }
     }
     painter.end();
-    ui->widget->newFrame(QPixmap::fromImage(result));
+    ui->widget->newFrame(result.copy());
+}
+
+void MainWindow::exit() {
+    close();
+}
+
+MainWindow::~MainWindow() 
+{
+    delete ui;
+}
+
+void MainWindow::newFrame(const QImage &frame) {
+    ui->widget->newFrame(frame.convertToFormat(QImage::Format_RGB888));
 }
 
 void MainWindow::loadFile() {

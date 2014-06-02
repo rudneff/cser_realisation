@@ -69,25 +69,36 @@ ERDescriptor* nprs::CserAlgorithm::newRegion(Point const& p) {
 ERDescriptor* CserAlgorithm::attachPoint(ERDescriptor *er, Point const& p) {
     ERDescriptor *newReg = er->attachPoint(p);
     _allRegions.push_back(newReg);
-    _erMap(p.x(), p.y()) = newReg;
-    const Rectangle &bounds = newReg->bounds();
+    _erMap(p.x(), p.y()) = er;
 
-    for (Point p : *(newReg->points())) {
-        _erMap(p.x(), p.y()) = newReg;
-    }
+    ERDescriptor temp = *er;
+    *er = *newReg;
+    *newReg = temp;
 
-    return newReg;
+    return er;
 }
 
 ERDescriptor* CserAlgorithm::combineRegions(const Point &p, ERDescriptor *er1, ERDescriptor *er2) {
     ERDescriptor *newReg = er1->combine(er2);
     _allRegions.push_back(newReg);
 
-    for (Point p : *(newReg->points())) {
-        _erMap(p.x(), p.y()) = newReg;
+//    for (Point p : *(newReg->points())) {
+//        _erMap(p.x(), p.y()) = newReg;
+//    }
+    
+    ERDescriptor temp = *er1;
+    *er1 = *newReg;
+    *newReg = temp;
+
+    for (int x = er2->bounds().x(), x1 = er2->bounds().x1(); x < x1; x++) {
+        for (int y = er2->bounds().y(), y1 = er2->bounds().y1(); y < y1; y++) {
+            if (_erMap(x, y) == er2) {
+                _erMap(x, y) = er1;
+            }
+        }
     }
 
-    return newReg;
+    return er1;
 }
 
 std::set<ERDescriptor*> CserAlgorithm::findNeighbors(Point const& p) {
