@@ -13,9 +13,7 @@ class ERDescriptor;
 // Incrementally computable feature
 class ICFeature {
 public:
-    ICFeature(const Matrix<ERDescriptor*> *erMap,  const Image *image, int channel)
-        : _image(image), _erMap(erMap), _channel(channel)
-    {}
+    ICFeature(const Matrix<ERDescriptor*> *erMap, const Image *image, int channel);
 
     virtual ~ICFeature() {}
 

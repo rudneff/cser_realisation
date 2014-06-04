@@ -45,8 +45,8 @@ ERDescriptor* ERDescriptor::attachPoint(const Point &p) {
 }
 
 ERDescriptor* ERDescriptor::combine(ERDescriptor *other) {
-    for (auto fc : *_featureComputers) {
-        fc->combine(fc, this, other);
+    for (int i = 0; i < _featureComputers->size(); i++) {
+        _featureComputers->at(i)->combine(other->_featureComputers->at(i), this, other);
     }
 
     Rectangle newBounds = Rectangle::fromPoints(fmin(other->bounds().x(), _bounds.x()),

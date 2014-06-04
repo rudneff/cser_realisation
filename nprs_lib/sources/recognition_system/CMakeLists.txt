@@ -47,6 +47,7 @@ SET (sources
 
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.cpp
 
+	src/rec_system/image_processing/region_detection/cser/features/ICFeature.cpp
     src/rec_system/image_processing/region_detection/cser/features/ICAspectRatioFeature.cpp
     src/rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.cpp
     src/rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.cpp

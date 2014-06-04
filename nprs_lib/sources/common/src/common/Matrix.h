@@ -45,7 +45,7 @@ public:
     int width() { return _width; }
     int height() { return _height; }
 
-    bool isInBounds(int x, int y) {
+    bool isInBounds(int x, int y) const {
         return x >= 0 && x < _width && y >= 0 && y < _height;
     }
 
