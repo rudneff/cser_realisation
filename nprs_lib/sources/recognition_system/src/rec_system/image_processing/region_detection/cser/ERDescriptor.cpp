@@ -5,11 +5,11 @@
 
 using namespace nprs;
 
-ERDescriptor::ERDescriptor(const Point &p, const std::vector<ICFeature*> &featureComputers)
-    : _bounds(p.x(), p.y(), 1, 1), _featureComputers(featureComputers), _features(featureComputers.size())
+ERDescriptor::ERDescriptor(const Point &p, std::vector<ICFeature*> *featureComputers)
+    : _bounds(p.x(), p.y(), 1, 1), _featureComputers(featureComputers), _features(featureComputers->size())
 {
-    for (int i = 0; i < _featureComputers.size(); i++) {
-        auto fc = _featureComputers[i];
+    for (int i = 0; i < _featureComputers->size(); i++) {
+        auto fc = (*_featureComputers)[i];
         fc->init(p, this);
         _features[i] = fc->getValue();
     }
@@ -19,17 +19,17 @@ ERDescriptor::~ERDescriptor() {
     
 }
 
-ERDescriptor::ERDescriptor(std::vector<ICFeature*> const& featureComputers, Rectangle bounds) 
-    : _featureComputers(featureComputers), _features(featureComputers.size()), _bounds(bounds)
+ERDescriptor::ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds) 
+    : _featureComputers(featureComputers), _features(featureComputers->size()), _bounds(bounds)
 {
-    for (int i = 0; i < _featureComputers.size(); i++) {
-        auto fc = _featureComputers[i];
+    for (int i = 0; i < _featureComputers->size(); i++) {
+        auto fc = (*_featureComputers)[i];
         _features[i] = fc->getValue();
     }
 }
 
 ERDescriptor* ERDescriptor::attachPoint(const Point &p) {
-    for(auto fc : _featureComputers) {
+    for(auto fc : *_featureComputers) {
         fc->increment(p, this);
     }
 
@@ -45,7 +45,7 @@ ERDescriptor* ERDescriptor::attachPoint(const Point &p) {
 }
 
 ERDescriptor* ERDescriptor::combine(ERDescriptor *other) {
-    for (auto fc : _featureComputers) {
+    for (auto fc : *_featureComputers) {
         fc->combine(fc, this, other);
     }
 

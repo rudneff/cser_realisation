@@ -3,7 +3,7 @@
 
 namespace nprs {
 
-class Point {
+class Point final {
 public:
     Point(float x, float y) 
         : _x(x), _y(y)

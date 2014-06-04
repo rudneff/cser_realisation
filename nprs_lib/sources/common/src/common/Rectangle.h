@@ -7,7 +7,7 @@
 
 namespace nprs {
 
-class Rectangle {
+class Rectangle final {
 public:
     Rectangle()
         : _x(0), _y(0), _width(0), _height(0)

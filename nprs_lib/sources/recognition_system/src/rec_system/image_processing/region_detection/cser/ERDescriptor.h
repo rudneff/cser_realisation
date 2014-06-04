@@ -19,7 +19,7 @@ public:
     static const int FEATURE_ASPECTRATIO = 0;
     static const int FEATURE_COMPACTNESS = 1;
 
-    ERDescriptor(const Point& p, const std::vector<ICFeature*> &featureComputers);
+    ERDescriptor(const Point& p, std::vector<ICFeature*> *featureComputers);
     ~ERDescriptor();
 
     ERDescriptor * attachPoint(const Point &p);
@@ -29,9 +29,9 @@ public:
     int getFeature(int f) const  { return _features[f]; }
 
 private:
-    ERDescriptor(const std::vector<ICFeature*> &featureComputers, Rectangle bounds);
+    ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds);
 
-    std::vector<ICFeature*> _featureComputers;
+    std::vector<ICFeature*> *_featureComputers;
 
     std::vector<float> _features;
     Rectangle _bounds;

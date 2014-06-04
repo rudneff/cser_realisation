@@ -4,7 +4,7 @@
 namespace nprs {
 
 template <typename T>
-class Matrix {
+class Matrix final {
 public:
     Matrix(int width, int height)
         : _width(width), _height(height), _data(new T[width * height])

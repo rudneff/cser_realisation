@@ -15,7 +15,7 @@ class ICFeature;
 
 class CserAlgorithm {
 public:
-    CserAlgorithm(Image const& image, int channel, const std::vector<pERFilter> &filters);
+    CserAlgorithm(const Image &image, int channel, const std::vector<pERFilter> &filters);
     CserAlgorithm(const CserAlgorithm&) = delete;
     CserAlgorithm& operator= (const CserAlgorithm& other) = delete;
     ~CserAlgorithm();
@@ -25,7 +25,8 @@ public:
 private:
     std::vector<ERDescriptor*> _allRegions;
     std::vector<ERDescriptor*> _filteredRegions;
-    std::vector<ICFeature*> _features;
+
+    std::vector<std::vector<ICFeature*>*> _featureComputers;
 
     Image const& _image;
     std::vector<pERFilter> const& _filters;
@@ -39,7 +40,8 @@ private:
     ERDescriptor* newRegion(Point const& p);
     ERDescriptor* combineRegions(const Point &p, ERDescriptor *er1, ERDescriptor *er2); 
     ERDescriptor* attachPoint(ERDescriptor *er, const Point &p);
-    std::set<ERDescriptor*> findNeighbors(Point const& p);
+    std::set<ERDescriptor*> findNeighbors(const Point &p);
+    void swapRegions(ERDescriptor *r1, ERDescriptor *r2);
 };
 
 }

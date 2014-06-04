@@ -9,7 +9,7 @@
 
 using namespace nprs;
 
-nprs::CserAlgorithm::CserAlgorithm(Image const& image, 
+nprs::CserAlgorithm::CserAlgorithm(const Image &image, 
                                    int channel, 
                                    std::vector<pERFilter> const& filters)
      : _image(image), 
@@ -25,8 +25,11 @@ nprs::CserAlgorithm::~CserAlgorithm() {
     for (ERDescriptor *r : _allRegions)
         delete r;
 
-    for (ICFeature *f : _features)
-        delete f;
+    for (auto fclist : _featureComputers) {
+        for (auto f : *fclist)
+            delete f;
+        delete fclist;
+    }
 }
 
 std::vector<ERDescriptor*> CserAlgorithm::perform() {
@@ -62,15 +65,15 @@ void CserAlgorithm::increment(int threshold) {
 }
 
 ERDescriptor* CserAlgorithm::newRegion(Point const& p) {
-    std::vector<ICFeature*> featureComputers(2);
+    std::vector<ICFeature*> *featureComputers = new std::vector<ICFeature*>(2);
+
     ICFeature *ar = new ICAspectRatioFeature(&_erMap, &_image, _channel);
     ICFeature *cmp = new ICCompactnessFeature(&_erMap, &_image, _channel);
 
-    featureComputers[ERDescriptor::FEATURE_ASPECTRATIO] = ar;
-    featureComputers[ERDescriptor::FEATURE_COMPACTNESS] = cmp;
+    (*featureComputers)[ERDescriptor::FEATURE_ASPECTRATIO] = ar;
+    (*featureComputers)[ERDescriptor::FEATURE_COMPACTNESS] = cmp;
 
-    _features.push_back(ar);
-    _features.push_back(cmp);
+    _featureComputers.push_back(featureComputers);
 
     ERDescriptor *reg = new ERDescriptor(p, featureComputers);
 
@@ -79,14 +82,12 @@ ERDescriptor* CserAlgorithm::newRegion(Point const& p) {
     return reg;
 }
 
-ERDescriptor* CserAlgorithm::attachPoint(ERDescriptor *er, Point const& p) {
+ERDescriptor* CserAlgorithm::attachPoint(ERDescriptor *er, const Point &p) {
     ERDescriptor *newReg = er->attachPoint(p);
     _allRegions.push_back(newReg);
     _erMap(p.x(), p.y()) = er;
 
-    ERDescriptor temp = *er;
-    *er = *newReg;
-    *newReg = temp;
+    swapRegions(er, newReg);
 
     return er;
 }
@@ -95,9 +96,7 @@ ERDescriptor* CserAlgorithm::combineRegions(const Point &p, ERDescriptor *er1, E
     ERDescriptor *newReg = er1->combine(er2);
     _allRegions.push_back(newReg);
     
-    ERDescriptor temp = *er1;
-    *er1 = *newReg;
-    *newReg = temp;
+    swapRegions(er1, newReg);
 
     for (int x = er2->bounds().x(), x1 = er2->bounds().x1(); x < x1; x++) {
         for (int y = er2->bounds().y(), y1 = er2->bounds().y1(); y < y1; y++) {
@@ -110,7 +109,7 @@ ERDescriptor* CserAlgorithm::combineRegions(const Point &p, ERDescriptor *er1, E
     return er1;
 }
 
-std::set<ERDescriptor*> CserAlgorithm::findNeighbors(Point const& p) {
+std::set<ERDescriptor*> CserAlgorithm::findNeighbors(const Point &p) {
     ERDescriptor* pd = _erMap(p.x(), p.y());
     std::set<ERDescriptor*> nbs;
 
@@ -124,11 +123,17 @@ std::set<ERDescriptor*> CserAlgorithm::findNeighbors(Point const& p) {
     return nbs;
 }
 
-void CserAlgorithm::computeHist(Image const& image) {
+void CserAlgorithm::computeHist(const Image &image) {
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height(); y++) {
             int intensity = image(x,y,_channel) * 255;
             _hist[intensity].push_back(Point(x,y));
         }
     }
+}
+
+void CserAlgorithm::swapRegions(ERDescriptor* r1, ERDescriptor* r2) {
+    ERDescriptor temp = *r1;
+    *r1 = *r2;
+    *r2 = temp;
 }

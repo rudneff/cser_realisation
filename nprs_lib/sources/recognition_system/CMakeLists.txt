@@ -29,6 +29,8 @@ SET (headers
     src/rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.h
     src/rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.h
     src/rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.h
+
+	src/rec_system/classification/Classifier.h
 )
 
 SET (sources
@@ -71,6 +73,7 @@ SET(directories
     src/rec_system/image_processing/region_detection/cser/filters
     src/rec_system/image_processing/region_detection/cser/algorithm
     src/rec_system/image_processing/region_detection/cser/features
+	src/rec_system/classification
 )
 
 FOREACH(directory ${directories})

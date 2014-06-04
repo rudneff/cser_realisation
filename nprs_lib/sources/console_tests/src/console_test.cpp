@@ -6,25 +6,16 @@
 
 void conditionsTest();
 void imageTest();
+void arrayTest();
 
 int main(int argc, char** argv) {
     conditionsTest();
     imageTest();
+    arrayTest();
     std::cin.get();
 }
 
 void conditionsTest() {
-    std::vector<std::function<bool(const nprs::ERDescriptor&)>> conditions {
-        [](const nprs::ERDescriptor& e) { return true; },
-        [](const nprs::ERDescriptor& e) { return true; },
-        [](const nprs::ERDescriptor& e) { return true; }
-    };
-
-    nprs::ERDescriptor er(nprs::Point(10, 10), std::vector<nprs::ICFeature*>());
-
-    for (auto c : conditions) {
-        std::cout << c(er) << std::endl;
-    }
 }
 
 struct tpix {
@@ -44,4 +35,7 @@ struct tpix {
 void imageTest() {
     using namespace nprs;
     Image image(100, 100, ColorInfo(ColorFormat::INT, 1));
+}
+
+void arrayTest() {
 }
