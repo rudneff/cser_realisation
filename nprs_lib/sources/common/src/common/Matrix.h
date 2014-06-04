@@ -7,18 +7,23 @@ template <typename T>
 class Matrix final {
 public:
     Matrix(int width, int height)
-        : _width(width), _height(height), _data(new T[width * height])
+        : _width(width), _height(height), _data(width * height)
     {
     }
 
-    Matrix(const Matrix& other)
-        : _width(other._width), _height(other._height), _data(new T[other._width * other._height])
+    Matrix(Matrix && other) 
+        : _width(other._width), _height(other._height), _data(std::move(other._data))
     {
-        memcpy(_data, other._data, _width * _height * sizeof(T));
     }
 
-    ~Matrix() {
-        delete[] _data;
+    Matrix& operator= (Matrix && other) {
+        if (this != &other) {
+            _width = other._width;
+            _height = other._height;
+            _data = std::move(other._data);
+        }
+
+        return *this;
     }
 
     T& operator() (int col, int row) {
@@ -45,14 +50,14 @@ public:
     }
 
     T* data() {
-        return _data;
+        return _data.data();
     }
 
 private:
     int _width;
     int _height;
 
-    T *_data;
+    std::vector<T> _data;
 };
 
 }

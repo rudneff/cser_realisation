@@ -11,6 +11,8 @@ namespace nprs {
 class Image final {
 public:
     Image(int width, int height, ColorInfo colorInfo);
+    Image(Image && other);
+    Image& operator= (Image && other);
     
     float getValue(int x, int y, int c) const { return _data[ind(x, y, c)]; }
     float& operator() (int x, int y, int c) { return _data[ind(x, y, c)]; }
