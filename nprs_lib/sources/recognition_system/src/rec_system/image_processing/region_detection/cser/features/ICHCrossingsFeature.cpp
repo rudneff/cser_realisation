@@ -66,7 +66,7 @@ float ICHCrossingsFeature::getValue() {
 
     if (_numCrossings.size() > 1) {
         float m[3];
-        m[0] = _numCrossings[_numCrossings.size() * 0.16];
+        m[0] = _numCrossings[_numCrossings.size() * 0.17];
         m[1] = _numCrossings[_numCrossings.size() * 0.50];
         m[2] = _numCrossings[_numCrossings.size() * 0.83];
         std::sort(m, m + 3);

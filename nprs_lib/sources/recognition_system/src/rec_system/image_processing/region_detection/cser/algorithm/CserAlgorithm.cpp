@@ -7,12 +7,13 @@
 #include <rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.h>
 #include <rec_system/image_processing/region_detection/cser/ERFilter.h>
 #include <rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.h>
+#include <rec_system\image_processing\region_detection\cser\features\ICNumHolesFeature.h>
 
 using namespace nprs;
 
 nprs::CserAlgorithm::CserAlgorithm(const Image &image, 
                                    int channel, 
-                                   std::vector<pERFilter> const& filters)
+                                   const std::vector<pERFilter> &filters)
      : _image(image), 
        _erMap(image.width(), image.height()), 
        _filters(filters), 
@@ -66,11 +67,12 @@ void CserAlgorithm::increment(int threshold) {
 }
 
 ERDescriptor* CserAlgorithm::newRegion(Point const& p) {
-    std::vector<ICFeature*> *featureComputers = new std::vector<ICFeature*>(3);
+    std::vector<ICFeature*> *featureComputers = new std::vector<ICFeature*>(4);
 
     (*featureComputers)[ERDescriptor::FEATURE_ASPECTRATIO] = new ICAspectRatioFeature(&_erMap, &_image, _channel);
     (*featureComputers)[ERDescriptor::FEATURE_COMPACTNESS] = new ICCompactnessFeature(&_erMap, &_image, _channel);
     (*featureComputers)[ERDescriptor::FEATURE_HCROSSINGS] = new ICHCrossingsFeature(&_erMap, &_image, _channel);
+    (*featureComputers)[ERDescriptor::FEATURE_NUMHOLES] = new ICNumHolesFeature(&_erMap, &_image, _channel);
 
     _featureComputers.push_back(featureComputers);
 
@@ -132,7 +134,7 @@ void CserAlgorithm::computeHist(const Image &image) {
     }
 }
 
-void CserAlgorithm::swapRegions(ERDescriptor* r1, ERDescriptor* r2) {
+void CserAlgorithm::swapRegions(ERDescriptor *r1, ERDescriptor *r2) {
     ERDescriptor temp = *r1;
     *r1 = *r2;
     *r2 = temp;

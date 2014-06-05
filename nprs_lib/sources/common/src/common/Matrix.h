@@ -11,6 +11,12 @@ public:
     {
     }
 
+    Matrix(const T *data, int width, int height) 
+        : _width(width), _height(height), _data(width * height)
+    {
+        std::copy(data, data + width * height, _data.begin());
+    }
+
     Matrix(Matrix && other) 
         : _width(other._width), _height(other._height), _data(std::move(other._data))
     {
@@ -30,20 +36,20 @@ public:
         return _data[row * _width + col];
     }
 
-    T const& operator() (int col, int row) const {
+    const T& operator() (int col, int row) const {
         return _data[row * _width + col];
     }
 
     T const& getValue(int col, int row) const {
-        _data[row * _width + col];
+        return _data[row * _width + col];
     }
 
     void setValue(int col, int row, const T &value) {
         _data[row * _width + col] = value;
     }
 
-    int width() { return _width; }
-    int height() { return _height; }
+    int width() const { return _width; }
+    int height() const { return _height; }
 
     bool isInBounds(int x, int y) const {
         return x >= 0 && x < _width && y >= 0 && y < _height;

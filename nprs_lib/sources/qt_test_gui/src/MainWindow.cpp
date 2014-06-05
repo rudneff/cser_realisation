@@ -27,9 +27,11 @@ void MainWindow::recognize() {
 
 void MainWindow::performRecognition(QImage& frame) {
     using namespace nprs;
+
     auto before = std::chrono::high_resolution_clock::now();
     pRecognitionResults results = _recSystem.recognize(frame.bits(), frame.width(), frame.height(), ColorInfo(ColorFormat::RGB, 3));
     auto after = std::chrono::high_resolution_clock::now();
+    
     auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(after - before);
 
     qDebug() << "recognition took " << ms.count() << " ms";

@@ -19,6 +19,7 @@ public:
     static const int FEATURE_ASPECTRATIO = 0;
     static const int FEATURE_COMPACTNESS = 1;
     static const int FEATURE_HCROSSINGS = 2;
+    static const int FEATURE_NUMHOLES = 3;
 
     ERDescriptor(const Point& p, std::vector<ICFeature*> *featureComputers);
     ~ERDescriptor();
