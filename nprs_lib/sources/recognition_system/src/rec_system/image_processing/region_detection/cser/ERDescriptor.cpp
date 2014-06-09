@@ -5,8 +5,11 @@
 
 using namespace nprs;
 
-ERDescriptor::ERDescriptor(const Point &p, std::vector<ICFeature*> *featureComputers)
-    : _bounds(p.x(), p.y(), 1, 1), _featureComputers(featureComputers), _features(featureComputers->size())
+ERDescriptor::ERDescriptor(const Point &p, std::vector<ICFeature*> *featureComputers, int threshold)
+    : _bounds(p.x(), p.y(), 1, 1), 
+      _featureComputers(featureComputers), 
+      _features(featureComputers->size()),
+      _threshold(threshold)
 {
     for (int i = 0; i < _featureComputers->size(); i++) {
         auto fc = (*_featureComputers)[i];
@@ -19,8 +22,11 @@ ERDescriptor::~ERDescriptor() {
     
 }
 
-ERDescriptor::ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds) 
-    : _featureComputers(featureComputers), _features(featureComputers->size()), _bounds(bounds)
+ERDescriptor::ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds, int threshold) 
+    : _featureComputers(featureComputers), 
+      _features(featureComputers->size()), 
+      _bounds(bounds),
+      _threshold(threshold)
 {
     for (int i = 0; i < _featureComputers->size(); i++) {
         auto fc = (*_featureComputers)[i];
@@ -28,7 +34,7 @@ ERDescriptor::ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle 
     }
 }
 
-ERDescriptor* ERDescriptor::attachPoint(const Point &p) {
+ERDescriptor* ERDescriptor::attachPoint(const Point &p, int threshold) {
     for(auto fc : *_featureComputers) {
         fc->increment(p, this);
     }
@@ -38,13 +44,13 @@ ERDescriptor* ERDescriptor::attachPoint(const Point &p) {
                                                 fmax(p.x() + 1, _bounds.x1()),
                                                 fmax(p.y() + 1, _bounds.y1()));
 
-    ERDescriptor* newReg = new ERDescriptor(_featureComputers, newBounds);
+    ERDescriptor* newReg = new ERDescriptor(_featureComputers, newBounds, threshold);
     _parent = newReg;
 
     return newReg;
 }
 
-ERDescriptor* ERDescriptor::combine(ERDescriptor *other) {
+ERDescriptor* ERDescriptor::combine(ERDescriptor *other, int threshold) {
     for (int i = 0; i < _featureComputers->size(); i++) {
         _featureComputers->at(i)->combine(other->_featureComputers->at(i), this, other);
     }
@@ -54,7 +60,7 @@ ERDescriptor* ERDescriptor::combine(ERDescriptor *other) {
                                                 fmax(other->bounds().x1(), _bounds.x1()),
                                                 fmax(other->bounds().y1(), _bounds.y1()));
 
-    ERDescriptor *newReg = new ERDescriptor(_featureComputers, newBounds);
+    ERDescriptor *newReg = new ERDescriptor(_featureComputers, newBounds, threshold);
     _parent = newReg;
 
     return newReg;

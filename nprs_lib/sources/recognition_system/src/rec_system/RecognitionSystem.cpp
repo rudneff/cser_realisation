@@ -28,14 +28,11 @@ pRecognitionResults RecognitionSystem::recognize(const uchar *data, int width, i
 
     CSERDetector detector(filters);
     auto results = detector.detect(converted);
-    
+
     std::vector<pNumberPlate> numberPlates;
     for (auto res : results) {
         pNumberPlate np = pNumberPlate(new NumberPlate(std::vector<pNumberPlateCharacter>(), res.getBounds()));
         numberPlates.push_back(np);
-    }
-
-    for (auto res: results) {
     }
 
     return pRecognitionResults(new RecognitionResults(numberPlates, converted));

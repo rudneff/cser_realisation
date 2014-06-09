@@ -14,7 +14,6 @@ class ERDescriptor;
 class ICFeature {
 public:
     ICFeature(const Matrix<ERDescriptor*> *erMap, const Image *image, int channel);
-
     virtual ~ICFeature() {}
 
     virtual void init(const Point &p, const ERDescriptor *reg) = 0;

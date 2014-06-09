@@ -20,9 +20,14 @@ ENDIF()
 ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(recognition_system)
 ADD_SUBDIRECTORY(console_tests)
+ADD_SUBDIRECTORY(training_lib)
 
 IF (JAVA_API)
 	ADD_SUBDIRECTORY(nprs_java_api)
+ENDIF()
+
+IF (CLASSIFIER_TRAINER)
+	ADD_SUBDIRECTORY(classifier_trainer)
 ENDIF()
 
 IF (TEST_GUI)

@@ -4,8 +4,7 @@
 namespace nprs {
 
 class Classifier {
-public:
-    
+
 };
 
 }

@@ -21,23 +21,26 @@ public:
     static const int FEATURE_HCROSSINGS = 2;
     static const int FEATURE_NUMHOLES = 3;
 
-    ERDescriptor(const Point& p, std::vector<ICFeature*> *featureComputers);
+    ERDescriptor(const Point& p, std::vector<ICFeature*> *featureComputers, int threshold);
     ~ERDescriptor();
 
-    ERDescriptor * attachPoint(const Point &p);
-    ERDescriptor * combine(ERDescriptor *other);
+    ERDescriptor * attachPoint(const Point &p, int threshold);
+    ERDescriptor * combine(ERDescriptor *other, int threshold);
     
     Rectangle const& bounds() const { return _bounds; }
     int getFeature(int f) const  { return _features[f]; }
 
+    int threshold() { return _threshold; }
+
 private:
-    ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds);
+    ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds, int threshold);
 
     std::vector<ICFeature*> *_featureComputers;
 
     std::vector<float> _features;
     Rectangle _bounds;
     ERDescriptor *_parent;
+    int _threshold;
 };
 
 }

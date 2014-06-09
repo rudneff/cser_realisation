@@ -11,7 +11,7 @@ class ERDescriptor;
 
 class ExtremalRegion {
 public:
-    explicit ExtremalRegion(Rectangle const& bounds);
+    explicit ExtremalRegion(const Rectangle &bounds);
     explicit ExtremalRegion(const ERDescriptor *erd);
 
     const Rectangle & getBounds() { return _bounds; }

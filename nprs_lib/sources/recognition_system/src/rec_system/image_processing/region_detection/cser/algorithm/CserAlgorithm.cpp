@@ -40,15 +40,16 @@ std::vector<ERDescriptor*> CserAlgorithm::perform() {
         increment(i);
     }
 
-    _filteredRegions = _allRegions;
+    std::vector<ERDescriptor*> filteredRegions = _allRegions;
     for (pERFilter const& filter : _filters) {
-        _filteredRegions = filter->perform(_filteredRegions);
+        filteredRegions = filter->perform(filteredRegions);
     }
 
-    return _filteredRegions;
+    return filteredRegions;
 }
 
 void CserAlgorithm::increment(int threshold) {
+    _currentThreshold = threshold;
     for (Point p : _hist[threshold]) {
         auto neighbors = findNeighbors(p);
         if (neighbors.size() == 0) {
@@ -76,7 +77,7 @@ ERDescriptor* CserAlgorithm::newRegion(Point const& p) {
 
     _featureComputers.push_back(featureComputers);
 
-    ERDescriptor *reg = new ERDescriptor(p, featureComputers);
+    ERDescriptor *reg = new ERDescriptor(p, featureComputers, _currentThreshold);
 
     _allRegions.push_back(reg);
     _erMap(p.x(), p.y()) = reg;
@@ -85,7 +86,7 @@ ERDescriptor* CserAlgorithm::newRegion(Point const& p) {
 }
 
 ERDescriptor* CserAlgorithm::attachPoint(ERDescriptor *er, const Point &p) {
-    ERDescriptor *newReg = er->attachPoint(p);
+    ERDescriptor *newReg = er->attachPoint(p, _currentThreshold);
     _allRegions.push_back(newReg);
     _erMap(p.x(), p.y()) = er;
 
@@ -95,7 +96,7 @@ ERDescriptor* CserAlgorithm::attachPoint(ERDescriptor *er, const Point &p) {
 }
 
 ERDescriptor* CserAlgorithm::combineRegions(const Point &p, ERDescriptor *er1, ERDescriptor *er2) {
-    ERDescriptor *newReg = er1->combine(er2);
+    ERDescriptor *newReg = er1->combine(er2, _currentThreshold);
     _allRegions.push_back(newReg);
     
     swapRegions(er1, newReg);

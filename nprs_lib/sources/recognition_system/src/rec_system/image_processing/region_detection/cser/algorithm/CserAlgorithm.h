@@ -13,19 +13,17 @@ class ERFilter; using pERFilter = std::shared_ptr<ERFilter>;
 class Point;
 class ICFeature;
 
-class CserAlgorithm {
+class CserAlgorithm final {
 public:
     CserAlgorithm(const Image &image, int channel, const std::vector<pERFilter> &filters);
     CserAlgorithm(const CserAlgorithm&) = delete;
     CserAlgorithm& operator= (const CserAlgorithm& other) = delete;
     ~CserAlgorithm();
 
-    std::vector<ERDescriptor*> perform();
+    std::vector<ERDescriptor*> perform(); 
 
 private:
     std::vector<ERDescriptor*> _allRegions;
-    std::vector<ERDescriptor*> _filteredRegions;
-
     std::vector<std::vector<ICFeature*>*> _featureComputers;
 
     Image const& _image;
@@ -33,6 +31,8 @@ private:
     int _channel;
     std::vector<std::vector<Point>> _hist;
     Matrix<ERDescriptor*> _erMap;
+
+    int _currentThreshold;
 
     void increment(int threshold);
     void computeHist(Image const& image);
