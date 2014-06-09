@@ -3,13 +3,13 @@
 #pragma once
 
 #include "RecognitionResults.h"
-
 #include <rec_system/RecognitionSystem.h>
 #include <rec_system/common_structures/RecognitionResults.h>
 #include <rec_system/common_structures/NumberPlate.h>
 #include <rec_system/common_structures/NumberPlateCharacter.h>
 #include <common/image/Image.h>
 #include <common/image/ImageConverter.h>
+#include <common/image/RawImageData.h>
 
 using namespace System;
 using namespace System::Collections;
@@ -40,20 +40,21 @@ public:
         nprs::RecognitionSystem recSystem;
         pin_ptr<Byte> ptr = &image[0];
         uchar* imgData = ptr;
-        nprs::pRecognitionResults results = recSystem.recognize(imgData, width, height, PixFormatToColorInfo(pixelFormat));
+        nprs::RecognitionResults results = recSystem.recognize(nprs::RawImageData(imgData, width, height, PixFormatToColorInfo(pixelFormat)));
+
 
         return ConvertResults(results);
     }
 
 private:
-    RecognitionResults^ ConvertResults(nprs::pRecognitionResults &src) {
+    RecognitionResults^ ConvertResults(const nprs::RecognitionResults &src) {
         List<NumberPlate^>^ numPlates = gcnew List<NumberPlate^>();
-        for (auto numPlate : src->numberPlates()) {
+        for (auto numPlate : src.numberPlates()) {
             numPlates->Add(ConvertNumberPlate(numPlate));
         }
 
-        array<Byte>^ image = gcnew array<Byte>(src->resultImage().width() * src->resultImage().height() * 4);
-        std::vector<uchar> converted = nprs::ImageConverter::imageToRawBgra(src->resultImage());
+        array<Byte>^ image = gcnew array<Byte>(src.resultImage().width() * src.resultImage().height() * 4);
+        std::vector<uchar> converted = nprs::ImageConverter::imageToRawBgra(src.resultImage());
         pin_ptr<Byte> ptr = &converted[0];
         Marshal::Copy((IntPtr)ptr, image, 0, image->Length);
 

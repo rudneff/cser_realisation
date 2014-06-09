@@ -3,6 +3,7 @@
 #include <rec_system/RecognitionSystem.h>
 #include <rec_system/common_structures/RecognitionResults.h>
 #include <rec_system/common_structures/NumberPlate.h>
+#include <common/image/RawImageData.h>
 #include <chrono>
 
 using namespace nprs;
@@ -25,8 +26,9 @@ void performRecognition(QImage &image) {
     using std::chrono::high_resolution_clock;
     using std::chrono::milliseconds;
 
+    RawImageData rawImage(image.bits(), image.width(), image.height(), ColorInfo(ColorFormat::RGB, 3));
     auto beforeTime = high_resolution_clock::now();
-    auto results = rs.recognize(image.bits(), image.width(), image.height(), ColorInfo(ColorFormat::RGB, 3));
+    auto results = rs.recognize(rawImage);
     auto afterTime = high_resolution_clock::now();
     int ms = std::chrono::duration_cast<milliseconds>(afterTime - beforeTime).count();
 

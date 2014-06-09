@@ -1,18 +1,20 @@
 #ifndef TRAININGLIB_SYMBOLDETECTORTRAINER_H
 #define TRAININGLIB_SYMBOLDETECTORTRAINER_H
 
-#include <common/image/Image.h>
-#include <rec_system/classification/adaboost/AdaBoostClassifier.h>
+#include <memory>
 
 namespace nprs {
+
+class Image;
+class AdaboostClassifier; using pAdaboostClassifier = std::shared_ptr<AdaboostClassifier>;
 
 class SymbolDetectorTrainer {
 public:
     void pushSymbolImage(const Image &image);
-    AdaboostClassifier createNMLightClassifier();
+    pAdaboostClassifier createNMLightClassifier();
 
 private:
-
+    
 };
 
 }

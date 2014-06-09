@@ -11,13 +11,16 @@ class ERDescriptor;
 
 class ExtremalRegion {
 public:
-    explicit ExtremalRegion(const Rectangle &bounds);
+    ExtremalRegion(const Rectangle &bounds, const std::vector<float> &features, int threshold);
     explicit ExtremalRegion(const ERDescriptor *erd);
 
-    const Rectangle & getBounds() { return _bounds; }
+    const Rectangle & getBounds() const { return _bounds; }
+    const std::vector<float> & featureVector() const { return _featureVector; }
 
 private:
     Rectangle _bounds;
+    std::vector<float> _featureVector;
+    int _threshold;
 };
 
 }

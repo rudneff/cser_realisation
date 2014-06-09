@@ -22,11 +22,8 @@ SET(directories
 INCLUDE_DIRECTORIES(src)
 INCLUDE_DIRECTORIES("../../libs")
 
-FOREACH(directory ${directories})
-	FILE(GLOB dir_files "${directory}/*")
-	STRING(REGEX REPLACE "/" "\\\\\\\\" convdir ${directory}) 
-	SOURCE_GROUP(${convdir} FILES ${dir_files})
-ENDFOREACH()
+CHECK_FILES("${sources};${headers}")
+GROUP_FILES("${directories}")
 
 FOREACH(dependency ${dependencies})
     INCLUDE_DIRECTORIES(../${dependency}/src)

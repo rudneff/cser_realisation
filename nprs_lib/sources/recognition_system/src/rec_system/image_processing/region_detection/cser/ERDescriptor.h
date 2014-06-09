@@ -29,8 +29,9 @@ public:
     
     Rectangle const& bounds() const { return _bounds; }
     int getFeature(int f) const  { return _features[f]; }
+    const std::vector<float> featureVector() const { return _features; }
 
-    int threshold() { return _threshold; }
+    int threshold() const { return _threshold; }
 
 private:
     ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds, int threshold);

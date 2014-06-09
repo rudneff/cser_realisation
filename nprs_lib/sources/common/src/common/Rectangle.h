@@ -17,7 +17,7 @@ public:
         : _x(x), _y(y), _width(width), _height(height)
     {}
 
-    Rectangle(Point const& p1, Point const& p2)
+    Rectangle(const Point &p1, const Point &p2)
     {
         _x = fmin(p1.x(), p2.x());
         _y = fmin(p1.y(), p2.y());

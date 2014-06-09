@@ -28,8 +28,9 @@ void MainWindow::recognize() {
 void MainWindow::performRecognition(QImage& frame) {
     using namespace nprs;
 
+    RawImageData rawImage(frame.bits(), frame.width(), frame.height(), ColorInfo(ColorFormat::RGB, 3));
     auto before = std::chrono::high_resolution_clock::now();
-    pRecognitionResults results = _recSystem.recognize(frame.bits(), frame.width(), frame.height(), ColorInfo(ColorFormat::RGB, 3));
+    RecognitionResults results = _recSystem.recognize(rawImage);
     auto after = std::chrono::high_resolution_clock::now();
     
     auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(after - before);
@@ -37,11 +38,11 @@ void MainWindow::performRecognition(QImage& frame) {
     qDebug() << "recognition took " << ms.count() << " ms";
 
     QPainter painter;
-    std::vector<uchar> data = ImageConverter::imageToRawRgb(results->resultImage());
-    QImage result(&data[0], results->resultImage().width(), results->resultImage().height(), QImage::Format_RGB888);
+    std::vector<uchar> data = ImageConverter::imageToRawRgb(results.resultImage());
+    QImage result(&data[0], results.resultImage().width(), results.resultImage().height(), QImage::Format_RGB888);
     painter.begin(&result);
     painter.setPen(QPen(QColor::fromRgb(255, 0, 0)));
-    for (pNumberPlate np : results->numberPlates()) {
+    for (pNumberPlate np : results.numberPlates()) {
         nprs::Rectangle bounds = np->bounds();
         painter.drawRect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
     }

@@ -12,29 +12,14 @@ SET (sources
 	src/training_lib/SymbolDetectorTrainer.cpp
 )
 
-# create missing files
-SET (source_files ${sources} ${headers})
-FOREACH(file ${source_files})
-    if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-        FILE(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")
-    ENDIF()
-ENDFOREACH()
-# --
-
 INCLUDE_DIRECTORIES(src)
 
-# create directories in XCode and Visual Studio
 SET(directories
     src/training_lib
 )
 
-FOREACH(directory ${directories})
-	FILE(GLOB dir_headers "${directory}/*.h")
-	FILE(GLOB dir_sources "${directory}/*.cpp")
-	STRING(REGEX REPLACE "/" "\\\\\\\\" convdir ${directory})
-	SOURCE_GROUP(${convdir} FILES ${dir_headers} ${dir_sources})
-ENDFOREACH()
-# --
+CHECK_FILES("${sources};${headers}")
+GROUP_FILES("${directories}")
 
 # dependencies
 SET(dependencies

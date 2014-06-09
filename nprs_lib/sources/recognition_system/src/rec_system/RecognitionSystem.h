@@ -9,14 +9,15 @@ using uchar = unsigned char;
 
 namespace nprs {
 
-class RecognitionResults; using pRecognitionResults = std::shared_ptr<RecognitionResults>;
+class RawImageData;
+class RecognitionResults;
 
 class RecognitionSystem {
-public:
+public: 
     RecognitionSystem();
     ~RecognitionSystem();
 
-    pRecognitionResults recognize(const uchar *data, int width, int height, ColorInfo cf) const;
+    RecognitionResults recognize(const RawImageData &image) const;
 };
 
 }

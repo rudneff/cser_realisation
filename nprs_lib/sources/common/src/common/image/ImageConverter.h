@@ -4,12 +4,13 @@
 #include "Image.h"
 #include <memory>
 #include <vector>
+#include <common/image/RawImageData.h>
 
 namespace nprs {
 
 class ImageConverter {
 public:
-    static Image convertRaw(const unsigned char *data, int width, int height, ColorFormat colorFormat);
+    static Image convertRaw(const RawImageData &raw);
     static std::vector<uchar> imageToRawBgra(const Image &image);
     static std::vector<uchar> imageToRawRgb(const Image &image);
 

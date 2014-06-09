@@ -19,7 +19,6 @@ ERDescriptor::ERDescriptor(const Point &p, std::vector<ICFeature*> *featureCompu
 }
 
 ERDescriptor::~ERDescriptor() {
-    
 }
 
 ERDescriptor::ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds, int threshold) 

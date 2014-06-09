@@ -8,22 +8,10 @@ SET (sources
     src/console_test.cpp
 )
 
-SET (source_files ${sources})
-
-FOREACH(file ${source_files})
-    IF(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-        FILE(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")
-    ENDIF()
-ENDFOREACH()
+CHECK_FILES(${sources})
+GROUP_FILES(src)
 
 INCLUDE_DIRECTORIES(src)
-
-FOREACH(directory ${directories})
-	FILE(GLOB dir_headers "${directory}/*.h")
-	FILE(GLOB dir_sources "${directory}/*.cpp")
-	STRING(REGEX REPLACE "/" "\\\\\\\\" convdir ${directory})
-	SOURCE_GROUP(${convdir} FILES ${dir_headers} ${dir_sources})
-ENDFOREACH()
 
 SET (dependencies
     common

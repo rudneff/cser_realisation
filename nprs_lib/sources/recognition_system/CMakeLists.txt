@@ -15,12 +15,11 @@ SET (headers
     src/rec_system/image_processing/region_detection/cser/CSERDetector.h
     src/rec_system/image_processing/region_detection/cser/ExtremalRegion.h
     src/rec_system/image_processing/region_detection/cser/ERFilter.h
-    src/rec_system/image_processing/region_detection/cser/ERFilter
     src/rec_system/image_processing/region_detection/cser/ERDescriptor.h
 
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.h
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.h
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.h
 
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.h
 
@@ -39,13 +38,17 @@ SET (sources
     src/rec_system/RecognitionSystem.cpp
     src/rec_system/Algorithm.cpp
 
+    src/rec_system/common_structures/NumberPlate.cpp
+    src/rec_system/common_structures/NumberPlateCharacter.cpp
+    src/rec_system/common_structures/RecognitionResults.cpp
+
     src/rec_system/image_processing/region_detection/cser/CSERDetector.cpp
     src/rec_system/image_processing/region_detection/cser/ExtremalRegion.cpp
     src/rec_system/image_processing/region_detection/cser/ERDescriptor.cpp
 
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.cpp
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.cpp
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.cpp
+    src/rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.cpp
 
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.cpp
 
@@ -59,18 +62,8 @@ SET (sources
 	src/rec_system/classification/TrainingSet.cpp
 )
 
-# create missing files
-SET (source_files ${sources} ${headers})
-FOREACH(file ${source_files})
-    if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-        FILE(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")
-    ENDIF()
-ENDFOREACH()
-# --
-
 INCLUDE_DIRECTORIES(src)
 
-# create directories in XCode and Visual Studio
 SET(directories
     src/rec_system
     src/rec_system/common_structures
@@ -83,13 +76,8 @@ SET(directories
 	src/rec_system/classification/adaboost
 )
 
-FOREACH(directory ${directories})
-	FILE(GLOB dir_headers "${directory}/*.h")
-	FILE(GLOB dir_sources "${directory}/*.cpp")
-	STRING(REGEX REPLACE "/" "\\\\\\\\" convdir ${directory})
-	SOURCE_GROUP(${convdir} FILES ${dir_headers} ${dir_sources})
-ENDFOREACH()
-# --
+CHECK_FILES( "${sources};${headers}" )
+GROUP_FILES( "${directories}" )
 
 SET(dependencies
     common

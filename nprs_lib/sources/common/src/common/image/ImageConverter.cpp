@@ -4,17 +4,17 @@
 using namespace nprs;
 using uchar = unsigned char;
 
-Image ImageConverter::convertRaw(unsigned char const* data, int width, int height, ColorFormat colorFormat) {
-    switch (colorFormat) {
-    case ColorFormat::RGB: return rgbToInt(data, width, height);
-    case ColorFormat::BGRA: return bgraToInt(data, width, height);
-    case ColorFormat::RGBA: return rgbaToInt(data, width, height);
+Image ImageConverter::convertRaw(const RawImageData &raw) {
+    switch (raw.colorInfo().format()) {
+    case ColorFormat::RGB: return rgbToInt(raw.data(), raw.width(), raw.height());
+    case ColorFormat::BGRA: return bgraToInt(raw.data(), raw.width(), raw.height());
+    case ColorFormat::RGBA: return rgbaToInt(raw.data(), raw.width(), raw.height());
     default:
         throw ArgumentException("Color format not supported");
     }
 }
 
-std::vector<uchar> ImageConverter::imageToRawBgra(Image const& image) {
+std::vector<uchar> ImageConverter::imageToRawBgra(const Image &image) {
     std::vector<uchar> result(image.width() * image.height() * 4);
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height(); y++) {

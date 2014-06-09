@@ -7,9 +7,7 @@ namespace nprs {
 
 class NumberPlateCharacter {
 public:
-    NumberPlateCharacter(int code, const Rectangle &bounds)
-        : _code(code), _bounds(bounds)
-    {}
+    NumberPlateCharacter(int code, const Rectangle &bounds);
 
     int code() const { return _code; }
     Rectangle const & bounds() const { return _bounds; }

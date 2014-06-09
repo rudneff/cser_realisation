@@ -9,6 +9,7 @@
 #include "image_processing/region_detection/cser/ExtremalRegion.h"
 #include <common/image/ImageConverter.h>
 #include <rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h>
+#include <rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.h>
 
 namespace nprs {
 
@@ -20,11 +21,11 @@ RecognitionSystem::~RecognitionSystem() {
     
 }
 
-pRecognitionResults RecognitionSystem::recognize(const uchar *data, int width, int height, ColorInfo cf) const {
+RecognitionResults RecognitionSystem::recognize(const RawImageData &image) const {
     std::vector<pERFilter> filters;
     filters.push_back(pERFilter(new ERFilterMNLight()));
 
-    Image converted = ImageConverter::convertRaw(data, width, height, cf.format());
+    Image converted = ImageConverter::convertRaw(image);
 
     CSERDetector detector(filters);
     auto results = detector.detect(converted);
@@ -35,7 +36,7 @@ pRecognitionResults RecognitionSystem::recognize(const uchar *data, int width, i
         numberPlates.push_back(np);
     }
 
-    return pRecognitionResults(new RecognitionResults(numberPlates, converted));
+    return std::move(RecognitionResults(numberPlates, converted));
 }
 
 }
