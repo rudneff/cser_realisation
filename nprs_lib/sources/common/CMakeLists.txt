@@ -27,6 +27,7 @@ SET (sources
     src/common/image/Image.cpp
     src/common/image/ImageConverter.cpp
     src/common/image/Color.cpp
+	src/common/image/RawImageData.cpp
 
     src/common/exceptions/NprsException.cpp
     src/common/exceptions/ArgumentException.cpp
@@ -40,7 +41,7 @@ SET (directories
 )
 
 CHECK_FILES("${sources} ${headers}")
-GROUP_FILES(${directories})
+GROUP_FILES("${directories}")
 
 INCLUDE_DIRECTORIES(src)
 

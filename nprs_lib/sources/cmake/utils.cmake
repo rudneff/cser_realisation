@@ -1,6 +1,5 @@
 FUNCTION(CHECK_FILES source_files)
 	FOREACH(file ${source_files})
-		MESSAGE(${file})
 		IF(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
 			MESSAGE("${file} not exists")
 			FILE(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")

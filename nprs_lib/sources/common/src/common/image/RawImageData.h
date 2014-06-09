@@ -7,11 +7,15 @@ using uchar = unsigned char;
 
 namespace nprs {
 
-class RawImageData {
+class RawImageData final {
 public:
-    RawImageData(const uchar *data, int width, int height, ColorInfo colorInfo)
-        : _data(data), _width(width), _height(height), _colorInfo(colorInfo)
-    {}
+    RawImageData(uchar *data, int width, int height, const ColorInfo &colorInfo);
+    RawImageData(const RawImageData &that);
+    RawImageData(RawImageData && that);
+    ~RawImageData();
+
+    RawImageData & operator= (const RawImageData &that);
+    RawImageData & operator= (RawImageData && that);
 
     const uchar * data() const{ return _data; }
     int width() const { return _width; }
@@ -19,9 +23,10 @@ public:
     ColorInfo colorInfo() const { return _colorInfo; }
 
 private:
-    const uchar *_data;
+    uchar *_data;
     int _width;
     int _height;
+    int _dataSize;
     ColorInfo _colorInfo;
 };
 
