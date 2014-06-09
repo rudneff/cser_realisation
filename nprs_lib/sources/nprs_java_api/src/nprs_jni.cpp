@@ -10,12 +10,13 @@
 
 const char RR_CLASS_NAME[] = "com/nprs/app/recognition/common_structures/RecognitionResults";
 const char NUM_PLATE_CLASS_NAME[] = "com/nprs/app/recognition/common_structures/NumberPlate";
+
 using namespace nprs;
 
 static jobject createRecResultsInstance(JNIEnv *env, const pRecognitionResults &results);
 static jobject createNumberPlateInstance(JNIEnv *env, const pNumberPlate &numPlate);
 
-jobject Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
+jobject JNICALL Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
     RecognitionSystem recognitionSystem;
     jboolean isCopy;
     uchar *data = reinterpret_cast<uchar*>(env->GetIntArrayElements(pixels, &isCopy));
