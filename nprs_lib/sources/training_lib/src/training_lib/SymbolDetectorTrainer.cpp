@@ -1,39 +1,41 @@
 #include "SymbolDetectorTrainer.h"
 #include <rec_system/classification/TrainingSet.h>
 #include <rec_system/classification/adaboost/AdaboostClassifier.h>
+#include "trainers/LightClassifierTrainer.h"
+#include <common/image/ImageConverter.h>
 
 using namespace nprs;
 
-
-SymbolDetectorTrainer::SymbolDetectorTrainer() 
-    : _nmLightTrainingSet(4)
+SymbolDetectorTrainer::SymbolDetectorTrainer()
+    : _lightClassifierTrainer(new LightClassifierTrainer())
 {
-}
-
-pAdaboostClassifier SymbolDetectorTrainer::createNMLightClassifier() {
-    pAdaboostClassifier aboost = std::make_shared<AdaboostClassifier>();
-    aboost->train(_nmLightTrainingSet);
-    return aboost;
-}
-
-void SymbolDetectorTrainer::pushSymbolImage(const Image &image, int threshold) {
     
 }
 
-void SymbolDetectorTrainer::trainNMLightClassifier(const std::string &fileName) {
-    AdaboostClassifier aboost;
-    aboost.train(_nmLightTrainingSet);
-    aboost.save(fileName);
+pClassifier SymbolDetectorTrainer::createNMLightClassifier() {
+    return _lightClassifierTrainer->train();
 }
 
-void SymbolDetectorTrainer::pushSymbolFeatures(const std::vector<float> &features) {
-    _nmLightTrainingSet.addItem(TrainDataItem(features, 1.0f));
+void SymbolDetectorTrainer::pushPositiveSample(const Bitmap &image) {
+    _lightClassifierTrainer->pushPositiveSample(ImageConverter::convertRaw(image));
 }
 
-void SymbolDetectorTrainer::pushNonSymbolsFeatures(const std::vector<float> &features) {
-    _nmLightTrainingSet.addItem(TrainDataItem(features, 0.0f));
+void SymbolDetectorTrainer::pushPositiveSample(const Image &image) {
+    _lightClassifierTrainer->pushPositiveSample(image);
 }
 
-void SymbolDetectorTrainer::pushNonSymbolImage(const Image &image, int threshold) {
-    
+void SymbolDetectorTrainer::pushPositiveSample(const std::vector<float> &features) {
+    _lightClassifierTrainer->pushPositiveSample(features);
+}
+
+void SymbolDetectorTrainer::pushNegativeSample(const Bitmap &image, bool isSceneImage, int numSamples) {
+    _lightClassifierTrainer->pushNegativeSample(ImageConverter::convertRaw(image), isSceneImage);
+}
+
+void SymbolDetectorTrainer::pushNegativeSample(const Image &image, bool isSceneImage) {
+    _lightClassifierTrainer->pushNegativeSample(image, isSceneImage);
+}
+
+void SymbolDetectorTrainer::pushNegativeSample(const std::vector<float> &features) {
+    _lightClassifierTrainer->pushNegativeSample(features);
 }

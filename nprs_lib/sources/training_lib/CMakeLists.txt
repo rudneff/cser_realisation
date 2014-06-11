@@ -9,18 +9,22 @@ SET (headers
 	src/training_lib/SampleExtractor.h
 	src/training_lib/Sample.h
 	src/training_lib/Sample.inl
+	src/training_lib/IClassifierTrainer.h
+	src/training_lib/trainers/LightClassifierTrainer.h
 )
 
 SET (sources
 	src/training_lib/SymbolDetectorTrainer.cpp
 	src/training_lib/SampleExtractor.cpp
 	src/training_lib/Sample.cpp
+	src/training_lib/trainers/LightClassifierTrainer.cpp
 )
 
 INCLUDE_DIRECTORIES(src)
 
 SET(directories
     src/training_lib
+	src/training_lib/trainers
 )
 
 CHECK_FILES("${sources};${headers}")

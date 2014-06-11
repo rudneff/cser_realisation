@@ -5,7 +5,7 @@ inline Matrix<T>::Matrix(int width, int height)
 }
 
 template <typename T>
-inline Matrix<T>::Matrix(T const* data, int width, int height) 
+inline Matrix<T>::Matrix(const T *data, int width, int height) 
     : _width(width), _height(height), _data(width * height) 
 {
     std::copy(data, data + width * height, _data.begin());
@@ -18,7 +18,7 @@ inline Matrix<T>::Matrix(Matrix && other)
 }
 
 template <typename T>
-inline nprs::Matrix<T>& Matrix<T>::operator=(Matrix&& other) {
+inline nprs::Matrix<T>& Matrix<T>::operator=(Matrix && other) {
     if (this != &other) {
         _width = other._width;
         _height = other._height;
@@ -48,12 +48,11 @@ inline bool Matrix<T>::isInBounds(int x, int y) const {
 }
 
 template <typename T>
-inline void Matrix<T>::setValue(int col, int row, T const& value) {
+inline void Matrix<T>::setValue(int col, int row, const T &value) {
     _data[row * _width + col] = value;
 }
 
 template <typename T>
-inline T const& Matrix<T>::getValue(int col, int row) const {
+inline const T& Matrix<T>::getValue(int col, int row) const {
     return _data[row * _width + col];
 }
-

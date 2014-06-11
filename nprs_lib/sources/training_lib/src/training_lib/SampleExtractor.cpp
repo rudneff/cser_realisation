@@ -15,11 +15,11 @@
 
 using namespace nprs;
 
-std::vector<Sample> SampleExtractor::extractPositiveSample(const Bitmap &image, int numImages) {
-    return extractPositiveSample(ImageConverter::convertRaw(image), numImages);
+std::vector<Sample> SampleExtractor::extractPositiveSample(const Bitmap &image) {
+    return extractPositiveSample(ImageConverter::convertRaw(image));
 }
 
-std::vector<Sample> SampleExtractor::extractPositiveSample(const Image &image, int numImages) {
+std::vector<Sample> SampleExtractor::extractPositiveSample(const Image &image) {
     std::vector<Sample> result;
 
     CSERDetector detector( { pERFilter(new ERFilterEmpty()) } );
@@ -51,3 +51,6 @@ std::vector<Sample> SampleExtractor::extractPositiveSample(const Image &image, i
     return result;
 }
 
+std::vector<Sample> SampleExtractor::extractNegativeSample(const Image &image, bool isSceneImage) {
+    return {};
+}

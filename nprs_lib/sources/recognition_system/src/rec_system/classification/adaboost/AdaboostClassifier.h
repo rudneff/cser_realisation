@@ -3,18 +3,19 @@
 
 #include <rec_system/classification/TrainingSet.h>
 #include <opencv2/opencv.hpp>
+#include <rec_system/classification/Classifier.h>
 
 namespace nprs {
 
-class AdaboostClassifier {
+class AdaboostClassifier : public Classifier {
 public:
     AdaboostClassifier();
 
-    void load(const std::string &fileName);
-    void save(const std::string &fileName);
+    void load(const std::string &fileName) override;
+    void save(const std::string &fileName) override;
 
-    void train(const TrainingSet &trainingSet);
-    float predict(const std::vector<float> &item);
+    void train(const TrainingSet &trainingSet) override;
+    float predict(const std::vector<float> &item) override;
 
 private:
     cv::Boost _cvBoost;

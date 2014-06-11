@@ -1,4 +1,4 @@
-inline Sample::Sample(ExtremalRegion const& region, Image const& image)
+inline Sample::Sample(const ExtremalRegion &region, const Image &image)
     : _region(region), _image(image)
 {
 }

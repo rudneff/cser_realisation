@@ -9,13 +9,14 @@ class TrainDataItem;
 
 class TrainingSet final {
 public:
-    TrainingSet(int featuresCount);
-    
+    TrainingSet();
+    ~TrainingSet();
+
     TrainingSet(TrainingSet && other);
     TrainingSet& operator= (TrainingSet && other);
 
-    TrainDataItem& operator() (int index);
-    const TrainDataItem& operator() (int index) const;
+    TrainDataItem&  operator() (int index);
+    const TrainDataItem & operator() (int index) const;
 
     TrainDataItem & getItem(int index);
     const TrainDataItem & getItem(int index) const;
@@ -36,6 +37,7 @@ public:
 
     const std::vector<float> & data() const { return _data; }
     float response() const { return _response; }
+    int featuresCount() { return _data.size(); }
 
 private:
     std::vector<float> _data;

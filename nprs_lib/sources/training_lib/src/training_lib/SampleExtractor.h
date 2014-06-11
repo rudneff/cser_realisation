@@ -13,8 +13,10 @@ class ExtremalRegion;
 
 class SampleExtractor {
 public:
-    std::vector<Sample> extractPositiveSample(const Bitmap &image, int numImages = 10);
-    std::vector<Sample> extractPositiveSample(const Image &image, int numImages = 10);
+    std::vector<Sample> extractPositiveSample(const Bitmap &image);
+    std::vector<Sample> extractPositiveSample(const Image &image);
+
+    std::vector<Sample> extractNegativeSample(const Image &image, bool isSceneImage);
 };
 
 }

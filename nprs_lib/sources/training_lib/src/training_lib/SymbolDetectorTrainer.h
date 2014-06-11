@@ -3,28 +3,31 @@
 
 #include <memory>
 #include <vector>
-#include <rec_system/classification/TrainingSet.h>
 
 namespace nprs {
 
+class Bitmap;
 class Image;
 class AdaboostClassifier; using pAdaboostClassifier = std::shared_ptr<AdaboostClassifier>;
+class IClassifierTrainer; using pIClassifierTrainer = std::shared_ptr<IClassifierTrainer>;
+class Classifier; using pClassifier = std::shared_ptr<Classifier>;
 
 class SymbolDetectorTrainer {
 public:
     SymbolDetectorTrainer();
 
-    void pushSymbolImage(const Image &image, int threshold = -1);
-    void pushSymbolFeatures(const std::vector<float> &features);
+    void pushPositiveSample(const Bitmap &image);
+    void pushPositiveSample(const Image &image);
+    void pushPositiveSample(const std::vector<float> &features);
 
-    void pushNonSymbolImage(const Image &image, int threshold = -1);
-    void pushNonSymbolsFeatures(const std::vector<float> &features);
+    void pushNegativeSample(const Bitmap &image, bool isSceneImage, int numSamples);
+    void pushNegativeSample(const Image &image, bool isSceneImage);
+    void pushNegativeSample(const std::vector<float> &features);
 
-    pAdaboostClassifier createNMLightClassifier();
-    void trainNMLightClassifier(const std::string &fileName);
-
+    pClassifier createNMLightClassifier();
+    
 private:
-    TrainingSet _nmLightTrainingSet;
+    pIClassifierTrainer _lightClassifierTrainer;
 };
 
 }

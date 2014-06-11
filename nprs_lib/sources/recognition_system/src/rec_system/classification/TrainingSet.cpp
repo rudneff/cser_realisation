@@ -2,13 +2,16 @@
 
 using namespace nprs;
 
-TrainingSet::TrainingSet(int featuresCount)
-    : _featuresCount(featuresCount)
+TrainingSet::TrainingSet()
 {
 }
+
 TrainingSet::TrainingSet(TrainingSet && other) 
     : _data(std::move(other._data))
 {
+}
+
+TrainingSet::~TrainingSet() {
 }
 
 TrainingSet& TrainingSet::operator=(TrainingSet && other) 
@@ -40,6 +43,6 @@ void TrainingSet::addItem(const TrainDataItem &item) {
     _data.push_back(item);
 }
 
-TrainDataItem::TrainDataItem(std::vector<float> const& data, float response) {
+TrainDataItem::TrainDataItem(const std::vector<float> &data, float response) {
     _data = data;
 }
