@@ -12,6 +12,9 @@ SET (headers
     src/rec_system/common_structures/NumberPlateCharacter.h
     src/rec_system/common_structures/RecognitionResults.h
 
+	src/rec_system/image_processing/filters/thresholding/OtsuThresholder.h
+	src/rec_system/image_processing/filters/thresholding/Thresholder.h
+
     src/rec_system/image_processing/region_detection/cser/CSERDetector.h
     src/rec_system/image_processing/region_detection/cser/ExtremalRegion.h
     src/rec_system/image_processing/region_detection/cser/ERFilter.h
@@ -28,6 +31,10 @@ SET (headers
     src/rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.h
     src/rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.h
     src/rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.h
+	
+	src/rec_system/image_processing/filters/ImageFilter.h
+	src/rec_system/image_processing/filters/binarization/OtsuBinarizer.h
+	src/rec_system/image_processing/filters/binarization/ThresholdBinarizer.h
 
 	src/rec_system/classification/Classifier.h
 	src/rec_system/classification/TrainingSet.h
@@ -41,6 +48,9 @@ SET (sources
     src/rec_system/common_structures/NumberPlate.cpp
     src/rec_system/common_structures/NumberPlateCharacter.cpp
     src/rec_system/common_structures/RecognitionResults.cpp
+
+	src/rec_system/image_processing/filters/thresholding/OtsuThresholder.cpp
+	src/rec_system/image_processing/filters/thresholding/Thresholder.cpp
 
     src/rec_system/image_processing/region_detection/cser/CSERDetector.cpp
     src/rec_system/image_processing/region_detection/cser/ExtremalRegion.cpp
@@ -67,11 +77,15 @@ INCLUDE_DIRECTORIES(src)
 SET(directories
     src/rec_system
     src/rec_system/common_structures
+
     src/rec_system/image_processing
+	src/rec_system/image_processing/filters
+	src/rec_system/image_processing/filters/thresholding
     src/rec_system/image_processing/region_detection/cser
     src/rec_system/image_processing/region_detection/cser/filters
     src/rec_system/image_processing/region_detection/cser/algorithm
     src/rec_system/image_processing/region_detection/cser/features
+
 	src/rec_system/classification
 	src/rec_system/classification/adaboost
 )

@@ -9,7 +9,7 @@ class TrainDataItem;
 
 class TrainingSet final {
 public:
-    TrainingSet();
+    TrainingSet(int featuresCount);
     
     TrainingSet(TrainingSet && other);
     TrainingSet& operator= (TrainingSet && other);
@@ -32,6 +32,8 @@ private:
 
 class TrainDataItem final {
 public:
+    TrainDataItem(const std::vector<float> &data, float response);
+
     const std::vector<float> & data() const { return _data; }
     float response() const { return _response; }
 

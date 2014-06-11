@@ -6,10 +6,15 @@ PROJECT(${projname})
 
 SET (headers
 	src/training_lib/SymbolDetectorTrainer.h
+	src/training_lib/SampleExtractor.h
+	src/training_lib/Sample.h
+	src/training_lib/Sample.inl
 )
 
 SET (sources
 	src/training_lib/SymbolDetectorTrainer.cpp
+	src/training_lib/SampleExtractor.cpp
+	src/training_lib/Sample.cpp
 )
 
 INCLUDE_DIRECTORIES(src)

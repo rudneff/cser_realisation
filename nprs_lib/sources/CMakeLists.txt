@@ -38,6 +38,7 @@ IF (TEST_GUI)
 	
 	ADD_SUBDIRECTORY(qt_test_gui)
 	ADD_SUBDIRECTORY(qt_console_ui)
+	ADD_SUBDIRECTORY(qt_training_utility)
 ENDIF()
 
 IF (MSVC)

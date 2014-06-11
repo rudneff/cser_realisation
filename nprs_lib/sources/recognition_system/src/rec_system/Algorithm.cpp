@@ -6,5 +6,4 @@ nprs::Algorithm::Algorithm(const std::function<void()> &finishedCallback)
 }
 
 nprs::Algorithm::~Algorithm() {
-    
 }

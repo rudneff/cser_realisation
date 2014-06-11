@@ -1,31 +1,40 @@
-#include "RawImageData.h"
+#include "Bitmap.h"
 #include <memory>
 #include <iostream>
 
 using namespace nprs;
 
-RawImageData::RawImageData(uchar *data, int width, int height, const ColorInfo &colorInfo)
-    : _width(width), 
-      _height(height), 
-      _colorInfo(colorInfo) 
+Bitmap::Bitmap(int width, int height, const ColorInfo &colorInfo) 
+    : _width(width),
+      _height(height),
+      _colorInfo(colorInfo),
+      _dataSize(width * height * colorInfo.numChannels())
 {
-    int size = width * height * colorInfo.numChannels();
-    _data = new uchar[size];
-    std::copy(data, data + size, _data);
+    _data = new uchar[_dataSize];
 }
 
-RawImageData::RawImageData(const RawImageData &that)
+Bitmap::Bitmap(const uchar *data, int width, int height, const ColorInfo &colorInfo)
+    : _width(width), 
+      _height(height), 
+      _colorInfo(colorInfo),
+      _dataSize(width * height * colorInfo.numChannels())
+{
+    _data = new uchar[_dataSize];
+    std::copy(data, data + _dataSize, _data);
+}
+
+Bitmap::Bitmap(const Bitmap &that)
     : _data(nullptr),
       _width(that._width),
       _height(that._height),
       _colorInfo(that._colorInfo)
 {
-    int size = that._width * that._height * that._colorInfo.numChannels();
-    _data = new uchar[size];
-    std::copy(that._data, that._data + size, _data);
+    _dataSize = that._width * that._height * that._colorInfo.numChannels();
+    _data = new uchar[_dataSize];
+    std::copy(that._data, that._data + _dataSize, _data);
 }
 
-RawImageData::RawImageData(RawImageData && that) 
+Bitmap::Bitmap(Bitmap && that) 
     : _data(that._data),
       _width(that._width),
       _height(that._height),
@@ -35,12 +44,12 @@ RawImageData::RawImageData(RawImageData && that)
     that._data = nullptr;
 }
 
-RawImageData::~RawImageData() {
+Bitmap::~Bitmap() {
     if (_data != nullptr)
         delete[] _data;
 }
 
-RawImageData& RawImageData::operator=(const RawImageData &that) {
+Bitmap& Bitmap::operator=(const Bitmap &that) {
     if (this != &that) {
         _width = that._width;
         _height = that._height;
@@ -53,7 +62,7 @@ RawImageData& RawImageData::operator=(const RawImageData &that) {
     return *this;
 }
 
-RawImageData& RawImageData::operator=(RawImageData && that) {
+Bitmap& Bitmap::operator=(Bitmap && that) {
     if (this != &that) {
         _width = that._width;
         _height = that._height;

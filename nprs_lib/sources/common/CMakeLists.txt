@@ -9,14 +9,18 @@ INCLUDE(utils)
 SET (headers 
     src/common/image/Color.h
     src/common/image/Image.h
+	src/common/image/Image.inl
     src/common/image/ImageConverter.h
-    src/common/image/RawImageData.h
+    src/common/image/Bitmap.h
 
     src/common/CommonDefinitions.h
     src/common/Rectangle.h
+	src/common/Rectangle.inl
     src/common/Line.h
     src/common/Point.h
+	src/common/Point.inl
     src/common/Matrix.h
+	src/common/Matrix.inl
 
     src/common/exceptions/NprsException.h
     src/common/exceptions/ArgumentException.h
@@ -27,7 +31,7 @@ SET (sources
     src/common/image/Image.cpp
     src/common/image/ImageConverter.cpp
     src/common/image/Color.cpp
-	src/common/image/RawImageData.cpp
+	src/common/image/Bitmap.cpp
 
     src/common/exceptions/NprsException.cpp
     src/common/exceptions/ArgumentException.cpp

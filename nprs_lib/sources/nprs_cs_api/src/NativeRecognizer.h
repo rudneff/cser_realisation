@@ -9,7 +9,7 @@
 #include <rec_system/common_structures/NumberPlateCharacter.h>
 #include <common/image/Image.h>
 #include <common/image/ImageConverter.h>
-#include <common/image/RawImageData.h>
+#include <common/image/Bitmap.h>
 
 using namespace System;
 using namespace System::Collections;
@@ -40,7 +40,7 @@ public:
         nprs::RecognitionSystem recSystem;
         pin_ptr<Byte> ptr = &image[0];
         uchar* imgData = ptr;
-        nprs::RecognitionResults results = recSystem.recognize(nprs::RawImageData(imgData, width, height, PixFormatToColorInfo(pixelFormat)));
+        nprs::RecognitionResults results = recSystem.recognize(nprs::Bitmap(imgData, width, height, PixFormatToColorInfo(pixelFormat)));
 
 
         return ConvertResults(results);
@@ -54,8 +54,8 @@ private:
         }
 
         array<Byte>^ image = gcnew array<Byte>(src.resultImage().width() * src.resultImage().height() * 4);
-        std::vector<uchar> converted = nprs::ImageConverter::imageToRawBgra(src.resultImage());
-        pin_ptr<Byte> ptr = &converted[0];
+        nprs::Bitmap converted = nprs::ImageConverter::imageToRawBgra(src.resultImage());
+        pin_ptr<Byte> ptr = converted.data();
         Marshal::Copy((IntPtr)ptr, image, 0, image->Length);
 
         return gcnew RecognitionResults(numPlates, image);

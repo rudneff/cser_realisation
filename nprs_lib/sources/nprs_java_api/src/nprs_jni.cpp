@@ -6,7 +6,7 @@
 #include <rec_system/common_structures/NumberPlateCharacter.h>
 #include <common/image/Image.h>
 #include <common/image/Color.h>
-#include <common/image/RawImageData.h>
+#include <common/image/Bitmap.h>
 #include <iostream>
 
 const char RR_CLASS_NAME[] = "com/nprs/app/recognition/common_structures/RecognitionResults";
@@ -21,7 +21,7 @@ jobject JNICALL Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv
     RecognitionSystem recognitionSystem;
     jboolean isCopy;
     uchar *data = reinterpret_cast<uchar*>(env->GetIntArrayElements(pixels, &isCopy));
-    RecognitionResults results = recognitionSystem.recognize(RawImageData(data, width, height, nprs::ColorInfo(nprs::ColorFormat::RGBA, 3)));
+    RecognitionResults results = recognitionSystem.recognize(Bitmap(data, width, height, nprs::ColorInfo(nprs::ColorFormat::RGBA, 3)));
     jobject resultsJava = createRecResultsInstance(env, results);
     return resultsJava;
 }
