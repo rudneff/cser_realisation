@@ -10,7 +10,7 @@ namespace nprs {
 
 class Point;
 class ERDescriptor;
-class ICFeature;
+class ICFeatureComputer;
 
 class ERDescriptor {
 public:
@@ -21,7 +21,7 @@ public:
     static const int FEATURE_HCROSSINGS = 2;
     static const int FEATURE_NUMHOLES = 3;
 
-    ERDescriptor(const Point& p, std::vector<ICFeature*> *featureComputers, int threshold);
+    ERDescriptor(const Point& p, std::vector<ICFeatureComputer*> *featureComputers, int threshold);
     ~ERDescriptor();
 
     ERDescriptor * attachPoint(const Point &p, int threshold);
@@ -29,14 +29,14 @@ public:
     
     Rectangle const& bounds() const { return _bounds; }
     int getFeature(int f) const  { return _features[f]; }
-    const std::vector<float> featureVector() const { return _features; }
+    std::vector<float> const& featureVector() const { return _features; }
 
     int threshold() const { return _threshold; }
 
 private:
-    ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds, int threshold);
+    ERDescriptor(std::vector<ICFeatureComputer*> *featureComputers, Rectangle bounds, int threshold);
 
-    std::vector<ICFeature*> *_featureComputers;
+    std::vector<ICFeatureComputer*> *_featureComputers;
 
     std::vector<float> _features;
     Rectangle _bounds;

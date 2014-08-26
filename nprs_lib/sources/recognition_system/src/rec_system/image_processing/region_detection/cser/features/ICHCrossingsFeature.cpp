@@ -4,11 +4,11 @@
 using namespace nprs;
 
 ICHCrossingsFeature::ICHCrossingsFeature(const Matrix<ERDescriptor*> *erMap, const Image *image, int channel)
-    : ICFeature(erMap, image, channel), _ytop(0), _ybottom(0)
+    : ICFeatureComputer(erMap, image, channel), _ytop(0), _ybottom(0)
 {
 }
 
-void ICHCrossingsFeature::combine(const ICFeature *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) {
+void ICHCrossingsFeature::combine(const ICFeatureComputer *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) {
     auto that = static_cast<const ICHCrossingsFeature*>(other);
 
     int ytop = fmin(this->_ytop, that->_ytop);

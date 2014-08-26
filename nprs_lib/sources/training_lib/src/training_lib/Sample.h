@@ -1,24 +1,29 @@
 #ifndef TRAININGLIB_SAMPLE_H
 #define TRAININGLIB_SAMPLE_H
 
-#include <rec_system/image_processing/region_detection/cser/ExtremalRegion.h>
+#include <common/NprsStd.h>
+#include <rec_system/classification/TrainingSet.h>
 #include <common/image/Image.h>
 
 namespace nprs {
 
-class Sample final {
-public:
-    Sample(const ExtremalRegion &region, const Image &image);
-
-    const ExtremalRegion & region() { return _region; }
-    const Image & image() { return _image; }
-
-private:
-    ExtremalRegion _region;
-    Image _image;
+enum class SampleType {
+    NMHeavy, NMLight
 };
 
-#include "Sample.inl"
+class Sample final {
+public:
+    Sample(const std::vector<float> &features, SampleType type, sp<const Image> image = sp<const Image>());
+
+    const std::vector<float> & featureVector() const { return _featureVector; }
+    sp<const Image> image() const { return _image; }
+    SampleType type() const { return _sampleType; }
+
+private:
+    SampleType _sampleType;
+    std::vector<float> _featureVector;
+    sp<const Image> _image;
+};
 
 }
 

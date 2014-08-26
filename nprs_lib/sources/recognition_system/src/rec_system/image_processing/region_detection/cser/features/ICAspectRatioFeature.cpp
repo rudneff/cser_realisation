@@ -5,7 +5,7 @@ using namespace nprs;
 using namespace std;
 
 ICAspectRatioFeature::ICAspectRatioFeature(const Matrix<ERDescriptor*> *erMap, const Image *image, int channel) 
-    : ICFeature(erMap, image, channel)
+    : ICFeatureComputer(erMap, image, channel)
 {}
 
 void ICAspectRatioFeature::init(const Point &p, const ERDescriptor *reg) {
@@ -21,7 +21,7 @@ void ICAspectRatioFeature::increment(const Point &p, const ERDescriptor *reg) {
     _bounds = Rectangle::fromPoints(x, y, x1, y1);
 }
 
-void ICAspectRatioFeature::combine(const ICFeature *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) {
+void ICAspectRatioFeature::combine(const ICFeatureComputer *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) {
     const ICAspectRatioFeature *o = static_cast<const ICAspectRatioFeature*>(other);
 
     float x = fmin(o->_bounds.x(), _bounds.x());

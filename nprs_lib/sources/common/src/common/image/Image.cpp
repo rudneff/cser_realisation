@@ -73,5 +73,5 @@ Image Image::cropped(int x0, int y0, int width, int height) const {
         }
     }
 
-    return res;
+    return std::move(res);
 }

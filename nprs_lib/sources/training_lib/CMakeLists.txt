@@ -8,16 +8,35 @@ SET (headers
 	src/training_lib/SymbolDetectorTrainer.h
 	src/training_lib/SampleExtractor.h
 	src/training_lib/Sample.h
-	src/training_lib/Sample.inl
+	src/training_lib/InputSample.h
 	src/training_lib/IClassifierTrainer.h
 	src/training_lib/trainers/LightClassifierTrainer.h
+	
+	src/training_lib/input_samples/ImageInputSample.h
+	src/training_lib/input_samples/PositiveImageInputSample.h
+	src/training_lib/input_samples/NegatvieRegionInputSample.h
+	src/training_lib/input_samples/NegativeImageInputSample.h
+	
+	src/training_lib/input_sample_extractors/MultiThresholdExtractor.h
+	src/training_lib/input_sample_extractors/AutoThresholdExtractor.h
+	src/training_lib/input_sample_extractors/RandomRegionExtractor.h
 )
 
 SET (sources
 	src/training_lib/SymbolDetectorTrainer.cpp
 	src/training_lib/SampleExtractor.cpp
 	src/training_lib/Sample.cpp
+	src/training_lib/InputSample.cpp
 	src/training_lib/trainers/LightClassifierTrainer.cpp
+	
+	src/training_lib/input_samples/ImageInputSample.cpp
+	src/training_lib/input_samples/PositiveImageInputSample.cpp
+	src/training_lib/input_samples/NegatvieRegionInputSample.cpp
+	src/training_lib/input_samples/NegativeImageInputSample.cpp
+	
+	src/training_lib/input_sample_extractors/MultiThresholdExtractor.cpp
+	src/training_lib/input_sample_extractors/AutoThresholdExtractor.cpp
+	src/training_lib/input_sample_extractors/RandomRegionExtractor.cpp
 )
 
 INCLUDE_DIRECTORIES(src)
@@ -25,6 +44,8 @@ INCLUDE_DIRECTORIES(src)
 SET(directories
     src/training_lib
 	src/training_lib/trainers
+	src/training_lib/input_sample_extractors
+	src/training_lib/input_samples
 )
 
 CHECK_FILES("${sources};${headers}")
@@ -48,4 +69,4 @@ INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
 
 ADD_LIBRARY(${projname} ${headers} ${sources})
 TARGET_LINK_LIBRARIES(${projname} ${dependencies})
-INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)
+INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_SOURCE_DIR}/../bin/)

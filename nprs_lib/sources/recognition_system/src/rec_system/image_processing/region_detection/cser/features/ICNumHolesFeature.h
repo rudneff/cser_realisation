@@ -5,14 +5,14 @@
 
 namespace nprs {
 
-class ICNumHolesFeature : public ICFeature {
+class ICNumHolesFeature : public ICFeatureComputer {
 public:
     ICNumHolesFeature(const Matrix<ERDescriptor*> *erMap, const Image *image, int channel);
     ~ICNumHolesFeature();
 
     void init(const Point &p, const ERDescriptor *reg) override;
     void increment(const Point &p, const ERDescriptor *reg) override;
-    void combine(const ICFeature *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) override;
+    void combine(const ICFeatureComputer *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) override;
     
     float getValue() override;
 

@@ -6,13 +6,13 @@
 
 namespace nprs {
 
-class ICHCrossingsFeature : public ICFeature {
+class ICHCrossingsFeature : public ICFeatureComputer {
 public:
     ICHCrossingsFeature(Matrix<ERDescriptor*> const* erMap, Image const* image, int channel);
 
     void init(const Point &p, const ERDescriptor *reg) override;
     void increment(const Point &p, const ERDescriptor *reg) override;
-    void combine(const ICFeature *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) override;
+    void combine(const ICFeatureComputer *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) override;
     float getValue() override;
 
 private:

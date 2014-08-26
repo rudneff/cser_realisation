@@ -13,7 +13,7 @@ SET (headers
     src/common/image/ImageConverter.h
     src/common/image/Bitmap.h
 
-    src/common/CommonDefinitions.h
+    src/common/NprsStd.h
     src/common/Rectangle.h
 	src/common/Rectangle.inl
     src/common/Line.h
@@ -21,6 +21,8 @@ SET (headers
 	src/common/Point.inl
     src/common/Matrix.h
 	src/common/Matrix.inl
+	src/common/Size.h
+	src/common/Size.inl
 
     src/common/exceptions/NprsException.h
     src/common/exceptions/ArgumentException.h

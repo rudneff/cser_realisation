@@ -14,8 +14,7 @@ TrainingSet::TrainingSet(TrainingSet && other)
 TrainingSet::~TrainingSet() {
 }
 
-TrainingSet& TrainingSet::operator=(TrainingSet && other) 
-{
+TrainingSet& TrainingSet::operator=(TrainingSet && other)  {
     if (this != &other) {
         _data = std::move(other._data);
     }

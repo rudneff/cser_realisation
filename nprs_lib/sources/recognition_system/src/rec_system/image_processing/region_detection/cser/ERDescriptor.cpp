@@ -5,7 +5,7 @@
 
 using namespace nprs;
 
-ERDescriptor::ERDescriptor(const Point &p, std::vector<ICFeature*> *featureComputers, int threshold)
+ERDescriptor::ERDescriptor(const Point &p, std::vector<ICFeatureComputer*> *featureComputers, int threshold)
     : _bounds(p.x(), p.y(), 1, 1), 
       _featureComputers(featureComputers), 
       _features(featureComputers->size()),
@@ -21,7 +21,7 @@ ERDescriptor::ERDescriptor(const Point &p, std::vector<ICFeature*> *featureCompu
 ERDescriptor::~ERDescriptor() {
 }
 
-ERDescriptor::ERDescriptor(std::vector<ICFeature*> *featureComputers, Rectangle bounds, int threshold) 
+ERDescriptor::ERDescriptor(std::vector<ICFeatureComputer*> *featureComputers, Rectangle bounds, int threshold) 
     : _featureComputers(featureComputers), 
       _features(featureComputers->size()), 
       _bounds(bounds),

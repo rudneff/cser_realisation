@@ -1,6 +1,7 @@
 #ifndef RECOGNITION_SYSTEM_H
 #define RECOGNITION_SYSTEM_H
 
+#include <common/NprsStd.h>
 #include <memory>
 #include <vector>
 

@@ -4,7 +4,7 @@
 using namespace nprs;
 
 ICNumHolesFeature::ICNumHolesFeature(Matrix<ERDescriptor*> const* erMap, Image const* image, int channel) 
-    : ICFeature(erMap, image, channel),
+    : ICFeatureComputer(erMap, image, channel),
       _genus(0)
 {
 }
@@ -41,12 +41,12 @@ void ICNumHolesFeature::increment(const Point &p, const ERDescriptor *reg) {
     _genus = 0.25 * (dc1 - dc2 + 2 * dc3);
 }
 
-void ICNumHolesFeature::combine(const ICFeature *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) {
+void ICNumHolesFeature::combine(const ICFeatureComputer *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) {
     _genus += (static_cast<const ICNumHolesFeature*>(other))->_genus;
 }
 
 float ICNumHolesFeature::getValue() {
-    return  1 - _genus;
+    return  1.0f - _genus;
 }
 
 std::tuple<int, int, int> ICNumHolesFeature::computePatterns(const Matrix<int> &r) {

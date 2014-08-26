@@ -11,7 +11,7 @@ class NumberPlateCharacter; using pNumberPlateCharacter = std::shared_ptr<Number
 
 class NumberPlate {
 public:
-    NumberPlate(const std::vector<pNumberPlateCharacter> &characters, Rectangle bounds);
+    NumberPlate(const std::vector<pNumberPlateCharacter> &characters, const Rectangle &bounds);
 
     NumberPlate(NumberPlate && other);
     NumberPlate & operator= (NumberPlate && other);

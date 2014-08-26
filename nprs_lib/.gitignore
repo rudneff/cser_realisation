@@ -10,3 +10,5 @@ bin/
 /sources-build/*
 /android-build/*
 /build/*
+/training_samples/*
+/out/*

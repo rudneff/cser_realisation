@@ -1,30 +1,25 @@
 #ifndef TRAININGLIB_LIGHTCLASSIFIERTRAINER_H
 #define TRAININGLIB_LIGHTCLASSIFIERTRAINER_H
 
+#include <common/NprsStd.h>
 #include <memory>
 #include <rec_system/classification/TrainingSet.h>
 #include <training_lib/IClassifierTrainer.h>
-#include <training_lib/SampleExtractor.h>
 
 namespace nprs {
 
-class Classifier; using pClassifer = std::shared_ptr<Classifier>;
+class Classifier;
+class InputSample;
 
 class LightClassifierTrainer : public IClassifierTrainer {
 public:
     LightClassifierTrainer();
 
-    pClassifer train() override;
-
-    void pushPositiveSample(const Image &image) override;
-    void pushPositiveSample(const std::vector<float> &features) override;
-
-    void pushNegativeSample(const Image &image, bool isSceneImage) override;
-    void pushNegativeSample(const std::vector<float> &features) override;
+    sp<Classifier> train() override;
+    void pushSample(const InputSample &sample, bool isPositive) override;
 
 private:
     TrainingSet _trainingSet;
-    SampleExtractor _sampleExtractor;
 };
 
 }

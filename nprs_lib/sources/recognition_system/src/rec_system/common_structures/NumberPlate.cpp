@@ -4,7 +4,7 @@
 
 using namespace nprs;
 
-NumberPlate::NumberPlate(const std::vector<pNumberPlateCharacter> &characters, Rectangle bounds)
+NumberPlate::NumberPlate(const std::vector<pNumberPlateCharacter> &characters, const Rectangle &bounds)
     : _bounds(bounds), _characters(characters)
 {
 }

@@ -7,7 +7,7 @@
 #include <rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.h>
 #include <rec_system/image_processing/region_detection/cser/ERFilter.h>
 #include <rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.h>
-#include <rec_system\image_processing\region_detection\cser\features\ICNumHolesFeature.h>
+#include <rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.h>
 
 using namespace nprs;
 
@@ -68,7 +68,7 @@ void CserAlgorithm::increment(int threshold) {
 }
 
 ERDescriptor* CserAlgorithm::newRegion(Point const& p) {
-    std::vector<ICFeature*> *featureComputers = new std::vector<ICFeature*>(4);
+    std::vector<ICFeatureComputer*> *featureComputers = new std::vector<ICFeatureComputer*>(4);
 
     (*featureComputers)[ERDescriptor::FEATURE_ASPECTRATIO] = new ICAspectRatioFeature(&_erMap, &_image, _channel);
     (*featureComputers)[ERDescriptor::FEATURE_COMPACTNESS] = new ICCompactnessFeature(&_erMap, &_image, _channel);

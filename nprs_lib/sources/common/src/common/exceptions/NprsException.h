@@ -10,7 +10,7 @@ public:
     explicit NprsException(const std::string &message);
     NprsException(const std::string &message, std::exception_ptr innerException);
 
-    std::string const& getMessage() { return _message; }
+    const std::string & getMessage() { return _message; }
     std::exception_ptr getInnerException() { return _innerException; }
 
 private:

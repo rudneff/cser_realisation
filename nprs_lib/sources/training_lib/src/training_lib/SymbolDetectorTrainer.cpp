@@ -7,35 +7,18 @@
 using namespace nprs;
 
 SymbolDetectorTrainer::SymbolDetectorTrainer()
-    : _lightClassifierTrainer(new LightClassifierTrainer())
+    : _nmLightTrainer(new LightClassifierTrainer())
 {
-    
 }
 
-pClassifier SymbolDetectorTrainer::createNMLightClassifier() {
-    return _lightClassifierTrainer->train();
+sp<Classifier> SymbolDetectorTrainer::createNMLightClassifier() {
+    return _nmLightTrainer->train();
 }
 
-void SymbolDetectorTrainer::pushPositiveSample(const Bitmap &image) {
-    _lightClassifierTrainer->pushPositiveSample(ImageConverter::convertRaw(image));
+void SymbolDetectorTrainer::pushPositiveSample(const InputSample &sample) {
+    _nmLightTrainer->pushSample(sample, true);
 }
 
-void SymbolDetectorTrainer::pushPositiveSample(const Image &image) {
-    _lightClassifierTrainer->pushPositiveSample(image);
-}
-
-void SymbolDetectorTrainer::pushPositiveSample(const std::vector<float> &features) {
-    _lightClassifierTrainer->pushPositiveSample(features);
-}
-
-void SymbolDetectorTrainer::pushNegativeSample(const Bitmap &image, bool isSceneImage, int numSamples) {
-    _lightClassifierTrainer->pushNegativeSample(ImageConverter::convertRaw(image), isSceneImage);
-}
-
-void SymbolDetectorTrainer::pushNegativeSample(const Image &image, bool isSceneImage) {
-    _lightClassifierTrainer->pushNegativeSample(image, isSceneImage);
-}
-
-void SymbolDetectorTrainer::pushNegativeSample(const std::vector<float> &features) {
-    _lightClassifierTrainer->pushNegativeSample(features);
+void SymbolDetectorTrainer::pushNegativeSample(const InputSample &sample) {
+    _nmLightTrainer->pushSample(sample, false);
 }

@@ -9,11 +9,11 @@ ERFilterMNLight::~ERFilterMNLight()
 
 std::vector<ERDescriptor*> ERFilterMNLight::perform(const std::vector<ERDescriptor*> &regions) {
     std::vector<ERDescriptor*> result;
-    for(ERDescriptor* reg : regions) {
+    for(ERDescriptor * reg : regions) {
         Rectangle const& bounds = reg->bounds();
         if (bounds.width() > 5 && bounds.width() < 60 &&
             bounds.height() > 5 && bounds.height() < 60 &&
-            reg->getFeature(ERDescriptor::FEATURE_ASPECTRATIO) < 0.7) 
+            reg->getFeature(ERDescriptor::FEATURE_ASPECTRATIO) < 0.7)
             {
                 result.push_back(reg);
             }

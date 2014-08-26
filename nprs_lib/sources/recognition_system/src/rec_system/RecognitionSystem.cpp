@@ -18,25 +18,23 @@
 namespace nprs {
 
 RecognitionSystem::RecognitionSystem() {
-    
 }
 
 RecognitionSystem::~RecognitionSystem() {
-    
 }
 
 RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
-    std::vector<pERFilter> filters{ pERFilter(new ERFilterMNLight()) };
+    std::vector<sp<ERFilter>> filters{ std::make_shared<ERFilterMNLight>() };
     Image converted = ImageConverter::convertRaw(image);
 
     CSERDetector detector(filters);
     auto results = detector.detect(converted);
 
-    std::vector<pNumberPlate> numberPlates;
-     for (auto res : results) {
-         pNumberPlate np = pNumberPlate(new NumberPlate(std::vector<pNumberPlateCharacter>(), res.bounds()));
-         numberPlates.push_back(np); 
-     }
+    std::vector<sp<NumberPlate>> numberPlates;
+    for (auto res : results) {
+        sp<NumberPlate> np = std::make_shared<NumberPlate>(std::vector<sp<NumberPlateCharacter>>(), res.bounds());
+        numberPlates.push_back(np); 
+    }
 
     return std::move(RecognitionResults(std::move(numberPlates), std::move(converted)));
 }
