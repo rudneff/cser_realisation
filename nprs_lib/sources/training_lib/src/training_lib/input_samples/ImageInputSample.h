@@ -12,7 +12,7 @@ class ImageInputSample : public InputSample {
 public:
     ImageInputSample(sp<const Image> image);
 
-    sp<const Image> image() const { return _image; }
+    sp<const Image> const&  image() const { return _image; }
 
 private:
     sp<const Image> _image;

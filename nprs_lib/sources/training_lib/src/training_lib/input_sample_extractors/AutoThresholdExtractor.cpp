@@ -40,7 +40,7 @@ std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples()
 
     if (first != regions.end()) {
         auto maxSquare = first;
-        for (auto it = first; it != regions.end() && it != first + 5; it++) {
+        for (auto it = first; it != regions.end() && it != first + 5; ++it) {
             if (it->bounds().area() > maxSquare->bounds().area()) {
                 maxSquare = it;
             }
