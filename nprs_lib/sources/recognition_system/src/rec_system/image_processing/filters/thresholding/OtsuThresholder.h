@@ -21,4 +21,3 @@ private:
 }
 
 #endif // RECSYSTEM_OTSUTHRESHOLDER_H
-

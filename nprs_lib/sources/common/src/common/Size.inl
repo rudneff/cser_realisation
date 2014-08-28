@@ -4,14 +4,14 @@ inline Size::Size(int size)
 }
 
 inline Size::Size(int width, int height)
-    : _width(width)
+: _width(width), _height(height)
 {
 }
 
-inline int Size::width() {
+inline int Size::width() const {
     return _width;
 }
 
-inline int Size::height() {
+inline int Size::height() const {
     return _height;
 }

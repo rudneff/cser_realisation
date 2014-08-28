@@ -28,16 +28,17 @@ int main(int argc, char **argv) {
     
     nprs::Bitmap bmp(image.bits(), image.width(), image.height(), nprs::ColorInfo(nprs::ColorFormat::RGB, 3));
     auto img = make_shared<nprs::Image>(nprs::ImageConverter::convertRaw(bmp));
-    nprs::AutoThresholdExtractor extractor(img);
+    nprs::RandomRegionExtractor extractor(img, 10, nprs::Size(7, 7), nprs::Size(50, 50));
+    //nprs::AutoThresholdExtractor extractor(img);
 
     auto samples = extractor.extractNMLightSamples();
     int counter = 0;
     for (auto sample : samples) {
         printVec(sample.featureVector());
         std::cout << std::endl;
-        nprs::Bitmap regBmp = nprs::ImageConverter::imageToRawRgb(*sample.image());
-        QImage resImage(regBmp.data(), regBmp.width(), regBmp.height(), QImage::Format_RGB888);
-        resImage.save("out/" + QString::number(counter++) + ".bmp", "bmp", 100);
+        nprs::Bitmap regBmp = nprs::ImageConverter::imageToRawBgra(*sample.image());
+        QImage resImage(regBmp.data(), regBmp.width(), regBmp.height(), QImage::Format_RGBA8888);
+        resImage.save("out/" + QString::number(counter++) + ".bmp");
     }
 
     std::cin.get();

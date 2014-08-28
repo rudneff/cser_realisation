@@ -49,7 +49,7 @@ std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples()
         Thresholder thresholder;
         Image regImage = thresholder.threshold(_image->cropped(maxSquare->bounds().x(), maxSquare->bounds().y(), maxSquare->bounds().width(), maxSquare->bounds().height()));
 
-        result.push_back(Sample(maxSquare->lightFeatures(), SampleType::NMLight));
+        result.push_back(Sample(maxSquare->lightFeatures(), SampleType::NMLight, std::make_shared<Image>(regImage)));
     }
 
     return result;

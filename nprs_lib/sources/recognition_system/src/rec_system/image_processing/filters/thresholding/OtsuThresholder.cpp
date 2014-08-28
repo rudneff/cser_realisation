@@ -20,8 +20,7 @@ float OtsuThresholder::findThreshold(const Image &image, int channel) {
 }
 
 // function is used to compute the q values in the equation
-double OtsuThresholder::px(int init, int end, const std::vector<float> &hist)
-{
+double OtsuThresholder::px(int init, int end, const std::vector<float> &hist) {
     int sum = 0;
     for (int i = init; i <= end; i++)
         sum += hist[i];

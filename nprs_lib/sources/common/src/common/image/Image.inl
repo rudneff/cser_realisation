@@ -17,3 +17,7 @@ inline float Image::setValue(int x, int y, int c, float value) {
 inline bool Image::isInside(int x, int y) const {
     return x >= 0 && x < _width && y >= 0 && y < _height;
 }
+
+inline Image Image::cropped(const Rectangle &rect) const {
+    return cropped(rect.x(), rect.y(), rect.width(), rect.height());
+}

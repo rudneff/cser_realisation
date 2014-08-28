@@ -8,8 +8,8 @@ public:
     Size(int size);
     Size(int width, int height);
 
-    int width();
-    int height();
+    int width() const;
+    int height() const;
 
 private:
     int _width;

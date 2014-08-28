@@ -40,7 +40,7 @@ void ICHCrossingsFeature::increment(const Point &p, const ERDescriptor *reg) {
     auto image = getImage();
 
     int transitions = 0;
-    transitions += (*map)(p.x() - 1, p.y()) == reg ? -1 : 1;
+    transitions += map->isInBounds(p.x() - 1, p.y()) && (*map)(p.x() - 1, p.y()) == reg ? -1 : 1;
     transitions += map->isInBounds(p.x() + 1, p.y()) && (*map)(p.x() + 1, p.y()) == reg ? -1 : 1;
 
     if (p.y() < _ytop) {

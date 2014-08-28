@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Color.h"
+#include <common/Rectangle.h>
 
 using uchar = unsigned char;
 
@@ -28,6 +29,7 @@ public:
 
     Image resized(int width, int height) const;
     Image cropped(int x, int y, int width, int height) const;
+    Image cropped(const Rectangle &rect) const;
     bool isInside(int x, int y) const;
 
 private:

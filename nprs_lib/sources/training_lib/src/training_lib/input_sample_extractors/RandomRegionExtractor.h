@@ -1,8 +1,10 @@
 #ifndef TRAININGLIB_RANDOMSCENEREGIONEXTRACTOR_H
 #define TRAININGLIB_RANDOMSCENEREGIONEXTRACTOR_H
 
+#include <random>
 #include <training_lib/SampleExtractor.h>
 #include <common/Size.h>
+#include <common/Rectangle.h>
 
 namespace nprs {
 
@@ -25,7 +27,12 @@ private:
     Size _minSize;
     Size _maxSize;
 
+    Rectangle chooseRandomRegion();
     bool checkConstraints(const ExtremalRegion &reg);
+    
+    std::default_random_engine _rng;
+    std::uniform_int_distribution<int> _widthDist;
+    std::uniform_int_distribution<int> _heightDist;
 };
 
 }
