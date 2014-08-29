@@ -4,6 +4,7 @@
 #include <training_lib/Sample.h>
 #include <training_lib/InputSample.h>
 #include <training_lib/SampleExtractor.h>
+#include <common/exceptions/CommonExceptions.h>
 
 using namespace nprs;
 
@@ -11,8 +12,12 @@ LightClassifierTrainer::LightClassifierTrainer()
 {
 }
 
-sp<Classifier> LightClassifierTrainer::train() {
-    sp<Classifier> classifier = make_shared<AdaboostClassifier>();
+up<Classifier> LightClassifierTrainer::train() {
+    if (_trainingSet.size() == 0) {
+        throw WrongStateException("LightClassifierTrainer::train(): training set is empty");
+    }
+
+    up<Classifier> classifier = up<AdaboostClassifier>(new AdaboostClassifier());
     classifier->train(_trainingSet);
     return classifier;
 }
@@ -20,6 +25,7 @@ sp<Classifier> LightClassifierTrainer::train() {
 void LightClassifierTrainer::pushSample(const InputSample &sample, bool isPositive) {
     sp<SampleExtractor> extractor = sample.createExtractor();
     std::vector<Sample> samples = extractor->extractNMLightSamples();
+
     for (Sample sample : samples) {
         _trainingSet.addItem(TrainDataItem(sample.featureVector(), isPositive ? 1.0f : 0.0f));
     }

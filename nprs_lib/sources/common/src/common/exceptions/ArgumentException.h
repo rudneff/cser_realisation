@@ -5,11 +5,6 @@
 
 namespace nprs {
 
-class ArgumentException : public NprsException {
-public:
-    explicit ArgumentException(const std::string &message);
-    ArgumentException(const std::string &message, std::exception_ptr innerException);
-};
 
 }
 

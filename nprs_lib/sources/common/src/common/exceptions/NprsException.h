@@ -2,20 +2,13 @@
 #define COMMON_NPRSEXCEPTION_H
 
 #include <string>
+#include <exception>
 
 namespace nprs {
 
-class NprsException {
+class NprsException : public std::runtime_error {
 public:
     explicit NprsException(const std::string &message);
-    NprsException(const std::string &message, std::exception_ptr innerException);
-
-    const std::string & getMessage() { return _message; }
-    std::exception_ptr getInnerException() { return _innerException; }
-
-private:
-    std::string _message;
-    std::exception_ptr _innerException;
 };
 
 }

@@ -5,11 +5,7 @@
 
 namespace nprs {
 
-class NotSupportedException : public NprsException {
-public:
-    explicit NotSupportedException(std::string const& message);
-    NotSupportedException(std::string const& message, std::exception_ptr innerException);
-};
+
 
 }
 

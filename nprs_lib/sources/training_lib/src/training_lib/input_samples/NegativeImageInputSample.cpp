@@ -3,11 +3,19 @@
 
 using namespace nprs;
 
-NegativeImageInputSample::NegativeImageInputSample(sp<const Image> image, int numSamples)
-: ImageInputSample(image), _numSamples(numSamples), _image(image)
+NegativeImageInputSample::NegativeImageInputSample(
+    sp<const Image> image, 
+    int numSamples,
+    const Size &minRegionSize,
+    const Size &maxRegionSize)
+: ImageInputSample(image), 
+  _numSamples(numSamples), 
+  _image(image),
+  _minSize(minRegionSize),
+  _maxSize(maxRegionSize)
 {
 }
 
 sp<SampleExtractor> NegativeImageInputSample::createExtractor() const {
-    return make_shared<RandomRegionExtractor>(_image, _numSamples);
+    return make_shared<RandomRegionExtractor>(_image, _numSamples, _minSize, _maxSize);
 }

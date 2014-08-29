@@ -4,13 +4,13 @@
 #include "Sample.h"
 #include <memory>
 #include <vector>
+#include "IClassifierTrainer.h"
 
 namespace nprs {
 
 class Bitmap;
 class Image;
 class InputSample;
-class IClassifierTrainer;
 class Classifier;
 
 class SymbolDetectorTrainer {
@@ -20,10 +20,10 @@ public:
     void pushPositiveSample(const InputSample &sample);
     void pushNegativeSample(const InputSample &sample);
 
-    sp<Classifier> createNMLightClassifier();
+    up<Classifier> createNMLightClassifier();
 
 private:
-    sp<IClassifierTrainer> _nmLightTrainer;
+    up<IClassifierTrainer> _nmLightTrainer;
 };
 
 }

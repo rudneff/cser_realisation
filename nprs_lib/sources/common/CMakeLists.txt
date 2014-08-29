@@ -25,8 +25,7 @@ SET (headers
 	src/common/Size.inl
 
     src/common/exceptions/NprsException.h
-    src/common/exceptions/ArgumentException.h
-    src/common/exceptions/NotSupportedException.h
+    src/common/exceptions/CommonExceptions.h
 )
 
 SET (sources
@@ -36,8 +35,7 @@ SET (sources
 	src/common/image/Bitmap.cpp
 
     src/common/exceptions/NprsException.cpp
-    src/common/exceptions/ArgumentException.cpp
-    src/common/exceptions/NotSupportedException.cpp
+    src/common/exceptions/CommonExceptions.cpp
 )
 
 SET (directories
@@ -46,7 +44,7 @@ SET (directories
     src/common/exceptions
 )
 
-CHECK_FILES("${sources} ${headers}")
+CHECK_FILES("${sources};${headers}")
 GROUP_FILES("${directories}")
 
 INCLUDE_DIRECTORIES(src)

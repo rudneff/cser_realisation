@@ -41,6 +41,6 @@ IF (TEST_GUI)
 	ADD_SUBDIRECTORY(qt_training_utility)
 ENDIF()
 
-IF (MSVC)
+IF (MSVC AND CS_API)
 	ADD_SUBDIRECTORY(nprs_cs_api)
 ENDIF()

@@ -1,6 +1,6 @@
 #include "Image.h"
 #include <iostream>
-#include <common/exceptions/ArgumentException.h>
+#include <common/exceptions/CommonExceptions.h>
 
 using namespace nprs;
 

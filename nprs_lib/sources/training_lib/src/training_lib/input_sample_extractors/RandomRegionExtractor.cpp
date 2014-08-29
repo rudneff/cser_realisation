@@ -34,11 +34,6 @@ std::vector<Sample> RandomRegionExtractor::extractNMLightSamples() {
 
     for (int i = 0; i < _numSamples; i++) {
         Rectangle bounds = chooseRandomRegion();
-
-        std::cout << "random bounds: [" 
-            << bounds.x() << ", " << bounds.y() << ", " << bounds.width() << ", " << bounds.height() 
-            << "]" << std::endl;
-
         auto regionImage = std::make_shared<Image>(_image->cropped(bounds));
         AutoThresholdExtractor extractor(regionImage);
         std::vector<Sample> extractedSamples = extractor.extractNMLightSamples();

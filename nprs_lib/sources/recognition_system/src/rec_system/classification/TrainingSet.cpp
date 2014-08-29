@@ -1,4 +1,5 @@
 #include "TrainingSet.h"
+#include <common/exceptions/CommonExceptions.h>
 
 using namespace nprs;
 
@@ -39,9 +40,18 @@ TrainDataItem& TrainingSet::getItem(int index) {
 }
 
 void TrainingSet::addItem(const TrainDataItem &item) {
+    if (_data.empty()) {
+        _featuresCount = item.featuresCount();
+    }
+
+    if (item.featuresCount() != featuresCount()) {
+        throw ArgumentException("TrainingSet::addItem(): item feature vector size does not match previous items feature vector size");
+    }
+
     _data.push_back(item);
 }
 
-TrainDataItem::TrainDataItem(const std::vector<float> &data, float response) {
-    _data = data;
+TrainDataItem::TrainDataItem(const std::vector<float> &data, float response) 
+: _data(data), _response(response)
+{
 }

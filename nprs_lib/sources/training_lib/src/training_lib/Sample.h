@@ -20,7 +20,7 @@ public:
     SampleType type() const { return _sampleType; }
 
 private:
-    SampleType _sampleType;
+    SampleType _sampleType; 
     std::vector<float> _featureVector;
     sp<const Image> _image;
 };

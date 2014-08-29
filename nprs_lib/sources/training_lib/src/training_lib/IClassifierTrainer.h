@@ -8,9 +8,9 @@ class InputSample;
 
 class IClassifierTrainer {
 public:
-    virtual ~IClassifierTrainer();
+    virtual ~IClassifierTrainer() {}
     
-    virtual sp<Classifier> train() = 0;
+    virtual up<Classifier> train() = 0;
     virtual void pushSample(const InputSample &sample, bool isPositive) = 0;
 };
 

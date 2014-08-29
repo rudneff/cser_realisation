@@ -11,7 +11,7 @@ SymbolDetectorTrainer::SymbolDetectorTrainer()
 {
 }
 
-sp<Classifier> SymbolDetectorTrainer::createNMLightClassifier() {
+up<Classifier> SymbolDetectorTrainer::createNMLightClassifier() {
     return _nmLightTrainer->train();
 }
 

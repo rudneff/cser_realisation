@@ -13,11 +13,13 @@ public:
     static Image convertRaw(const Bitmap &raw);
     static Bitmap imageToRawBgra(const Image &image);
     static Bitmap imageToRawRgb(const Image &image);
+    static Bitmap imageToRawArgb32(const Image &image);
 
 private:
     static Image rgbToInt(const uchar *data, int width, int height);
     static Image bgraToInt(const uchar *data, int width, int height);
-    static Image rgbaToInt(const uchar* data, int width, int height);
+    static Image rgbaToInt(const uchar *data, int width, int height);
+    static Image argb32ToInt(const uchar *data, int width, int height);
 };
 
 }

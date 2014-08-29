@@ -15,7 +15,7 @@ class LightClassifierTrainer : public IClassifierTrainer {
 public:
     LightClassifierTrainer();
 
-    sp<Classifier> train() override;
+    up<Classifier> train() override;
     void pushSample(const InputSample &sample, bool isPositive) override;
 
 private:
