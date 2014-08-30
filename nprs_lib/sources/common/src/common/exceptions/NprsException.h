@@ -2,7 +2,7 @@
 #define COMMON_NPRSEXCEPTION_H
 
 #include <string>
-#include <exception>
+#include <stdexcept>
 
 namespace nprs {
 

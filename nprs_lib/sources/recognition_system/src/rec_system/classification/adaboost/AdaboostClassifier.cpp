@@ -1,4 +1,4 @@
-#include "AdaBoostClassifier.h"
+#include "AdaboostClassifier.h"
 
 using namespace nprs;
 

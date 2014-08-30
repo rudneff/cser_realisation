@@ -8,6 +8,7 @@
 #include <rec_system/image_processing/region_detection/cser/ERFilter.h>
 #include <rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.h>
 #include <rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.h>
+#include <memory.h>
 
 using namespace nprs;
 
