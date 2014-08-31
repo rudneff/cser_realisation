@@ -1,5 +1,7 @@
 #include "AdaboostClassifier.h"
 
+#include <iostream>
+
 using namespace nprs;
 
 AdaboostClassifier::AdaboostClassifier()
@@ -50,5 +52,7 @@ std::pair<cv::Mat, cv::Mat> AdaboostClassifier::convertTrainData(const TrainingS
 }
 
 cv::Mat AdaboostClassifier::convertItem(const std::vector<float> &item) const {
+    std::cout << "feature vector size: ";
+    std::cout << item.size() << std::endl;
     return cv::Mat(1, item.size(), CV_32FC1);
 }

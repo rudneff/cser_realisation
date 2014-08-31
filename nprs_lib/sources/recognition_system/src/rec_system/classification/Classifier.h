@@ -10,7 +10,7 @@ class TrainingSet;
 
 class Classifier {
 public:
-    virtual ~Classifier() {};
+    virtual ~Classifier() {}
 
     virtual void load(const std::string &fileName) = 0;
     virtual void save(const std::string &fileName) const = 0;

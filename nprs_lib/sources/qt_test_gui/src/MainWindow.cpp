@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include <rec_system/common_structures/RecognitionResults.h>
 #include <rec_system/common_structures/NumberPlate.h>
@@ -54,8 +54,7 @@ void MainWindow::exit() {
     close();
 }
 
-MainWindow::~MainWindow() 
-{
+MainWindow::~MainWindow()  {
     delete ui;
 }
 
