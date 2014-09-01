@@ -17,15 +17,14 @@ AutoThresholdExtractor::AutoThresholdExtractor(sp<const Image> image)
 AutoThresholdExtractor::~AutoThresholdExtractor() {
 }
 
-std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples()
-{
+std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples() {
     std::vector<Sample> result;
 
     CSERDetector detector({ make_shared<ERFilterEmpty>() });
     std::vector<ExtremalRegion> regions = detector.detect(*_image);
     std::sort(
-        regions.begin(), 
-        regions.end(), 
+        regions.begin(),
+        regions.end(),
         [](const ExtremalRegion &a, const ExtremalRegion &b)  { 
                     return a.threshold() < b.threshold(); 
         });

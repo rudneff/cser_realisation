@@ -5,3 +5,7 @@ using namespace nprs;
 SampleExtractor::SampleExtractor() {
     
 }
+
+SampleExtractor::~SampleExtractor() {
+    
+}

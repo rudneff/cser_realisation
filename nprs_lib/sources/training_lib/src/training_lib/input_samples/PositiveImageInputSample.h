@@ -9,7 +9,8 @@ class PositiveImageInputSample : public ImageInputSample {
 public:
     explicit PositiveImageInputSample(sp<const Image> image);
 
-    sp<SampleExtractor> createExtractor() const override;
+private:
+    up<SampleExtractor> createExtractor() const override;
 };
 
 }

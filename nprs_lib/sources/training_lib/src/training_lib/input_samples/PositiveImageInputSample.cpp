@@ -9,6 +9,6 @@ PositiveImageInputSample::PositiveImageInputSample(sp<const Image> image)
 {
 }
 
-sp<SampleExtractor> nprs::PositiveImageInputSample::createExtractor() const {
-    return make_shared<AutoThresholdExtractor>(image());
+up<SampleExtractor> nprs::PositiveImageInputSample::createExtractor() const {
+    return up<AutoThresholdExtractor>(new AutoThresholdExtractor(image()));
 }

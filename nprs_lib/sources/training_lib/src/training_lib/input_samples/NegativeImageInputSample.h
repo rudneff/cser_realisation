@@ -14,13 +14,13 @@ public:
         const Size &minRegionSize,
         const Size &maxRegionSize);
 
-    sp<SampleExtractor> createExtractor() const override;
-
 private:
     sp<const Image> _image;
     int _numSamples;
     Size _minSize;
     Size _maxSize;
+
+    up<SampleExtractor> createExtractor() const override;
 };
 
 }

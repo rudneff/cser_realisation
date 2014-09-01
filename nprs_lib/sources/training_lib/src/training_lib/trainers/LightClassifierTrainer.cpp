@@ -23,8 +23,7 @@ up<Classifier> LightClassifierTrainer::train() {
 }
 
 void LightClassifierTrainer::pushSample(const InputSample &sample, bool isPositive) {
-    sp<SampleExtractor> extractor = sample.createExtractor();
-    std::vector<Sample> samples = extractor->extractNMLightSamples();
+    std::vector<Sample> samples = sample.extractNMLightSamples();
 
     for (Sample sample : samples) {
         _trainingSet.addItem(TrainDataItem(sample.featureVector(), isPositive ? 1.0f : 0.0f));

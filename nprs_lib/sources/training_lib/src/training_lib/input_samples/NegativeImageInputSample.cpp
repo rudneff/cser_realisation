@@ -16,6 +16,6 @@ NegativeImageInputSample::NegativeImageInputSample(
 {
 }
 
-sp<SampleExtractor> NegativeImageInputSample::createExtractor() const {
-    return make_shared<RandomRegionExtractor>(_image, _numSamples, _minSize, _maxSize);
+up<SampleExtractor> NegativeImageInputSample::createExtractor() const {
+    return up<RandomRegionExtractor>(new RandomRegionExtractor(_image, _numSamples, _minSize, _maxSize));
 }
