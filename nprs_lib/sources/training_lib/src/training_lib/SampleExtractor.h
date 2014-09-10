@@ -1,5 +1,5 @@
-#ifndef SYMBOL_FEATURE_EXTRACTOR_H
-#define SYMBOL_FEATURE_EXTRACTOR_H
+#ifndef TRAININGLIB_SYMBOLEXTRACTOR_H
+#define TRAININGLIB_SYMBOLEXTRACTOR_H
 
 #include <common/NprsStd.h>
 #include <tuple>
@@ -13,11 +13,11 @@ class InputSample;
 class SampleExtractor {
 public:
     SampleExtractor();
-    virtual ~SampleExtractor() {}
+    virtual ~SampleExtractor();
 
     virtual std::vector<Sample> extractNMLightSamples() = 0;
 };
 
 }
 
-#endif // SYMBOL_FEATURE_EXTRACTOR_H
+#endif // TRAININGLIB_SYMBOLEXTRACTOR_H
