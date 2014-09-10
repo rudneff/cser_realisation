@@ -22,7 +22,6 @@ SET(directories
 INCLUDE_DIRECTORIES(src)
 INCLUDE_DIRECTORIES("../../libs")
 
-CHECK_FILES("${sources};${headers}")
 GROUP_FILES("${directories}")
 
 FOREACH(dependency ${dependencies})

@@ -26,6 +26,8 @@ public:
     int size() const { return _data.size(); }
     int featuresCount() const { return _featuresCount; }
 
+    std::vector<TrainDataItem> const& items() const { return _data; }
+
 private:
     std::vector<TrainDataItem> _data;
     int _featuresCount;

@@ -39,6 +39,8 @@ SET (headers
 	src/rec_system/classification/Classifier.h
 	src/rec_system/classification/TrainingSet.h
 	src/rec_system/classification/adaboost/AdaboostClassifier.h
+	src/rec_system/classification/kmeans/FCMeansClassifier.h
+	src/rec_system/classification/kmeans/FuzzyCluster.h
 )
 
 SET (sources
@@ -70,6 +72,8 @@ SET (sources
 
 	src/rec_system/classification/adaboost/AdaboostClassifier.cpp
 	src/rec_system/classification/TrainingSet.cpp
+	src/rec_system/classification/kmeans/FCMeansClassifier.cpp
+	src/rec_system/classification/kmeans/FuzzyCluster.cpp
 )
 
 INCLUDE_DIRECTORIES(src)
@@ -88,9 +92,9 @@ SET(directories
 
 	src/rec_system/classification
 	src/rec_system/classification/adaboost
+	src/rec_system/classification/kmeans
 )
 
-CHECK_FILES( "${sources};${headers}" )
 GROUP_FILES( "${directories}" )
 
 SET(dependencies

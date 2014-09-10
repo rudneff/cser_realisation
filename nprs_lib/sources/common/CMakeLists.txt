@@ -24,8 +24,11 @@ SET (headers
 	src/common/Size.h
 	src/common/Size.inl
 
+	src/common/math/Vector.h
+
     src/common/exceptions/NprsException.h
     src/common/exceptions/CommonExceptions.h
+    src/common/functional/ListProcessing.h
 )
 
 SET (sources
@@ -44,7 +47,6 @@ SET (directories
     src/common/exceptions
 )
 
-CHECK_FILES("${sources};${headers}")
 GROUP_FILES("${directories}")
 
 INCLUDE_DIRECTORIES(src)

@@ -48,7 +48,6 @@ SET(directories
 	src/training_lib/input_samples
 )
 
-CHECK_FILES("${sources};${headers}")
 GROUP_FILES("${directories}")
 
 # dependencies

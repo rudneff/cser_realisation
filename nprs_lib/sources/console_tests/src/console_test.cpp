@@ -2,7 +2,9 @@
 #include <rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.h>
 #include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
 #include <common/Point.h>
+#include <common/math/Vector.h>
 #include <common/image/Image.h>
+#include <common/functional/ListProcessing.h>
 
 void conditionsTest();
 void imageTest();
@@ -10,11 +12,23 @@ void arrayTest();
 void matrixMoveTest();
 
 int main(int argc, char** argv) {
-    conditionsTest();
-    imageTest();
-    arrayTest();
-    matrixMoveTest();
-    std::cin.get();
+//    conditionsTest();
+//    imageTest();
+//    arrayTest();
+//    matrixMoveTest();
+//    std::cin.get();
+
+    std::vector<int> list = {1, 1};
+    auto res = nprs::fold<int>(list, [] (const int &prev, const int &curr) { return (int) prev * curr; });
+
+    nprs::Vector<int> v(list);
+
+    printf("%d %f\n", res, v.length());
+
+    nprs::Vector<float> v1 = {0, 0};
+    nprs::Vector<float> v2 = {1, 1};
+
+    printf("%f", v1.distanceTo(v2));
 }
 
 void conditionsTest() {
