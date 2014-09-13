@@ -20,6 +20,7 @@ int main(int argc, char** argv) {
 
     std::vector<int> list = {1, 1};
     auto res = nprs::fold<int>(list, [] (const int &prev, const int &curr) { return (int) prev * curr; });
+    auto res2 = nprs::map<int, double>(list, [] (const int &v) { return v + 1; });
 
     nprs::Vector<int> v(list);
 

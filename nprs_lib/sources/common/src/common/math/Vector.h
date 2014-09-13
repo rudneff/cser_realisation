@@ -7,6 +7,7 @@
 #include <cmath>
 #include <common/functional/ListProcessing.h>
 #include <common/exceptions/CommonExceptions.h>
+#include "Math.h"
 
 namespace nprs {
 
@@ -34,7 +35,11 @@ public:
 
     template <typename O>
     double distanceTo(Vector<O> const& other) const {
-        return 0;
+        return sqrt(sum(
+            mapIndexed(_coords, [&] (const Scalar &s, int i) {
+                return Math::sqr(s - other[i]);
+            })
+        ));
     }
 
     Scalar max(int *outIndex = 0) const {
@@ -63,12 +68,8 @@ public:
     }
 
     Vector<Scalar> normalize() const {
-        std::vector<Scalar> ncoords(numDims());
         double len = length();
-        for (int i = 0; i < numDims(); i++) {
-            ncoords[i] = static_cast<Scalar> (_coords[i] / len);
-        }
-        return Vector<Scalar>(std::move(ncoords));
+        return map<Scalar, Scalar> (_coords, [&] (const Scalar &v) { return v / len; });
     }
 
     template <typename O>
@@ -76,7 +77,10 @@ public:
         if (numDims() != other.numDims())
             throw ArgumentException("Vector<Scalar> operator+ (): dimensions must match");
 
-        return Vector<Scalar>(map<Scalar>([&] (Scalar v, int i) { return v + other[i]; }));
+        return
+            mapIndexed<Scalar, Scalar>(
+                _coords, [&] (const Scalar &v, int i) { return v + other[i]; }
+            );
     }
 
     template <typename O>
@@ -84,29 +88,22 @@ public:
         if (numDims() != other.numDims())
             throw ArgumentException("Vector<Scalar> operator+ (): dimensions must match");
 
-        return Vector<Scalar>(map<Scalar>([&] (Scalar v, int i) { v - other[i]; }));
+        return Vector<Scalar>(mapIndexed<Scalar,Scalar>(_coords, [&] (Scalar const& v, int i) { v - other[i]; }));
     }
 
-    Scalar operator* (Scalar k) {
-        return map<Scalar>([&] (Scalar val, int i) { return val * k; });
+    Vector<Scalar> operator* (double k) const {
+        return mapIndexed<Scalar, Scalar>(_coords, [&] (Scalar const& val, int i) { return val * k; });
     }
 
-    Scalar operator/ (Scalar k) {
-        return map<Scalar>([&] (Scalar val, int i) { return val / k; });
-    }
-
-    template <typename O>
-    Vector<O> map(std::function<O (Scalar, int)> func) {
-        std::vector<O> newCoords(numDims());
-        for (int i = 0; i < _coords.size(); i++) {
-            newCoords[i] = func(_coords[i], i);
-        }
-        return Vector<O>(std::move(newCoords));
+    Vector<Scalar> operator/ (double k) const {
+        return mapIndexed<Scalar, Scalar>(_coords, [&] (Scalar const& val, int i) { return val / k; });
     }
 
 private:
     std::vector<Scalar> _coords;
 };
+
+typedef Vector<double> RealVec;
 
 }
 

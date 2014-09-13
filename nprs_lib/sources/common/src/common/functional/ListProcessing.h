@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <functional>
+#include <numeric>
+#include <common/exceptions/CommonExceptions.h>
 
 namespace nprs {
 
@@ -12,6 +14,7 @@ std::vector<TOut> map(std::vector<TIn> const &input, std::function<TOut(const TI
     for (int i = 0; i < input.size(); i++) {
         outVec[i] = transformator(input[i]);
     }
+
     return std::move(outVec);
 }
 
@@ -26,17 +29,38 @@ std::vector<TIn> filter(std::vector<TIn> const &input, std::function<bool(const 
 
 template<typename TIn>
 TIn fold(std::vector<TIn> const &input, std::function<TIn(const TIn&, const TIn&)> func) {
-    TIn out = input[0];
-    for (int i = 1; i < input.size(); i++) {
+    if (input.size() < 2)
+        throw ArgumentException("fold(): input array size must be >= 2");
+
+    TIn out = func(input[0], input[1]);
+    for (int i = 2; i < input.size(); i++) {
         out = func(out, input[i]);
     }
+
+    std::vector<TIn> result(input.size());
+    std::accumulate(input.begin(), input.end(), [] () {  } );
 
     return out;
 }
 
+template<typename TIn, typename TOut>
+std::vector<TOut> mapIndexed(std::vector<TIn> const &input, std::function<TOut(const TIn&, int)> transformator) {
+    std::vector<TOut> outVec(input.size());
+    for (int i = 0; i < input.size(); i++) {
+        outVec[i] = transformator(input[i], i);
+    }
+
+    return std::move(outVec);
+}
+
 template <typename T>
 T sum(std::vector<T> const& input) {
-    return fold<int>(input, [] (const T &acc, const T& curr) { return acc + curr; });
+    return fold<T>(input, [] (const T &acc, const T& curr) { return acc + curr; });
+}
+
+template <typename T, typename O>
+O sumMap(std::vector<T> const& input, std::function<O (const T&)> func) {
+
 }
 
 template <typename T1, typename T2>

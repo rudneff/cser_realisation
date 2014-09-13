@@ -25,6 +25,7 @@ SET (headers
 	src/common/Size.inl
 
 	src/common/math/Vector.h
+	src/common/math/Math.h
 
     src/common/exceptions/NprsException.h
     src/common/exceptions/CommonExceptions.h

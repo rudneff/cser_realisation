@@ -13,7 +13,7 @@ void FCMeansClassifier::save(const std::string &fileName) const {
 
 void FCMeansClassifier::train(const TrainingSet &trainingSet) {
     for(TrainDataItem const& item: trainingSet.items()) {
-
+        
     }
 }
 
