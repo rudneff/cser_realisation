@@ -1,4 +1,5 @@
 #include "TrainingSet.h"
+#include "../../../../../../../../Qt/5.2.1/gcc_64/include/QtGui/qevent.h"
 #include <common/exceptions/CommonExceptions.h>
 
 using namespace nprs;
@@ -41,17 +42,30 @@ TrainDataItem& TrainingSet::getItem(int index) {
 
 void TrainingSet::addItem(const TrainDataItem &item) {
     if (_data.empty()) {
-        _featuresCount = item.featuresCount();
+        _featuresCount = item.numDimensions();
     }
 
-    if (item.featuresCount() != featuresCount()) {
+    if (item.numDimensions() != numDimensions()) {
         throw ArgumentException("TrainingSet::addItem(): item feature vector size does not match previous items feature vector size");
     }
 
     _data.push_back(item);
 }
 
-TrainDataItem::TrainDataItem(const std::vector<float> &data, float response) 
+TrainDataItem::TrainDataItem(const RealVec &data, float response)
 : _data(data), _response(response)
 {
+}
+
+RealVec TrainingSet::rangeMin() const {
+    std::vector<float> minCoords(numDimensions(), 0.0f);
+    for (TrainDataItem const& item : _data) {
+        for (int i = 0; i < item.numDimensions(); i++) {
+
+        }
+    }
+}
+
+RealVec TrainingSet::rangeMax() const {
+
 }

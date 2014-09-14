@@ -36,13 +36,13 @@ void AdaboostClassifier::train(const TrainingSet &trainingSet) {
 }
 
 std::pair<cv::Mat, cv::Mat> AdaboostClassifier::convertTrainData(const TrainingSet &trainSet) const {
-    cv::Mat trainData(trainSet.size(), trainSet.featuresCount(), CV_32FC1);
+    cv::Mat trainData(trainSet.size(), trainSet.numDimensions(), CV_32FC1);
     cv::Mat responses(trainSet.size(), 1, CV_32FC1);
 
     for (int i = 0; i < trainSet.size(); i++) {
         const TrainDataItem  &item = trainSet(i);
         responses.at<float>(i, 0) = item.response();
-        const std::vector<float> &data = item.data();
+        const std::vector<float> &data = item.data().coords();
         for (int j = 0; j < data.size(); j++) {
             trainData.at<float>(i, j) = data[j];
         }

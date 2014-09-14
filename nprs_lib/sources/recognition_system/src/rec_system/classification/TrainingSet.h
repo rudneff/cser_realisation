@@ -2,6 +2,7 @@
 #define RECSYSTEM_TRAININGSET_H
 
 #include <vector>
+#include <common/math/Vector.h>
 
 namespace nprs {
 
@@ -24,9 +25,12 @@ public:
     void addItem(const TrainDataItem& item);
 
     int size() const { return _data.size(); }
-    int featuresCount() const { return _featuresCount; }
+    int numDimensions() const { return _featuresCount; }
 
     std::vector<TrainDataItem> const& items() const { return _data; }
+
+    RealVec rangeMin() const;
+    RealVec rangeMax() const;
 
 private:
     std::vector<TrainDataItem> _data;
@@ -35,14 +39,14 @@ private:
 
 class TrainDataItem final {
 public:
-    TrainDataItem(const std::vector<float> &data, float response);
+    TrainDataItem(const RealVec &data, float response);
 
-    const std::vector<float> & data() const { return _data; }
+    const RealVec & data() const { return _data; }
     float response() const { return _response; }
-    int featuresCount() const { return _data.size(); }
+    int numDimensions() const { return _data.numDims(); }
 
 private:
-    std::vector<float> _data;
+    RealVec _data;
     float _response;
 };
 

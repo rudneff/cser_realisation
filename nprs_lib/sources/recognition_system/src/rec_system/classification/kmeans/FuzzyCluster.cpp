@@ -2,31 +2,34 @@
 
 namespace nprs {
 
-FuzzyCluster::FuzzyCluster(RealVec const &centroid)
-: _centroid(centroid), _needRecomputeCentroid(false)
+FuzzyCluster::FuzzyCluster(RealVec const &centroid, int dimsCount)
+: _centroid(centroid), _needRecomputeCentroid(false), _dimsCount(dimsCount)
 {
+}
+
+RealVec const& FuzzyCluster::centroid() const {
 
 }
 
-RealVec FuzzyCluster::centroid() {
-    if (_needRecomputeCentroid) {
-        std::pair<RealVec, double> sum =
-            nprs::sum(
-                map<std::pair<RealVec, double>, std::pair<RealVec, double>> (
-                    _points,
-                    [] (const std::pair<RealVec, double> &v) -> std::pair<RealVec, double> {
-                        double k = Math::pow(v.second, 2);
-                        return std::make_pair<RealVec, double>(v.first * k, k);
-                    }
-                )
-            );
+void FuzzyCluster::addPoint(const FuzzyPoint &p) {
+    _points.push_back(p);
+    _needRecomputeCentroid = true;
+}
+
+RealVec FuzzyCluster::computeCentroid() const {
+    if (_points.size() == 0) {
+        return _centroid;
     }
 
-    return _centroid;
-}
+    RealVec sum(std::vector<float>(_dimsCount, 0.0f));
+    double sumWeights = 0.0;
 
-void FuzzyCluster::addPoint(const RealVec &point, double weight) {
-    _points.push_back(std::make_pair(point, weight));
+    for (int i = 0; i < _points.size(); i++) {
+        sum += _points[i].coords() * Math::sqr(_points[i].weight());
+        sumWeights += Math::sqr(_points[i].weight());
+    }
+
+    return sum / sumWeights;
 }
 
 }

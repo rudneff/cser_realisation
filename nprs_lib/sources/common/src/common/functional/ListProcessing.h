@@ -37,9 +37,6 @@ TIn fold(std::vector<TIn> const &input, std::function<TIn(const TIn&, const TIn&
         out = func(out, input[i]);
     }
 
-    std::vector<TIn> result(input.size());
-    std::accumulate(input.begin(), input.end(), [] () {  } );
-
     return out;
 }
 

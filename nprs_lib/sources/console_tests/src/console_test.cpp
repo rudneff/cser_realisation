@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     printf("%d %f\n", res, v.length());
 
     nprs::Vector<float> v1 = {0, 0};
-    nprs::Vector<float> v2 = {1, 1};
+    nprs::Vector<float> v2 = {4, 3};
 
     printf("%f", v1.distanceTo(v2));
 }

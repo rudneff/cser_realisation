@@ -8,13 +8,18 @@ namespace nprs {
 class Math {
 public:
     template <typename Scalar>
-    static double pow(Scalar value, double p) {
+    static double pow(const Scalar value, double p) {
         return ::pow(value, p);
     };
 
     template <typename Scalar>
-    static double sqr(Scalar value) {
+    static double sqr(const Scalar &value) {
         return value * value;
+    }
+
+    template <typename Scalar>
+    static double sqrt(const Scalar &value) {
+        return ::sqrt(value);
     }
 };
 
