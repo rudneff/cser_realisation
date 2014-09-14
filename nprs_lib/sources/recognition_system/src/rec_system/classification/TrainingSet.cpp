@@ -1,5 +1,4 @@
 #include "TrainingSet.h"
-#include "../../../../../../../../Qt/5.2.1/gcc_64/include/QtGui/qevent.h"
 #include <common/exceptions/CommonExceptions.h>
 
 using namespace nprs;

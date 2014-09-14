@@ -20,7 +20,7 @@ public:
     float getValue(int x, int y, int c) const;
     float& operator() (int x, int y, int c);
     float operator() (int x, int y, int c) const;
-    float setValue(int x, int y, int c, float value);
+    void setValue(int x, int y, int c, float value);
 
     int width() const { return _width; }
     int height() const { return _height; }

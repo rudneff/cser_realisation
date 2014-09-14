@@ -10,7 +10,7 @@ inline float Image::operator()(int x, int y, int c) const {
     return _data[ind(x, y, c)]; 
 }
 
-inline float Image::setValue(int x, int y, int c, float value) {
+inline void Image::setValue(int x, int y, int c, float value) {
     _data[ind(x, y, c)] = value; 
 }
 
