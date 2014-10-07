@@ -11,7 +11,7 @@ using namespace nprs;
 void performRecognition(QImage &image);
 
 int main(int argc, char **argv) {
-    QImage image = QImage("C:/Users/vardan/Desktop/cars/images00067.png").convertToFormat(QImage::Format_RGB888);
+    QImage image = QImage("/Users/vardan/Pictures/cars/images00035.png").convertToFormat(QImage::Format_RGB888);
     
     for (int i = 0; i < 100; i++) {
         performRecognition(image);

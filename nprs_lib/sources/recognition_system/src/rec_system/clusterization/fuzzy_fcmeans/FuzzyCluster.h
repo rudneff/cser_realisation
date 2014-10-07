@@ -9,19 +9,17 @@ class FuzzyPoint;
 
 class FuzzyCluster {
 public:
-    FuzzyCluster(const RealVec &centroid, int dimsCount);
+    FuzzyCluster(const RealVec &centroid);
 
     RealVec const& centroid() const;
-    std::vector<FuzzyPoint> const& points() const { return _points; }
-    void addPoint(const FuzzyPoint &p);
+    float computePointWeight(const RealVec &point) const;
 
 private:
     RealVec _centroid;
-    std::vector<FuzzyPoint> _points;
     bool _needRecomputeCentroid;
     int _dimsCount;
 
-    RealVec computeCentroid() const;
+    RealVec computeCentroid(std::vector<FuzzyPoint> const& points) const;
 };
 
 class FuzzyPoint {

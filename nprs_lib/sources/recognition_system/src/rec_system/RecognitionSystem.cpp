@@ -4,7 +4,6 @@
 #include "common_structures/NumberPlateCharacter.h"
 #include "common/Rectangle.h"
 #include <rec_system/image_processing/region_detection/cser/CSERDetector.h>
-#include <rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.h>
 #include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
 #include "image_processing/region_detection/cser/ExtremalRegion.h"
 #include <common/image/ImageConverter.h>

@@ -1,7 +1,7 @@
 #include "ERDescriptor.h"
 #include <common/Point.h>
 #include "features/ICFeature.h"
-#include <cmath>
+#include <common/math/Math.h>
 
 using namespace nprs;
 
@@ -38,10 +38,11 @@ ERDescriptor* ERDescriptor::attachPoint(const Point &p, int threshold) {
         fc->increment(p, this);
     }
 
-    Rectangle newBounds = Rectangle::fromPoints(fmin(p.x(), _bounds.x()),
-                                                fmin(p.y(), _bounds.y()),
-                                                fmax(p.x() + 1, _bounds.x1()),
-                                                fmax(p.y() + 1, _bounds.y1()));
+    Rectangle newBounds = Rectangle::fromPoints(
+        Math::min(p.x(), _bounds.x()),
+        Math::min(p.y(), _bounds.y()),
+        Math::max(p.x() + 1, _bounds.x1()),
+        Math::max(p.y() + 1, _bounds.y1()));
 
     ERDescriptor* newReg = new ERDescriptor(_featureComputers, newBounds, threshold);
     _parent = newReg;
@@ -54,10 +55,11 @@ ERDescriptor* ERDescriptor::combine(ERDescriptor *other, int threshold) {
         _featureComputers->at(i)->combine(other->_featureComputers->at(i), this, other);
     }
 
-    Rectangle newBounds = Rectangle::fromPoints(fmin(other->bounds().x(), _bounds.x()),
-                                                fmin(other->bounds().y(), _bounds.y()),
-                                                fmax(other->bounds().x1(), _bounds.x1()),
-                                                fmax(other->bounds().y1(), _bounds.y1()));
+    Rectangle newBounds = Rectangle::fromPoints(
+        Math::min(other->bounds().x(), _bounds.x()),
+        Math::min(other->bounds().y(), _bounds.y()),
+        Math::max(other->bounds().x1(), _bounds.x1()),
+        Math::max(other->bounds().y1(), _bounds.y1()));
 
     ERDescriptor *newReg = new ERDescriptor(_featureComputers, newBounds, threshold);
     _parent = newReg;

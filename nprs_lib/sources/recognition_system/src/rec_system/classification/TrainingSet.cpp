@@ -56,15 +56,24 @@ TrainDataItem::TrainDataItem(const RealVec &data, float response)
 {
 }
 
-RealVec TrainingSet::rangeMin() const {
+std::vector<float> TrainingSet::rangeMin() const {
     std::vector<float> minCoords(numDimensions(), 0.0f);
     for (TrainDataItem const& item : _data) {
-        for (int i = 0; i < item.numDimensions(); i++) {
-
+        for (int i = 0; i < numDimensions(); i++) {
+            minCoords[i] = Math::min(minCoords[i], item.data()[i]);
         }
     }
+
+    return std::move(minCoords);
 }
 
-RealVec TrainingSet::rangeMax() const {
+std::vector<float> TrainingSet::rangeMax() const {
+    std::vector<float> maxCoords(numDimensions(), 0.0f);
+    for (TrainDataItem const& item : _data) {
+        for (int i = 0; i < numDimensions(); i++) {
+            maxCoords[i] = Math::max(maxCoords[i], item.data()[i]);
+         }
+    }
 
+    return std::move(maxCoords);
 }

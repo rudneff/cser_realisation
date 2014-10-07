@@ -44,3 +44,7 @@ ENDIF()
 IF (MSVC AND CS_API)
 	ADD_SUBDIRECTORY(nprs_cs_api)
 ENDIF()
+
+#set(JAVA_API true CACHE BOOLEAN "description")
+#set(TEST_GUI true CACHE BOOLEAN "description")
+#set(CMAKE_PREFIX_PATH "/usr/local/Cellar/qt5/5.3.2" CACHE PATH "qt5")

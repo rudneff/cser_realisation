@@ -29,8 +29,8 @@ public:
 
     std::vector<TrainDataItem> const& items() const { return _data; }
 
-    RealVec rangeMin() const;
-    RealVec rangeMax() const;
+    std::vector<float> rangeMin() const;
+    std::vector<float> rangeMax() const;
 
 private:
     std::vector<TrainDataItem> _data;

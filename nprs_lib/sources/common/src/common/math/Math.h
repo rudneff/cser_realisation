@@ -21,6 +21,16 @@ public:
     static double sqrt(const Scalar &value) {
         return ::sqrt(value);
     }
+
+    template <typename Scalar>
+    static Scalar min(const Scalar &v1, const Scalar &v2) {
+        return v2 < v1 ? v2 : v1;
+    }
+
+    template <typename Scalar>
+    static Scalar max(const Scalar &v1, const Scalar &v2) {
+        return v1 < v2 ? v2 : v1;
+    }
 };
 
 }

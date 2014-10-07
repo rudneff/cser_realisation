@@ -1,10 +1,7 @@
 #include <iostream>
-#include <rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.h>
 #include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
-#include <common/Point.h>
 #include <common/math/Vector.h>
 #include <common/image/Image.h>
-#include <common/functional/ListProcessing.h>
 
 void conditionsTest();
 void imageTest();

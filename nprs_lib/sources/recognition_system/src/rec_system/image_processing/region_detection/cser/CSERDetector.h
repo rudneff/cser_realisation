@@ -5,7 +5,7 @@
 #include <vector>
 #include <memory>
 #include "common/image/Image.h"
-#include "common/Matrix.h"
+#include <common/Matrix.h>
 
 namespace nprs {
 

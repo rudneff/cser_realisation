@@ -17,6 +17,7 @@
 #include <training_lib/input_sample_extractors/AutoThresholdExtractor.h>
 #include <training_lib/input_sample_extractors/RandomRegionExtractor.h>
 #include <functional>
+#include <QtWidgets/qfilesystemmodel.h>
 
 static void pushPositiveSamples(const QString &dir, nprs::SymbolDetectorTrainer &trainer);
 static void pushNegativeSamples(const QString &dir, nprs::SymbolDetectorTrainer &trainer);
@@ -28,7 +29,7 @@ static QImage toQImage(const nprs::Image &img);
 int main(int argc, char **argv) {
     try {
         nprs::SymbolDetectorTrainer trainer;
-        pushNegativeSamples("training_samples/negative/scene_images", trainer);
+        pushNegativeSamples("training_samples/cutted/negative/scene_images", trainer);
         pushPositiveSamples("training_samples/positive", trainer);
 
         sp<nprs::Classifier> nmLightClassifier = trainer.createNMLightClassifier();
@@ -71,7 +72,7 @@ static void pushNegativeSamples(const QString &dir, nprs::SymbolDetectorTrainer 
     performOnImages(dir, [&] (const QFileInfo &fileInfo) {
         qDebug() << fileInfo.filePath();
         auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
-        nprs::NegativeImageInputSample sample(image, 14, 5, 30);
+        nprs::NegativeImageInputSample sample(image, 1, 50, 150);
         trainer.pushNegativeSample(sample);
 
         // debug code
@@ -90,6 +91,16 @@ static void pushNegativeSamples(const QString &dir, nprs::SymbolDetectorTrainer 
 //          }
 //      }
     });
+}
+
+static void createNegativeSamples(const QString &dir) {
+    performOnImages(
+        dir,
+        [&] (const QFileInfo &fileInfo) {
+            auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+            nprs::RandomRegionExtractor extractor(image, 7, 35);
+        }
+    );
 }
 
 static void showResponses(const nprs::Classifier &classifier, const QString &dir) {

@@ -33,14 +33,13 @@ SET (headers
     src/rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.h
 	
 	src/rec_system/image_processing/filters/ImageFilter.h
-	src/rec_system/image_processing/filters/binarization/OtsuBinarizer.h
-	src/rec_system/image_processing/filters/binarization/ThresholdBinarizer.h
 
 	src/rec_system/classification/Classifier.h
 	src/rec_system/classification/TrainingSet.h
 	src/rec_system/classification/adaboost/AdaboostClassifier.h
-	src/rec_system/classification/kmeans/FCMeansClassifier.h
-	src/rec_system/classification/kmeans/FuzzyCluster.h
+	src/rec_system/clusterization/fuzzy_fcmeans/FCMeansClusterer.h
+	src/rec_system/clusterization/fuzzy_fcmeans/FuzzyCluster.h
+	src/rec_system/clusterization/Clusterer.h
 )
 
 SET (sources
@@ -72,8 +71,10 @@ SET (sources
 
 	src/rec_system/classification/adaboost/AdaboostClassifier.cpp
 	src/rec_system/classification/TrainingSet.cpp
-	src/rec_system/classification/kmeans/FCMeansClassifier.cpp
-	src/rec_system/classification/kmeans/FuzzyCluster.cpp
+	src/rec_system/clusterization/fuzzy_fcmeans/FCMeansClusterer.cpp
+	src/rec_system/clusterization/fuzzy_fcmeans/FuzzyCluster.cpp
+
+	src/rec_system/clusterization/Clusterer.cpp
 )
 
 INCLUDE_DIRECTORIES(src)
@@ -92,7 +93,7 @@ SET(directories
 
 	src/rec_system/classification
 	src/rec_system/classification/adaboost
-	src/rec_system/classification/kmeans
+	src/rec_system/clusterization/fuzzy_fcmeans
 )
 
 GROUP_FILES( "${directories}" )

@@ -17,11 +17,12 @@ void AdaboostClassifier::load(std::string const& fileName) {
 }
 
 float AdaboostClassifier::predict(const std::vector<float> &item) const {
-    return _cvBoost.predict(convertItem(item));
+    return _cvBoost.predict(convertItem(item), cv::Mat(), cv::Range::all(), false, false);
 }
 
 void AdaboostClassifier::train(const TrainingSet &trainingSet) {
     CvBoostParams params;
+    params.weak_count = 4;
     params.boost_type = cv::Boost::REAL;
 
     std::pair<cv::Mat, cv::Mat> trainData = convertTrainData(trainingSet);
@@ -29,10 +30,8 @@ void AdaboostClassifier::train(const TrainingSet &trainingSet) {
     _cvBoost.train(
         trainData.first,
         CV_ROW_SAMPLE,
-        trainData.second);
-//        cv::Mat(), cv::Mat(), cv::Mat(), cv::Mat(), 
-//        params, 
-//        true);
+        trainData.second,
+        cv::Mat(), cv::Mat(), cv::Mat(), cv::Mat(), params, false);
 }
 
 std::pair<cv::Mat, cv::Mat> AdaboostClassifier::convertTrainData(const TrainingSet &trainSet) const {
@@ -52,7 +51,5 @@ std::pair<cv::Mat, cv::Mat> AdaboostClassifier::convertTrainData(const TrainingS
 }
 
 cv::Mat AdaboostClassifier::convertItem(const std::vector<float> &item) const {
-    std::cout << "feature vector size: ";
-    std::cout << item.size() << std::endl;
     return cv::Mat(1, item.size(), CV_32FC1);
 }
