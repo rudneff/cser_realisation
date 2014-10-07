@@ -7,7 +7,7 @@ namespace nprs {
 
 class Algorithm {
 public:
-    explicit Algorithm(std::function<void()> const& finishedCallback);
+    explicit Algorithm(const std::function<void()> &finishedCallback);
     virtual ~Algorithm();
 
     virtual void perform() = 0;

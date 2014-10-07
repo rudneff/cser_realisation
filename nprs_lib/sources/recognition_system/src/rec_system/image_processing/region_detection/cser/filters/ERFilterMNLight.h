@@ -7,8 +7,8 @@ namespace nprs {
 
 class ERFilterMNLight : public ERFilter {
 public:
-    ~ERFilterMNLight() override;
-    bool isRegion(const ERDescriptor& region) override;
+    ~ERFilterMNLight();
+    std::vector<ERDescriptor*> perform(const std::vector<ERDescriptor*> &regions) override;
 };
 
 }

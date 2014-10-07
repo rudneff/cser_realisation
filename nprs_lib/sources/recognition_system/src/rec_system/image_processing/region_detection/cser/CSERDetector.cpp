@@ -21,5 +21,5 @@ std::vector<nprs::ExtremalRegion> nprs::CSERDetector::detect(Image const& image)
         result.push_back(ExtremalRegion(desc));
     }
 
-    return result;
+    return std::move(result);
 }

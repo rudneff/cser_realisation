@@ -6,23 +6,27 @@
 #include <rec_system/common_structures/NumberPlateCharacter.h>
 #include <common/image/Image.h>
 #include <common/image/Color.h>
+#include <common/image/Bitmap.h>
 #include <iostream>
 
 const char RR_CLASS_NAME[] = "com/nprs/app/recognition/common_structures/RecognitionResults";
 const char NUM_PLATE_CLASS_NAME[] = "com/nprs/app/recognition/common_structures/NumberPlate";
+
 using namespace nprs;
 
-static jobject createRecResultsInstance(JNIEnv *env, const pRecognitionResults &results);
+static jobject createRecResultsInstance(JNIEnv *env, const RecognitionResults &results);
 static jobject createNumberPlateInstance(JNIEnv *env, const pNumberPlate &numPlate);
 
-jobject Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
+jobject JNICALL Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
     RecognitionSystem recognitionSystem;
-    pRecognitionResults results = recognitionSystem.recognize(Image<uchar>(10, 10, ColorInfo(COLORFORMAT_BGRA255, 3)));
+    jboolean isCopy;
+    uchar *data = reinterpret_cast<uchar*>(env->GetIntArrayElements(pixels, &isCopy));
+    RecognitionResults results = recognitionSystem.recognize(Bitmap(data, width, height, nprs::ColorInfo(nprs::ColorFormat::RGBA, 3)));
     jobject resultsJava = createRecResultsInstance(env, results);
     return resultsJava;
 }
 
-static jobject createRecResultsInstance(JNIEnv *env, const pRecognitionResults &results) {
+static jobject createRecResultsInstance(JNIEnv *env, const RecognitionResults &results) {
     jclass recResultsClass = env->FindClass(RR_CLASS_NAME);
     jmethodID recResultsConstructor = env->GetMethodID(recResultsClass, "<init>", "()V");
     jmethodID recResultsAdd = env->GetMethodID(
@@ -33,9 +37,18 @@ static jobject createRecResultsInstance(JNIEnv *env, const pRecognitionResults &
 
     jobject result = env->NewObject(recResultsClass, recResultsConstructor);
 
-    for (auto numPlate : results->numberPlates()) {
-        jobject numPlateJava = createNumberPlateInstance(env, numPlate);
-        env->CallVoidMethod(result, recResultsAdd, numPlateJava);
+    int count = 0;
+    for (auto numPlate : results.numberPlates()) {
+        if (count > 250)
+            break;
+
+        if (numPlate->bounds().width() > 5 && numPlate->bounds().width() < 30 &&
+            numPlate->bounds().height() > 5 && numPlate->bounds().height() < 30)
+        {
+            count++;
+            jobject numPlateJava = createNumberPlateInstance(env, numPlate);
+            env->CallVoidMethod(result, recResultsAdd, numPlateJava);
+        }
     }
 
     return result;

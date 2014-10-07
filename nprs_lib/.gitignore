@@ -5,3 +5,11 @@
 /make/*
 msvc12/
 bin/
+/xcode/*
+/qtc_build/*
+/sources-build/*
+/android-build/*
+/build/*
+/training_samples/*
+/out/*
+/sources/*.user

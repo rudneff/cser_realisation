@@ -1,8 +1,9 @@
-#ifndef COMMON_COMMONDEFINITIONS_H
-#define COMMON_COMMONDEFINITIONS_H
+#ifndef COMMON_NPRSSTD_H
+#define COMMON_NPRSSTD_H
 
 #include <memory>
 
+using std::make_shared;
 using uchar = unsigned char;
 template <typename T> using sp = std::shared_ptr<T>;
 template <typename T> using wp = std::weak_ptr<T>;

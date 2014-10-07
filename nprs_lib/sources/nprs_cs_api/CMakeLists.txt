@@ -22,6 +22,9 @@ SET (dependencies
 	common
 )
 
+CHECK_FILES("${sources};${headers}")
+GROUP_FILES(src)
+
 FOREACH(dep ${dependencies})
 	INCLUDE_DIRECTORIES("../${dep}/src")
 ENDFOREACH()

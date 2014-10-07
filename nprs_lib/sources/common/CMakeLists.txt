@@ -4,30 +4,43 @@ SET(projname common)
 
 PROJECT(${projname})
 
+INCLUDE(utils)
+
 SET (headers 
     src/common/image/Color.h
     src/common/image/Image.h
+	src/common/image/Image.inl
     src/common/image/ImageConverter.h
+    src/common/image/Bitmap.h
 
-    src/common/CommonDefinitions.h
+    src/common/NprsStd.h
     src/common/Rectangle.h
+	src/common/Rectangle.inl
     src/common/Line.h
     src/common/Point.h
+	src/common/Point.inl
     src/common/Matrix.h
+	src/common/Matrix.inl
+	src/common/Size.h
+	src/common/Size.inl
+
+	src/common/math/Vector.h
+	src/common/math/Math.h
+	src/common/math/Vec.h
 
     src/common/exceptions/NprsException.h
-    src/common/exceptions/ArgumentException.h
-    src/common/exceptions/NotSupportedException.h
+    src/common/exceptions/CommonExceptions.h
+    src/common/functional/ListProcessing.h
 )
 
 SET (sources
     src/common/image/Image.cpp
     src/common/image/ImageConverter.cpp
-	src/common/image/Color.cpp
+    src/common/image/Color.cpp
+	src/common/image/Bitmap.cpp
 
     src/common/exceptions/NprsException.cpp
-    src/common/exceptions/ArgumentException.cpp
-    src/common/exceptions/NotSupportedException.cpp
+    src/common/exceptions/CommonExceptions.cpp
 )
 
 SET (directories
@@ -36,22 +49,9 @@ SET (directories
     src/common/exceptions
 )
 
-SET (source_files ${sources} ${headers})
-
-FOREACH(file ${source_files})
-    IF(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-        FILE(APPEND ${CMAKE_CURRENT_SOURCE_DIR}/${file} "\n")
-    ENDIF()
-ENDFOREACH()
+GROUP_FILES("${directories}")
 
 INCLUDE_DIRECTORIES(src)
-
-FOREACH(directory ${directories})
-	FILE(GLOB dir_headers "${directory}/*.h")
-	FILE(GLOB dir_sources "${directory}/*.cpp")
-	STRING(REGEX REPLACE "/" "\\\\\\\\" convdir ${directory})
-	SOURCE_GROUP(${convdir} FILES ${dir_headers} ${dir_sources})
-ENDFOREACH()
 
 ADD_LIBRARY(${projname} ${headers} ${sources})
 INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

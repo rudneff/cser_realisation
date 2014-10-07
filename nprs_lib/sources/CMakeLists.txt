@@ -2,8 +2,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 PROJECT(nprs)
 
-SET(CMAKE_BUILD_TYPE Debug)
-
 IF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     MESSAGE("using clang")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -19,23 +17,34 @@ ELSEIF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     SET(MSVC true)
 ENDIF()
 
+SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(recognition_system)
 ADD_SUBDIRECTORY(console_tests)
+ADD_SUBDIRECTORY(training_lib)
 
 IF (JAVA_API)
 	ADD_SUBDIRECTORY(nprs_java_api)
 ENDIF()
 
-IF (TEST_GUI)
-	FIND_PACKAGE(Qt5Core)
-	FIND_PACKAGE(Qt5Widgets)
-
-	IF (Qt5Core_FOUND AND Qt5Widgets_FOUND)
-		ADD_SUBDIRECTORY(qt_test_gui)
-	ENDIF()
+IF (CLASSIFIER_TRAINER)
+	ADD_SUBDIRECTORY(classifier_trainer)
 ENDIF()
 
-IF (MSVC)
+IF (TEST_GUI)
+	FIND_PACKAGE(Qt5Core REQUIRED)
+	FIND_PACKAGE(Qt5Widgets REQUIRED)
+	
+	ADD_SUBDIRECTORY(qt_test_gui)
+	ADD_SUBDIRECTORY(qt_console_ui)
+	ADD_SUBDIRECTORY(qt_training_utility)
+ENDIF()
+
+IF (MSVC AND CS_API)
 	ADD_SUBDIRECTORY(nprs_cs_api)
 ENDIF()
+
+#set(JAVA_API true CACHE BOOLEAN "description")
+#set(TEST_GUI true CACHE BOOLEAN "description")
+#set(CMAKE_PREFIX_PATH "/usr/local/Cellar/qt5/5.3.2" CACHE PATH "qt5")

@@ -43,7 +43,7 @@ public class CameraHolder {
     private void configure() {
         Camera.Parameters params = _camera.getParameters();
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-        params.setPictureSize(1920, 1080);
+        params.setPictureSize(320, 240);
         _camera.setParameters(params);
     }
 }

@@ -1,5 +1,7 @@
 #include "ERFilterMNHeavy.h"
 
-bool nprs::ERFilterMNHeavy::isRegion(ERDescriptor const& region) {
-    return true;
+using namespace nprs;
+
+std::vector<ERDescriptor*> ERFilterMNHeavy::perform(std::vector<ERDescriptor*> const& regions) {
+    return regions;
 }

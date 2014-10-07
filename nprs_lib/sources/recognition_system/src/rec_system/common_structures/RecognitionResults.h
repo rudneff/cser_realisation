@@ -11,9 +11,11 @@ class NumberPlate; using pNumberPlate = std::shared_ptr<NumberPlate>;
 
 class RecognitionResults {
 public:
-    RecognitionResults(const std::vector<pNumberPlate> &numberPlates, const Image resultImage)
-            : _numberPlates(numberPlates), _resultImage(resultImage)
-    {}
+    RecognitionResults(const std::vector<pNumberPlate> &numberPlates, const Image &resultImage);
+    RecognitionResults(std::vector<pNumberPlate> && numberPlates, Image && resultImage);
+
+    RecognitionResults(RecognitionResults && other);
+    RecognitionResults& operator= (RecognitionResults && other);
 
     const std::vector<pNumberPlate>& numberPlates() const { return _numberPlates; }
     const Image & resultImage() const { return _resultImage; }

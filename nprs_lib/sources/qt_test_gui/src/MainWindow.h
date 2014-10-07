@@ -20,10 +20,13 @@ public slots:
     void newFrame(const QImage &image);
     void loadFile();
     void exit();
+    void recognize();
 
 private:
     Ui::MainWindow *ui;
     nprs::RecognitionSystem _recSystem;
+
+    void performRecognition(QImage &frame);
 };
 
 #endif // MAINWINDOW_H

@@ -9,14 +9,16 @@ class FrameView : public QWidget
 public:
     explicit FrameView(QWidget *parent = 0);
 
+    QImage & frame() { return _frame; }
+
 public slots:
-    void newFrame(const QPixmap &pm);
+    void newFrame(const QImage &frame);
 
 protected:
     void paintEvent(QPaintEvent* e) override;
 
 private:
-    QPixmap _pixMap;
+    QImage _frame;
 };
 
 #endif // FRAMEVIEW_H

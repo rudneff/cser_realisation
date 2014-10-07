@@ -1,6 +1,6 @@
 #include "Algorithm.h"
 
-nprs::Algorithm::Algorithm(std::function<void()> const& finishedCallback)
+nprs::Algorithm::Algorithm(const std::function<void()> &finishedCallback)
     : _finishedCallback(finishedCallback)
 {
 }

@@ -1,44 +1,51 @@
 #include <iostream>
-#include <rec_system/image_processing/region_detection/cser/filters/ERFilterConditional.h>
 #include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
-#include <common/Point.h>
+#include <common/math/Vector.h>
 #include <common/image/Image.h>
 
 void conditionsTest();
 void imageTest();
+void arrayTest();
+void matrixMoveTest();
 
 int main(int argc, char** argv) {
-    conditionsTest();
-    imageTest();
-    std::cin.get();
+//    conditionsTest();
+//    imageTest();
+//    arrayTest();
+//    matrixMoveTest();
+//    std::cin.get();
+
+    std::vector<int> list = {1, 1};
+    auto res = nprs::fold<int>(list, [] (const int &prev, const int &curr) { return (int) prev * curr; });
+    auto res2 = nprs::map<int, double>(list, [] (const int &v) { return v + 1; });
+
+    nprs::Vector<int> v(list);
+
+    printf("%d %f\n", res, v.length());
+
+    nprs::Vector<float> v1 = {0, 0};
+    nprs::Vector<float> v2 = {4, 3};
+
+    printf("%f", v1.distanceTo(v2));
 }
 
 void conditionsTest() {
-    std::vector<std::function<bool(const nprs::ERDescriptor&)>> conditions {
-        [](const nprs::ERDescriptor& e) { return true; },
-        [](const nprs::ERDescriptor& e) { return true; },
-        [](const nprs::ERDescriptor& e) { return true; }
-    };
-
-    nprs::ERDescriptor er(nprs::Point(10, 10), std::vector<nprs::ICFeature*>());
-
-    for (auto c : conditions) {
-        std::cout << c(er) << std::endl;
-    }
-
-    std::function<bool(const nprs::ERDescriptor&)> condition = [](const nprs::ERDescriptor& e) { return true; };
-
-    nprs::ERFilterConditional filter(condition);
-    bool res = filter.isRegion(er);
-    std::cout << res << std::endl;
 }
 
 struct tpix {
+    tpix(int value) : value(value) {}
+
     tpix()
         : value(65)
     {
         std::cout << "tpix::ctor" << std::endl;
     };
+
+    tpix(const tpix& other) 
+        : value(other.value)
+    {
+        std::cout << "tpix::cctor" << std::endl;
+    }
 
     ~tpix() {
         std::cout << "tpix::dtor" << std::endl;
@@ -50,4 +57,20 @@ struct tpix {
 void imageTest() {
     using namespace nprs;
     Image image(100, 100, ColorInfo(ColorFormat::INT, 1));
+}
+
+nprs::Matrix<tpix> newMatrix() {
+    nprs::Matrix<tpix> m(2,2);
+    m(1,1) = -102;
+    return m;
+}
+
+void matrixMoveTest() {
+    std::cout << "matrix move: " << std::endl;
+    nprs::Matrix<tpix> m = newMatrix();
+    std::cout << m(1,1).value << std::endl;
+    std::cout << "------" << std::endl;
+}
+
+void arrayTest() {
 }

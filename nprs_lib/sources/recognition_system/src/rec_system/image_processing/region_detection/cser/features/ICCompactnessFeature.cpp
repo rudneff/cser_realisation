@@ -4,7 +4,7 @@
 using namespace nprs;
 
 ICCompactnessFeature::ICCompactnessFeature(Matrix<ERDescriptor*> const* erMap,  Image const* img,  int channel)
-    : ICFeature(erMap, img, channel),
+    : ICFeatureComputer(erMap, img, channel),
       _area(0), _perimeter(0)
 {
 }
@@ -30,7 +30,7 @@ void ICCompactnessFeature::increment(Point const& p, ERDescriptor const* reg) {
     _perimeter += 4 - sum;
 }
 
-void ICCompactnessFeature::combine(const ICFeature *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) {
+void ICCompactnessFeature::combine(const ICFeatureComputer *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) {
     _perimeter += static_cast<const ICCompactnessFeature*>(other)->_perimeter;
     _area += static_cast<const ICCompactnessFeature*>(other)->_area;
 }

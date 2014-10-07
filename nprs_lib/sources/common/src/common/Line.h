@@ -3,7 +3,7 @@
 
 namespace nprs {
 
-class Line {
+class Line final {
 public:
     Line(float x0, float y0, float x1, float y1)
         : _x0(x0), _y0(y0), _x1(x1), _y1(y1)

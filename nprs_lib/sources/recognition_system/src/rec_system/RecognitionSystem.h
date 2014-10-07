@@ -1,22 +1,23 @@
 #ifndef RECOGNITION_SYSTEM_H
 #define RECOGNITION_SYSTEM_H
 
+#include <common/NprsStd.h>
 #include <memory>
 #include <vector>
-#include <common/image/Image.h>
 
 using uchar = unsigned char;
 
 namespace nprs {
 
-class RecognitionResults; using pRecognitionResults = std::shared_ptr<RecognitionResults>;
+class Bitmap;
+class RecognitionResults;
 
 class RecognitionSystem {
-public:
+public: 
     RecognitionSystem();
     ~RecognitionSystem();
 
-    pRecognitionResults recognize(const uchar *data, int width, int height, ColorInfo cf) const;
+    RecognitionResults recognize(const Bitmap &image) const;
 };
 
 }

@@ -5,13 +5,13 @@
 
 namespace nprs {
 
-class ICAspectRatioFeature : public ICFeature {
+class ICAspectRatioFeature : public ICFeatureComputer {
 public:
     ICAspectRatioFeature(const Matrix<ERDescriptor*> *erMap, const Image *image, int channel);
 
-    void init(Point const& p, ERDescriptor const* reg) override;
-    void increment(Point const& p, ERDescriptor const* reg) override;
-    void combine(ICFeature const* other, ERDescriptor const* thisReg, ERDescriptor const* otherReg) override;
+    void init(const Point &p, const ERDescriptor *reg) override;
+    void increment(const Point &p, const ERDescriptor *reg) override;
+    void combine(const ICFeatureComputer *other, const ERDescriptor *thisReg, const ERDescriptor *otherReg) override;
 
     float getValue() override;
 

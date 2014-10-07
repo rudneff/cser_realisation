@@ -4,18 +4,22 @@
 #include "Image.h"
 #include <memory>
 #include <vector>
+#include <common/image/Bitmap.h>
 
 namespace nprs {
 
 class ImageConverter {
 public:
-    static Image convertRaw(const unsigned char *data, int width, int height, ColorFormat colorFormat);
-    static std::vector<uchar> imageToRawBgra(const Image &image);
-    static std::vector<uchar> imageToRawRgb(const Image &image);
+    static Image convertRaw(const Bitmap &raw);
+    static Bitmap imageToRawBgra(const Image &image);
+    static Bitmap imageToRawRgb(const Image &image);
+    static Bitmap imageToRawArgb32(const Image &image);
 
 private:
     static Image rgbToInt(const uchar *data, int width, int height);
     static Image bgraToInt(const uchar *data, int width, int height);
+    static Image rgbaToInt(const uchar *data, int width, int height);
+    static Image argb32ToInt(const uchar *data, int width, int height);
 };
 
 }

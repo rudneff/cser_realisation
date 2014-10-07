@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -30,6 +31,7 @@ public class ResultsActivity extends Activity {
 
         String extra = getIntent().getStringExtra("test");
         byte[] imageBytes = getIntent().getByteArrayExtra("image");
+
         if (imageBytes != null) {
             ImageView imageView = (ImageView) findViewById(R.id.frame_view);
 
@@ -38,24 +40,29 @@ public class ResultsActivity extends Activity {
             rotate.postRotate(90);
             inputBmp = Bitmap.createBitmap(inputBmp, 0, 0, inputBmp.getWidth(), inputBmp.getHeight(), rotate, true);
 
-            Canvas canvas = new Canvas(inputBmp);
-
+            long before = System.currentTimeMillis();
             RecognitionResults results = _recognizer.recognize(inputBmp);
-            for (NumberPlate np : results.getNumberPlates()) {
-                Log.d("debug", String.format("NumberPlate: [%f %f %f %f]\n", np.getBounds().x(), np.getBounds().y(), np.getBounds().width(), np.getBounds().height()));
-            }
+            long after = System.currentTimeMillis();
+            Log.d("debug", String.format("recognition performed in %d ms", after - before));
+            Log.d("debug", String.format("got %d results.", results.getNumberPlates().size()));
 
-//            Rectangle bounds = results.getNumberPlates().get(0).getBounds();
-            Paint paint = new Paint();
-            paint.setColor(Color.argb(255, 255, 0, 0));
-            paint.setStrokeWidth(2.0f);
-//            canvas.drawRect(bounds.x(), bounds.y(), bounds.width(), bounds.height(), paint);
+            Canvas canvas = new Canvas(inputBmp);
+            drawResults(canvas, results);
 
             imageView.setImageBitmap(inputBmp);
         }
+    }
 
-        Bitmap image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        Log.d("debug", "image created" + image.getWidth() + " " + image.getHeight());
+    public void drawResults(Canvas canvas, RecognitionResults recognitionResults) {
+        Paint paint = new Paint();
+        paint.setColor(Color.argb(255, 255, 0, 0));
+        paint.setStrokeWidth(1.0f);
+        paint.setStyle(Paint.Style.STROKE);
+
+        for (NumberPlate np : recognitionResults.getNumberPlates()) {
+            Rectangle bounds = np.getBounds();
+            canvas.drawRect(bounds.x(), bounds.y(), bounds.x() + bounds.width(), bounds.y() + bounds.height(), paint);
+        }
     }
 
     @Override
