@@ -100,6 +100,7 @@ GROUP_FILES( "${directories}" )
 
 SET(dependencies
     common
+    dlib
 )
 
 FOREACH(dep ${dependencies})
