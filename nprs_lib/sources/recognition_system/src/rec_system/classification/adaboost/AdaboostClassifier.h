@@ -2,7 +2,7 @@
 #define RECSYSTEM_ADABOOST_CLASSIFIER_H
 
 #include <opencv2/opencv.hpp>
-#include <rec_system/classification/TrainingSet.h>
+#include <rec_system/machine_learning/TrainingSet.h>
 #include <rec_system/classification/Classifier.h>
 
 namespace nprs {

@@ -32,9 +32,14 @@ public:
     std::vector<float> rangeMin() const;
     std::vector<float> rangeMax() const;
 
+    bool isNormalized() const { return _isNormalized; }
+    bool isRandomized() const { return _isRandomized; }
+
 private:
     std::vector<TrainDataItem> _data;
     int _featuresCount;
+    bool _isNormalized;
+    bool _isRandomized;
 };
 
 class TrainDataItem final {

@@ -4,6 +4,7 @@
 using namespace nprs;
 
 TrainingSet::TrainingSet()
+: _isNormalized(false), _isRandomized(false)
 {
 }
 

@@ -2,7 +2,7 @@
 #define TRAININGLIB_SAMPLE_H
 
 #include <common/NprsStd.h>
-#include <rec_system/classification/TrainingSet.h>
+#include <rec_system/machine_learning/TrainingSet.h>
 #include <common/image/Image.h>
 
 namespace nprs {

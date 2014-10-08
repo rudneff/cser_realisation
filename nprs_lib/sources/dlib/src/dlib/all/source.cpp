@@ -59,16 +59,16 @@
 #include "../image_loader/jpeg_loader.cpp"
 #endif
 
-#ifndef DLIB_NO_GUI_SUPPORT
-#include "../gui_widgets/fonts.cpp"
-#include "../gui_widgets/widgets.cpp"
-#include "../gui_widgets/drawable.cpp"
-#include "../gui_widgets/canvas_drawing.cpp"
-#include "../gui_widgets/style.cpp"
-#include "../gui_widgets/base_widgets.cpp"
-#include "../gui_core/gui_core_kernel_1.cpp"
-#include "../gui_core/gui_core_kernel_2.cpp"
-#endif // DLIB_NO_GUI_SUPPORT
+//#ifndef DLIB_NO_GUI_SUPPORT
+//#include "../gui_widgets/fonts.cpp"
+//#include "../gui_widgets/widgets.cpp"
+//#include "../gui_widgets/drawable.cpp"
+//#include "../gui_widgets/canvas_drawing.cpp"
+//#include "../gui_widgets/style.cpp"
+//#include "../gui_widgets/base_widgets.cpp"
+//#include "../gui_core/gui_core_kernel_1.cpp"
+//#include "../gui_core/gui_core_kernel_2.cpp"
+//#endif // DLIB_NO_GUI_SUPPORT
 
 #endif // DLIB_ISO_CPP_ONLY
 

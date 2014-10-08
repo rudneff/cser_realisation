@@ -89,28 +89,34 @@ ERDescriptor* CserAlgorithm::newRegion(Point const& p) {
 ERDescriptor* CserAlgorithm::attachPoint(ERDescriptor *er, const Point &p) {
     ERDescriptor *newReg = er->attachPoint(p, _currentThreshold);
     _allRegions.push_back(newReg);
+
     _erMap(p.x(), p.y()) = er;
+    for (int x = newReg->bounds().x(); x <= newReg->bounds().x1(); x++) {
+        for (int y = newReg->bounds().y(); y <= newReg->bounds().y1(); y++) {
+            if (_erMap(x, y) == er)
+                _erMap(x, y) = newReg;
+        }
+    }
+//    swapRegions(er, newReg);
 
-    swapRegions(er, newReg);
-
-    return er;
+    return newReg;
 }
 
 ERDescriptor* CserAlgorithm::combineRegions(const Point &p, ERDescriptor *er1, ERDescriptor *er2) {
     ERDescriptor *newReg = er1->combine(er2, _currentThreshold);
     _allRegions.push_back(newReg);
     
-    swapRegions(er1, newReg);
+//    swapRegions(er1, newReg);
 
-    for (int x = er2->bounds().x(), x1 = er2->bounds().x1(); x < x1; x++) {
-        for (int y = er2->bounds().y(), y1 = er2->bounds().y1(); y < y1; y++) {
+    for (int x = newReg->bounds().x(), x1 = newReg->bounds().x1(); x < x1; x++) {
+        for (int y = newReg->bounds().y(), y1 = newReg->bounds().y1(); y < y1; y++) {
             if (_erMap(x, y) == er2) {
-                _erMap(x, y) = er1;
+                _erMap(x, y) = newReg;
             }
         }
     }
 
-    return er1;
+    return newReg;
 }
 
 std::set<ERDescriptor*> CserAlgorithm::findNeighbors(const Point &p) {
@@ -130,7 +136,7 @@ std::set<ERDescriptor*> CserAlgorithm::findNeighbors(const Point &p) {
 void CserAlgorithm::computeHist(const Image &image) {
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height(); y++) {
-            int intensity = image(x,y,_channel) * 255;
+            int intensity = (int) (image(x,y,_channel) * 255);
             _hist[intensity].push_back(Point(x,y));
         }
     }

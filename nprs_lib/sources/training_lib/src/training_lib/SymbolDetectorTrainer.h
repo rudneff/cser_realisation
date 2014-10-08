@@ -1,7 +1,7 @@
 #ifndef TRAININGLIB_SYMBOLDETECTORTRAINER_H
 #define TRAININGLIB_SYMBOLDETECTORTRAINER_H
 
-#include "Sample.h"
+#include <common/NprsStd.h>
 #include <memory>
 #include <vector>
 #include "IClassifierTrainer.h"
@@ -11,7 +11,9 @@ namespace nprs {
 class Bitmap;
 class Image;
 class InputSample;
-class Classifier;
+class DecisionMaker;
+class Trainer;
+class TrainingSet;
 
 class SymbolDetectorTrainer {
 public:
@@ -20,10 +22,11 @@ public:
     void pushPositiveSample(const InputSample &sample);
     void pushNegativeSample(const InputSample &sample);
 
-    up<Classifier> createNMLightClassifier();
+    up<DecisionMaker> createNMLightClassifier();
 
 private:
-    up<IClassifierTrainer> _nmLightTrainer;
+    up<Trainer> _nmLightTrainer;
+    up<TrainingSet> _lightTrainData;
 };
 
 }
