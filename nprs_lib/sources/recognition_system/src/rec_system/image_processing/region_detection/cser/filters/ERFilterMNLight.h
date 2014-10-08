@@ -9,6 +9,8 @@ namespace nprs {
 
 class ERFilterMNLight : public ERFilter {
 public:
+    static const double THRESHOLD;
+
     ERFilterMNLight(sp<DecisionMaker> const& regressor);
 
     ~ERFilterMNLight();

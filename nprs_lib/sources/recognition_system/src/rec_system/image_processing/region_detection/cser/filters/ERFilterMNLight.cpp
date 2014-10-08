@@ -5,6 +5,8 @@
 
 namespace nprs {
 
+const double ERFilterMNLight::THRESHOLD = 0.3;
+
 static bool isLocalMaximum(const ERDescriptor *reg, const DecisionMaker &dm);
 
 ERFilterMNLight::ERFilterMNLight(sp<DecisionMaker> const& regressor)
@@ -20,47 +22,55 @@ std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescrip
 
     std::vector<ERDescriptor *> result;
 
-    for (ERDescriptor * descriptor : regions) {
-        double val = (*_regressor)(descriptor->featureVector());
-        if (val > 0.3) {
-            result.push_back(descriptor);
-        }
-    }
-
-//    const ERDescriptor *root = regions[regions.size() - 1];
+//    for (ERDescriptor * descriptor : regions) {
+//        double val = (*_regressor)(descriptor->featureVector());
 //
-//    std::stack<ERDescriptor const*> uncheckedRoots;
-//    uncheckedRoots.push(root);
+//        if (val > 0.5) {
+//            result.push_back(descriptor);
 //
-//    while (!uncheckedRoots.empty()) {
-//        const ERDescriptor *reg = uncheckedRoots.top();
-//        uncheckedRoots.pop();
-//
-//        std::cout << "popped region " << reg << std::endl;
-//        while (reg->parent1() != nullptr) {
-//            std::cout << reg->featureVector()[0] << " " << reg->featureVector()[1] << std::endl;
-//            if (isLocalMaximum(reg, *_regressor)) {
-//                result.push_back(const_cast<ERDescriptor*>(reg));
-//            }
-//            if (reg->parent2() != nullptr) {
-//                uncheckedRoots.push(reg->parent2());
-//                std::cout << "pushed region " << reg->parent2() << std::endl;
-//            }
-//
-//            reg = reg->parent1();
+//            auto fv = descriptor->featureVector();
+//            std::cout << fv[0] << " " << " " << fv[1] << " " << fv[2] << " " <<  fv[3] << " " << val << std::endl;
 //        }
 //    }
+
+    const ERDescriptor *root = regions[regions.size() - 1];
+
+    std::stack<ERDescriptor const*> uncheckedRoots;
+    uncheckedRoots.push(root);
+
+    while (!uncheckedRoots.empty()) {
+        const ERDescriptor *reg = uncheckedRoots.top();
+        uncheckedRoots.pop();
+
+        while (reg->parent1() != nullptr) {
+            if (isLocalMaximum(reg, *_regressor)) {
+                result.push_back(const_cast<ERDescriptor *>(reg));
+            }
+            if (reg->parent2() != nullptr) {
+                uncheckedRoots.push(reg->parent2());
+                std::cout << "pushed region " << reg->parent2() << std::endl;
+            }
+
+            reg = reg->parent1();
+        }
+    }
 
     return result;
 }
 
 static bool isLocalMaximum(const ERDescriptor *reg, const DecisionMaker &dm) {
+    static const double eps = 0.01;
+
+    double currValue = dm(reg->featureVector());
+    if (currValue < ERFilterMNLight::THRESHOLD)
+        return false;
+
     double childValue = !reg->child() ? -1 : dm(reg->child()->featureVector());
     double parent1Value = !reg->parent1() ? -1 : dm(reg->parent1()->featureVector());
     double parent2Value = !reg->parent2() ? -1 : dm(reg->parent2()->featureVector());
-    double currValue = dm(reg->featureVector());
 
-    return (currValue > childValue && currValue > parent1Value) || (currValue > childValue && currValue > parent2Value);
+    return (currValue - childValue > eps && currValue - parent1Value > eps) ||
+           (currValue - childValue > eps && currValue - parent2Value > eps);
 }
 
 }

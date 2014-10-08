@@ -15,7 +15,7 @@ ERDescriptor::ERDescriptor(const Point &p, std::vector<ICFeatureComputer*> *feat
       _parent2(nullptr)
 
 {
-    for (int i = 0; i < _featureComputers->size(); i++) {
+   for (int i = 0; i < _featureComputers->size(); i++) {
         auto fc = (*_featureComputers)[i];
         fc->init(p, this);
         _features[i] = fc->getValue();
@@ -51,10 +51,6 @@ ERDescriptor* ERDescriptor::attachPoint(const Point &p, int threshold) {
         Math::max(p.x() + 1, _bounds.x1()),
         Math::max(p.y() + 1, _bounds.y1()));
 
-    if (threshold == 254 || threshold == 255) {
-        int a = 0;
-    }
-
     ERDescriptor* newReg = new ERDescriptor(_featureComputers, newBounds, threshold);
     _child = newReg;
     newReg->_parent1 = this;
@@ -65,10 +61,6 @@ ERDescriptor* ERDescriptor::attachPoint(const Point &p, int threshold) {
 ERDescriptor* ERDescriptor::combine(ERDescriptor *other, int threshold) {
     for (int i = 0; i < _featureComputers->size(); i++) {
         _featureComputers->at(i)->combine(other->_featureComputers->at(i), this, other);
-    }
-
-    if (threshold == 254 || threshold == 255) {
-        int a = 0;
     }
 
     Rectangle newBounds = Rectangle::fromPoints(

@@ -41,7 +41,8 @@ private:
     ERDescriptor* combineRegions(const Point &p, ERDescriptor *er1, ERDescriptor *er2); 
     ERDescriptor* attachPoint(ERDescriptor *er, const Point &p);
     std::set<ERDescriptor*> findNeighbors(const Point &p);
-    void swapRegions(ERDescriptor *r1, ERDescriptor *r2);
+
+//    void swapRegions(ERDescriptor *r1, ERDescriptor *r2);
 };
 
 }

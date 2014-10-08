@@ -41,12 +41,12 @@ std::vector<ERDescriptor*> CserAlgorithm::perform() {
         increment(i);
     }
 
-    std::vector<ERDescriptor*> filteredRegions = _allRegions;
-    for (pERFilter const& filter : _filters) {
-        filteredRegions = filter->perform(filteredRegions);
-    }
+//    std::vector<ERDescriptor*> filteredRegions = _allRegions;
+//    for (pERFilter const& filter : _filters) {
+//        filteredRegions = filter->perform(_allRegions);
+//    }
 
-    return filteredRegions;
+    return _filters[0]->perform(_allRegions);
 }
 
 void CserAlgorithm::increment(int threshold) {
@@ -110,7 +110,7 @@ ERDescriptor* CserAlgorithm::combineRegions(const Point &p, ERDescriptor *er1, E
 
     for (int x = newReg->bounds().x(), x1 = newReg->bounds().x1(); x < x1; x++) {
         for (int y = newReg->bounds().y(), y1 = newReg->bounds().y1(); y < y1; y++) {
-            if (_erMap(x, y) == er2) {
+            if (_erMap(x, y) == er1 || _erMap(x, y) == er2) {
                 _erMap(x, y) = newReg;
             }
         }
@@ -142,8 +142,8 @@ void CserAlgorithm::computeHist(const Image &image) {
     }
 }
 
-void CserAlgorithm::swapRegions(ERDescriptor *r1, ERDescriptor *r2) {
-    ERDescriptor temp = *r1;
-    *r1 = *r2;
-    *r2 = temp;
-}
+//void CserAlgorithm::swapRegions(ERDescriptor *r1, ERDescriptor *r2) {
+//    ERDescriptor temp = *r1;
+//    *r1 = *r2;
+//    *r2 = temp;
+//}

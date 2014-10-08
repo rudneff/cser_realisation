@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(loadFile()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exit()));
     connect(ui->actionRecognize, SIGNAL(triggered()), this, SLOT(recognize()));
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(recognize()));
     newFrame(QImage("/Users/vardan/Pictures/cars/images00013.png"));
 }
 
