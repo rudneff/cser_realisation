@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exit()));
     connect(ui->actionRecognize, SIGNAL(triggered()), this, SLOT(recognize()));
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(recognize()));
+    connect(ui->pushButton_2, SIGNAL(clicked), this, SLOT(loadFile()));
     newFrame(QImage("/Users/vardan/Pictures/cars/images00013.png"));
 }
 
@@ -68,4 +69,9 @@ void MainWindow::loadFile() {
     QFileDialog fd;
     QImage frame(fd.getOpenFileName());
     newFrame(frame);
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    loadFile();
 }

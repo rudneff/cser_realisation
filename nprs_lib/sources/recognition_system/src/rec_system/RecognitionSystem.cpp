@@ -8,6 +8,7 @@
 #include <rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h>
 #include <rec_system/image_processing/filters/thresholding/Thresholder.h>
 #include <rec_system/machine_learning/DLibDecisionMaker.h>
+#include <rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.h>
 
 namespace nprs {
 
@@ -23,7 +24,10 @@ RecognitionSystem::~RecognitionSystem() {
 RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
     sp<DecisionMaker> dm = DLibDecisionMaker<kernel_type>::load("nm_light_trained.dat");
     sp<ERFilterMNLight> lightFilter = std::make_shared<ERFilterMNLight>(dm);
+
+//    std::vector<sp<ERFilter>> filters{ std::make_shared<ERFilterEmpty>() };
     std::vector<sp<ERFilter>> filters{ lightFilter };
+
 
     Image converted = ImageConverter::convertRaw(image);
 

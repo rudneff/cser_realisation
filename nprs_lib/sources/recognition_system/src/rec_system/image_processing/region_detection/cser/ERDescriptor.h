@@ -14,7 +14,7 @@ class ICFeatureComputer;
 
 class ERDescriptor {
 public:
-    template <typename T> using pvec = std::shared_ptr<std::vector<T>>;
+    friend class CserAlgorithm;
 
     static const int FEATURE_ASPECTRATIO = 0;
     static const int FEATURE_COMPACTNESS = 1;

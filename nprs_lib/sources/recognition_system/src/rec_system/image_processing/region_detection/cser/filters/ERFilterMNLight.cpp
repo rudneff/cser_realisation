@@ -48,9 +48,7 @@ std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescrip
             }
             if (reg->parent2() != nullptr) {
                 uncheckedRoots.push(reg->parent2());
-                std::cout << "pushed region " << reg->parent2() << std::endl;
             }
-
             reg = reg->parent1();
         }
     }
