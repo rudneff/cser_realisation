@@ -11,7 +11,7 @@ class Image;
 class AutoThresholdExtractor : public SampleExtractor {
 public:
     explicit AutoThresholdExtractor(sp<const Image> image);
-    ~AutoThresholdExtractor() override;
+    ~AutoThresholdExtractor();
 
     std::vector<Sample> extractNMLightSamples() override;
 

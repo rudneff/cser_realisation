@@ -1,5 +1,5 @@
-#include <rec_system/classification/TrainingSet.h>
 #include "FCMeansClusterer.h"
+#include <rec_system/machine_learning/TrainingSet.h>
 #include <chrono>
 #include <random>
 

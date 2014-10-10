@@ -14,7 +14,7 @@ class ICFeatureComputer;
 
 class ERDescriptor {
 public:
-    template <typename T> using pvec = std::shared_ptr<std::vector<T>>;
+    friend class CserAlgorithm;
 
     static const int FEATURE_ASPECTRATIO = 0;
     static const int FEATURE_COMPACTNESS = 1;
@@ -28,10 +28,14 @@ public:
     ERDescriptor * combine(ERDescriptor *other, int threshold);
     
     Rectangle const& bounds() const { return _bounds; }
-    int getFeature(int f) const  { return _features[f]; }
+    float getFeature(int f) const  { return _features[f]; }
     std::vector<float> const& featureVector() const { return _features; }
 
     int threshold() const { return _threshold; }
+
+    const ERDescriptor * child() const { return _child; }
+    const ERDescriptor * parent1() const { return _parent1; }
+    const ERDescriptor * parent2() const { return _parent2; }
 
 private:
     ERDescriptor(std::vector<ICFeatureComputer*> *featureComputers, Rectangle bounds, int threshold);
@@ -40,8 +44,12 @@ private:
 
     std::vector<float> _features;
     Rectangle _bounds;
-    ERDescriptor *_parent;
     int _threshold;
+
+    ERDescriptor *_child;
+
+    ERDescriptor *_parent1;
+    ERDescriptor *_parent2;
 };
 
 }

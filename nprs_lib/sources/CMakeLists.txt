@@ -23,6 +23,7 @@ ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(recognition_system)
 ADD_SUBDIRECTORY(console_tests)
 ADD_SUBDIRECTORY(training_lib)
+ADD_SUBDIRECTORY(dlib)
 
 IF (JAVA_API)
 	ADD_SUBDIRECTORY(nprs_java_api)

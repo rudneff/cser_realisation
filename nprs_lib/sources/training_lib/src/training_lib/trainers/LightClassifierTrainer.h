@@ -3,7 +3,7 @@
 
 #include <common/NprsStd.h>
 #include <memory>
-#include <rec_system/classification/TrainingSet.h>
+#include <rec_system/machine_learning/TrainingSet.h>
 #include <training_lib/IClassifierTrainer.h>
 
 namespace nprs {

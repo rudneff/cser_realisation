@@ -2,19 +2,18 @@
 #include "common_structures/RecognitionResults.h"
 #include "common_structures/NumberPlate.h"
 #include "common_structures/NumberPlateCharacter.h"
-#include "common/Rectangle.h"
 #include <rec_system/image_processing/region_detection/cser/CSERDetector.h>
-#include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
 #include "image_processing/region_detection/cser/ExtremalRegion.h"
 #include <common/image/ImageConverter.h>
 #include <rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h>
+#include <rec_system/image_processing/filters/thresholding/Thresholder.h>
+#include <rec_system/machine_learning/DLibDecisionMaker.h>
 #include <rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.h>
 
-#include <chrono>
-#include <iostream>
-#include <rec_system/image_processing/filters/thresholding/Thresholder.h>
-
 namespace nprs {
+
+typedef dlib::matrix<double> sample_type;
+typedef dlib::radial_basis_kernel<sample_type> kernel_type;
 
 RecognitionSystem::RecognitionSystem() {
 }
@@ -23,7 +22,13 @@ RecognitionSystem::~RecognitionSystem() {
 }
 
 RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
-    std::vector<sp<ERFilter>> filters{ std::make_shared<ERFilterMNLight>() };
+    sp<DecisionMaker> dm = DLibDecisionMaker<kernel_type>::load("nm_light_trained.dat");
+    sp<ERFilterMNLight> lightFilter = std::make_shared<ERFilterMNLight>(dm);
+
+//    std::vector<sp<ERFilter>> filters{ std::make_shared<ERFilterEmpty>() };
+    std::vector<sp<ERFilter>> filters{ lightFilter };
+
+
     Image converted = ImageConverter::convertRaw(image);
 
     CSERDetector detector(filters);

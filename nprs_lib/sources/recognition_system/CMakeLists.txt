@@ -35,11 +35,18 @@ SET (headers
 	src/rec_system/image_processing/filters/ImageFilter.h
 
 	src/rec_system/classification/Classifier.h
-	src/rec_system/classification/TrainingSet.h
+	src/rec_system/machine_learning/TrainingSet.h
 	src/rec_system/classification/adaboost/AdaboostClassifier.h
 	src/rec_system/clusterization/fuzzy_fcmeans/FCMeansClusterer.h
 	src/rec_system/clusterization/fuzzy_fcmeans/FuzzyCluster.h
 	src/rec_system/clusterization/Clusterer.h
+
+	src/rec_system/machine_learning/TrainingSet.h
+	src/rec_system/machine_learning/DecisionMaker.h
+	src/rec_system/machine_learning/Trainer.h
+	src/rec_system/machine_learning/SvmRegressionTrainer.h
+	src/rec_system/machine_learning/DLibDecisionMaker.h
+	src/rec_system/machine_learning/DLibHelper.h
 )
 
 SET (sources
@@ -70,11 +77,16 @@ SET (sources
     src/rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.cpp
 
 	src/rec_system/classification/adaboost/AdaboostClassifier.cpp
-	src/rec_system/classification/TrainingSet.cpp
+	src/rec_system/machine_learning/TrainingSet.cpp
 	src/rec_system/clusterization/fuzzy_fcmeans/FCMeansClusterer.cpp
 	src/rec_system/clusterization/fuzzy_fcmeans/FuzzyCluster.cpp
 
 	src/rec_system/clusterization/Clusterer.cpp
+
+	src/rec_system/machine_learning/TrainingSet.cpp
+	src/rec_system/machine_learning/SvmRegressionTrainer.cpp
+	src/rec_system/machine_learning/DLibDecisionMaker.cpp
+	src/rec_system/machine_learning/DLibHelper.cpp
 )
 
 INCLUDE_DIRECTORIES(src)
@@ -94,12 +106,15 @@ SET(directories
 	src/rec_system/classification
 	src/rec_system/classification/adaboost
 	src/rec_system/clusterization/fuzzy_fcmeans
+
+	src/rec_system/machine_learning
 )
 
 GROUP_FILES( "${directories}" )
 
 SET(dependencies
     common
+    dlib
 )
 
 FOREACH(dep ${dependencies})
