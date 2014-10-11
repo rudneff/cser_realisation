@@ -4,6 +4,7 @@
 #include <common/NprsStd.h>
 #include <rec_system/machine_learning/DecisionMaker.h>
 #include <rec_system/image_processing/region_detection/cser/ERFilter.h>
+#include <common/image/Image.h>
 
 namespace nprs {
 
@@ -14,7 +15,7 @@ public:
     ERFilterMNLight(sp<DecisionMaker> const& regressor);
 
     ~ERFilterMNLight();
-    std::vector<ERDescriptor*> perform(const std::vector<ERDescriptor*> &regions) override;
+    std::vector<ERDescriptor *> perform(const std::vector<ERDescriptor *> &regions, Image const &image) override;
 
 private:
     sp<DecisionMaker> _regressor;

@@ -41,12 +41,12 @@ std::vector<ERDescriptor*> CserAlgorithm::perform() {
         increment(i);
     }
 
-//    std::vector<ERDescriptor*> filteredRegions = _allRegions;
-//    for (pERFilter const& filter : _filters) {
-//        filteredRegions = filter->perform(_allRegions);
-//    }
+    std::vector<ERDescriptor*> filteredRegions = _allRegions;
+    for (pERFilter const& filter : _filters) {
+        filteredRegions = filter->perform(_allRegions, _image);
+    }
 
-    return _filters[0]->perform(_allRegions);
+    return filteredRegions;
 }
 
 void CserAlgorithm::increment(int threshold) {

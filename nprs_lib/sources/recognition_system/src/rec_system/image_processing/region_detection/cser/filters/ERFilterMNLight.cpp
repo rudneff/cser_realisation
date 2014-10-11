@@ -2,6 +2,7 @@
 #include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
 #include <stack>
 #include <iostream>
+#include <common/image/Image.h>
 
 namespace nprs {
 
@@ -17,7 +18,7 @@ ERFilterMNLight::ERFilterMNLight(sp<DecisionMaker> const& regressor)
 ERFilterMNLight::~ERFilterMNLight() {
 }
 
-std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescriptor *> &regions) {
+std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescriptor *> &regions, Image const &image) {
     std::cout << regions.size() << std::endl;
 
     std::vector<ERDescriptor *> result;
@@ -52,6 +53,8 @@ std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescrip
             reg = reg->parent1();
         }
     }
+
+    std::cout << result.size() << std::endl;
 
     return result;
 }

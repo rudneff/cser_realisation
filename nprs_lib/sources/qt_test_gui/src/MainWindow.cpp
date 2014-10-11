@@ -41,7 +41,7 @@ void MainWindow::performRecognition(QImage& frame) {
 
     QPainter painter;
     nprs::Bitmap resultImage = ImageConverter::imageToRawRgb(results.resultImage());
-    QImage result(resultImage.data(), results.resultImage().width(), results.resultImage().height(), QImage::Format_RGB888);
+    QImage result = QImage(resultImage.data(), resultImage.width(), resultImage.height(), QImage::Format_RGB888).copy();
     painter.begin(&result);
     painter.setPen(QPen(QColor::fromRgb(255, 0, 0)));
     for (pNumberPlate np : results.numberPlates()) {
@@ -71,7 +71,6 @@ void MainWindow::loadFile() {
     newFrame(frame);
 }
 
-void MainWindow::on_pushButton_2_clicked()
-{
+void MainWindow::on_pushButton_2_clicked() {
     loadFile();
 }

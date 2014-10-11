@@ -6,11 +6,12 @@
 namespace nprs {
 
 class ERDescriptor;
+class Image;
 
 class ERFilter {
 public:
     virtual ~ERFilter() {};
-    virtual std::vector<ERDescriptor*> perform(const std::vector<ERDescriptor*> &regions) = 0;
+    virtual std::vector<ERDescriptor *> perform(const std::vector<ERDescriptor *> &regions, Image const &image) = 0;
 };
 
 }
