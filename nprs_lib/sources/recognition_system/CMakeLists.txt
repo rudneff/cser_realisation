@@ -12,10 +12,15 @@ SET (headers
     src/rec_system/common_structures/NumberPlateCharacter.h
     src/rec_system/common_structures/RecognitionResults.h
 
+	src/rec_system/image_processing/SobelOperator.h
     src/rec_system/image_processing/feature_extraction/FeatureExtractor.h
     src/rec_system/image_processing/feature_extraction/HogFeatureExtractor.h
+    src/rec_system/image_processing/feature_extraction/HistogramExtractor.h
 	src/rec_system/image_processing/filters/thresholding/OtsuThresholder.h
 	src/rec_system/image_processing/filters/thresholding/Thresholder.h
+	src/rec_system/image_processing/filters/MaskFilter.h
+	src/rec_system/image_processing/filters/Convolution.h
+	src/rec_system/image_processing/filters/Convolution.h
 	src/rec_system/image_processing/object_detection/CascadeObjectDetector.h
 	src/rec_system/image_processing/object_detection/ObjectDetector.h
 	src/rec_system/image_processing/object_detection/OcvHelper.h
@@ -60,9 +65,13 @@ SET (sources
     src/rec_system/common_structures/NumberPlateCharacter.cpp
     src/rec_system/common_structures/RecognitionResults.cpp
 
+	src/rec_system/image_processing/SobelOperator.cpp
     src/rec_system/image_processing/feature_extraction/HogFeatureExtractor.cpp
+    src/rec_system/image_processing/feature_extraction/HistogramExtractor.cpp
+	src/rec_system/image_processing/filters/Convolution.cpp
 	src/rec_system/image_processing/filters/thresholding/OtsuThresholder.cpp
 	src/rec_system/image_processing/filters/thresholding/Thresholder.cpp
+	src/rec_system/image_processing/filters/MaskFilter.cpp
 	src/rec_system/image_processing/object_detection/CascadeObjectDetector.cpp
 	src/rec_system/image_processing/object_detection/OcvHelper.cpp
     src/rec_system/image_processing/region_detection/cser/CSERDetector.cpp
@@ -104,6 +113,7 @@ SET(directories
     src/rec_system/image_processing/feature_extraction
 	src/rec_system/image_processing/filters
 	src/rec_system/image_processing/filters/thresholding
+	src/rec_system/image_processing/object_detection
     src/rec_system/image_processing/region_detection/cser
     src/rec_system/image_processing/region_detection/cser/filters
     src/rec_system/image_processing/region_detection/cser/algorithm

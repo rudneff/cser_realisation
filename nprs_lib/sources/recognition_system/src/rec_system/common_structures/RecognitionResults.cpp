@@ -3,12 +3,12 @@
 
 using namespace nprs;
 
-RecognitionResults::RecognitionResults(std::vector<pNumberPlate> const& numberPlates, const Image &resultImage) 
+RecognitionResults::RecognitionResults(std::vector<sp<NumberPlate>> const& numberPlates, const Image &resultImage) 
     : _numberPlates(numberPlates), _resultImage(resultImage) 
 {
 }
 
-RecognitionResults::RecognitionResults(std::vector<pNumberPlate> && numberPlates, Image && resultImage) 
+RecognitionResults::RecognitionResults(std::vector<sp<NumberPlate>> && numberPlates, Image && resultImage) 
     : _numberPlates(std::move(numberPlates)), _resultImage(std::move(resultImage))
 {
 }

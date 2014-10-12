@@ -29,7 +29,7 @@ RandomRegionExtractor::RandomRegionExtractor(
 }
 
 std::vector<Sample> RandomRegionExtractor::extractNMLightSamples() {
-    CSERDetector detector(std::vector<sp<ERFilter>> { make_shared<ERFilterEmpty>() });
+    CSERDetector detector(std::vector<sp<ERFilter>> {});
     std::vector<Sample> result;
 
     for (int i = 0; i < _numSamples; i++) {

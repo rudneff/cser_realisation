@@ -3,7 +3,6 @@
 #include "OcvHelper.h"
 #include "CascadeObjectDetector.h"
 #include <opencv2/opencv.hpp>
-#include <QuartzCore/QuartzCore.h>
 
 namespace nprs {
 

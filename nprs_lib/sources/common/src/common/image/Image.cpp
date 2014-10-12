@@ -75,3 +75,13 @@ Image Image::cropped(int x0, int y0, int width, int height) const {
 
     return std::move(res);
 }
+
+Image Image::copyChannel(int c) const {
+    Image res(width(), height(), ColorInfo(ColorFormat::INTENSITY, 1));
+    for (int x = 0; x < width(); x++) {
+        for (int y = 0; y < height(); y++) {
+            res(x, y, 0) = (*this)(x, y, c);
+        }
+    }
+    return res;
+}

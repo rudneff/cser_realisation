@@ -20,7 +20,8 @@ AutoThresholdExtractor::~AutoThresholdExtractor() {
 std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples() {
     std::vector<Sample> result;
 
-    CSERDetector detector({ make_shared<ERFilterEmpty>() });
+    std::vector<sp<ERFilter>> filters;
+    CSERDetector detector(filters);
     std::vector<ExtremalRegion> regions = detector.detect(*_image);
     std::sort(
         regions.begin(),

@@ -7,11 +7,11 @@ HaarCascadeDecisionMaker::HaarCascadeDecisionMaker(const std::string &fileName) 
 }
 
 float HaarCascadeDecisionMaker::operator()(const RealVec &sample) const {
-
+    throw NotImplementedException("");
 }
 
 void HaarCascadeDecisionMaker::serialize(const std::string &fileName) const {
-
+    throw NotImplementedException("");
 }
 
 }

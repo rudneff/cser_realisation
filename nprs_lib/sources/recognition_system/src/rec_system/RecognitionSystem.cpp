@@ -28,7 +28,7 @@ RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
     sp<ERFilterMNHeavy> symbolDetector = std::make_shared<ERFilterMNHeavy>(std::make_shared<CascadeObjectDetector>("cascade.xml"));
 
 //    std::vector<sp<ERFilter>> filters{ std::make_shared<ERFilterEmpty>() };
-    std::vector<sp<ERFilter>> filters{ lightFilter, symbolDetector };
+    std::vector<sp<ERFilter>> filters{ lightFilter };
 
 
     Image converted = ImageConverter::convertRaw(image);

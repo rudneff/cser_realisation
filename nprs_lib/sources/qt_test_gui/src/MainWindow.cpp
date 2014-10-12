@@ -9,6 +9,7 @@
 #include <qpainter.h>
 #include <chrono>
 #include <future>
+#include <rec_system/image_processing/SobelOperator.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -24,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::recognize() {
-    performRecognition(ui->widget->frame());
+    //performRecognition(ui->widget->frame());
+    testSobel(ui->widget->frame());
 }
 
 void MainWindow::performRecognition(QImage& frame) {
@@ -44,12 +46,25 @@ void MainWindow::performRecognition(QImage& frame) {
     QImage result = QImage(resultImage.data(), resultImage.width(), resultImage.height(), QImage::Format_RGB888).copy();
     painter.begin(&result);
     painter.setPen(QPen(QColor::fromRgb(255, 0, 0)));
-    for (pNumberPlate np : results.numberPlates()) {
+    for (sp<NumberPlate> np : results.numberPlates()) {
         nprs::Rectangle bounds = np->bounds();
         painter.drawRect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
     }
     painter.end();
     ui->widget->newFrame(result.copy());
+}
+
+void MainWindow::testSobel(QImage& frame) {
+    using namespace nprs;
+
+    Bitmap rawImage(frame.bits(), frame.width(), frame.height(), nprs::ColorInfo(nprs::ColorFormat::RGB, 3));
+    Image image = ImageConverter::convertRaw(rawImage);
+    SobelOperator sobel;
+    Image gradients = sobel.apply(image).copyChannel(2);
+    Bitmap resultRaw = ImageConverter::imageToRawRgb(gradients);
+
+    QImage resultImage = QImage(resultRaw.data(), resultRaw.width(), resultRaw.height(), QImage::Format_RGB888).copy();
+    ui->widget->newFrame(resultImage);
 }
 
 void MainWindow::exit() {

@@ -21,6 +21,10 @@ up<DecisionMaker> SymbolDetectorTrainer::createNMLightClassifier() {
     return _nmLightTrainer->train(*_lightTrainData);
 }
 
+up<DecisionMaker> SymbolDetectorTrainer::createNMHeavyClassifier() {
+    throw NotImplementedException("");
+}
+
 void SymbolDetectorTrainer::pushPositiveSample(const InputSample &sample) {
     auto extractedSamples = sample.extractNMLightSamples();
     for (Sample const& es : extractedSamples) {

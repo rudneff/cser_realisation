@@ -1,4 +1,17 @@
 template <typename T>
+inline Matrix<T>::Matrix(std::vector<std::vector<T>> rows) 
+: _width(rows.size()),
+  _height(rows.begin()->size()),
+  _data(_width * _height)
+{
+    for (int row = 0; row < rows.size(); row++) {
+        for (int col = 0; col < rows[row].size(); col++) {
+            _data[row * _width + col] = rows[row][col];
+        }
+    }
+}
+
+template <typename T>
 inline Matrix<T>::Matrix(int width, int height) 
     : _width(width), _height(height), _data(width * height) 
 {

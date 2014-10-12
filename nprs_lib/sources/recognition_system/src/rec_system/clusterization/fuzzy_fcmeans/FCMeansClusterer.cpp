@@ -10,11 +10,9 @@ FCMeansClusterer::FCMeansClusterer(float m)
 {
 }
 
-std::vector<int> FCMeansClusterer::divide(
-    const std::vector<RealVec> &items,
-    std::vector<RealVec> *outCentroids)
+std::vector<int> FCMeansClusterer::divide(const std::vector<RealVec> &items, std::vector<RealVec> *outCentroids)
 {
-
+    throw NotImplementedException("");
 }
 
 std::vector<up<FuzzyCluster>> FCMeansClusterer::initializeClusters(

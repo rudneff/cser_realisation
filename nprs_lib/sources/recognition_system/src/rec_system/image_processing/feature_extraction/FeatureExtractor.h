@@ -11,6 +11,8 @@ class Rectangle;
 
 class FeatureExtractor {
 public:
+    virtual ~FeatureExtractor() {}
+
     virtual std::vector<float> extract(const Image &image, const Rectangle &bounds) = 0;
 };
 

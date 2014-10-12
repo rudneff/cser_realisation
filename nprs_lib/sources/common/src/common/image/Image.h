@@ -19,7 +19,7 @@ public:
 
     float getValue(int x, int y, int c) const;
     float& operator() (int x, int y, int c);
-    float operator() (int x, int y, int c) const;
+    float const& operator() (int x, int y, int c) const;
     void setValue(int x, int y, int c, float value);
 
     int width() const { return _width; }
@@ -30,6 +30,7 @@ public:
     Image resized(int width, int height) const;
     Image cropped(int x, int y, int width, int height) const;
     Image cropped(const Rectangle &rect) const;
+    Image copyChannel(int c) const;
     bool isInside(int x, int y) const;
 
 private:

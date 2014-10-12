@@ -4,7 +4,7 @@
 namespace nprs {
 
 up<DecisionMaker> CascadeClassifierTrainer::train(const TrainingSet &dataSet) {
-    
+    throw NotImplementedException("");
 }
 
 }

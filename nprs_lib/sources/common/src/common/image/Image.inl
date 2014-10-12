@@ -6,7 +6,7 @@ inline float& Image::operator()(int x, int y, int c) {
     return _data[ind(x, y, c)]; 
 }
 
-inline float Image::operator()(int x, int y, int c) const {
+inline float const& Image::operator()(int x, int y, int c) const {
     return _data[ind(x, y, c)]; 
 }
 

@@ -8,7 +8,7 @@ FuzzyCluster::FuzzyCluster(RealVec const &centroid)
 }
 
 RealVec const& FuzzyCluster::centroid() const {
-
+    throw NotImplementedException("");
 }
 
 RealVec FuzzyCluster::computeCentroid(const std::vector<FuzzyPoint> &points) const {
@@ -28,7 +28,8 @@ RealVec FuzzyCluster::computeCentroid(const std::vector<FuzzyPoint> &points) con
 }
 
 float FuzzyCluster::computePointWeight(const RealVec &point) const {
-
+    throw NotImplementedException("");
+    
 }
 
 }

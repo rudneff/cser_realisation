@@ -11,7 +11,7 @@ class CascadeObjectDetector : public ObjectDetector {
 public:
     CascadeObjectDetector(const std::string &fileName);
 
-    virtual std::vector<Rectangle> detect(const Image &image, const Rectangle &bounds);
+    virtual std::vector<Rectangle> detect(const Image &image, const Rectangle &bounds) override;
 
 private:
     up<cv::CascadeClassifier> _cvClassifier;

@@ -10,6 +10,8 @@ class Image;
 
 class ObjectDetector {
 public:
+    virtual ~ObjectDetector() {}
+
     virtual std::vector<Rectangle> detect(const Image &image, const Rectangle &bounds) = 0;
 };
 

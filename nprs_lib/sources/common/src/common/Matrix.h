@@ -1,11 +1,14 @@
 #ifndef COMMON_MATRIX_H
 #define COMMON_MATRIX_H
 
+#include <vector>
+
 namespace nprs {
 
 template <typename T>
 class Matrix final {
 public:
+    Matrix(std::vector<std::vector<T>> rows);
     Matrix(int width, int height);
     Matrix(const T *data, int width, int height);
     Matrix(Matrix && other);

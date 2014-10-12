@@ -56,7 +56,7 @@ struct tpix {
 
 void imageTest() {
     using namespace nprs;
-    Image image(100, 100, ColorInfo(ColorFormat::INT, 1));
+    Image image(100, 100, ColorInfo(ColorFormat::INTENSITY, 1));
 }
 
 nprs::Matrix<tpix> newMatrix() {
