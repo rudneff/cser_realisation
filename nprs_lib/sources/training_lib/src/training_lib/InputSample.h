@@ -3,6 +3,7 @@
 
 #include <common/NprsStd.h>
 #include <vector>
+#include "Sample.h"
 
 namespace nprs {
 
@@ -14,6 +15,7 @@ public:
     virtual ~InputSample();
 
     std::vector<Sample> extractNMLightSamples() const;
+    std::vector<Sample> extractNMHeavySamples() const;
 
 private:
     virtual up<SampleExtractor> createExtractor() const = 0;

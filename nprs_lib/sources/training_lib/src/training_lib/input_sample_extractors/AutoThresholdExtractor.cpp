@@ -6,8 +6,9 @@
 #include <rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.h>
 #include <rec_system/image_processing/region_detection/cser/CSERDetector.h>
 #include <training_lib/Sample.h>
+#include <rec_system/image_processing/feature_extraction/HogFeatureExtractor.h>
 
-using namespace nprs;
+namespace nprs {
 
 AutoThresholdExtractor::AutoThresholdExtractor(sp<const Image> image)
     : _image(image)
@@ -26,14 +27,14 @@ std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples() {
     std::sort(
         regions.begin(),
         regions.end(),
-        [](const ExtremalRegion &a, const ExtremalRegion &b)  { 
-                    return a.threshold() < b.threshold(); 
+        [](const ExtremalRegion &a, const ExtremalRegion &b) {
+            return a.threshold() < b.threshold();
         });
 
     OtsuThresholder otsu;
     int otsuThres = otsu.findThreshold(*_image) * 255;
     auto first = std::find_if(regions.begin(), regions.end(),
-            [&](const ExtremalRegion &a) {
+        [&](const ExtremalRegion &a) {
             return (a.threshold() > otsuThres - 5 && a.threshold() < otsuThres + 5);
         }
     );
@@ -53,4 +54,12 @@ std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples() {
     }
 
     return result;
+}
+
+std::vector<Sample> AutoThresholdExtractor::extractNMHeavySamples() {
+    HogFeatureExtractor extractor;
+    std::vector<float> fv = extractor.extract(*_image, Rectangle(0, 0, _image->width(), _image->height()));
+    return {Sample(fv, SampleType::NMHeavy)};
+}
+
 }

@@ -60,3 +60,20 @@ bool RandomRegionExtractor::checkConstraints(const ExtremalRegion &reg) {
            reg.bounds().width() <= _maxSize.width() &&
            reg.bounds().height() <= _maxSize.height();
 }
+
+std::vector<Sample> RandomRegionExtractor::extractNMHeavySamples() {
+    CSERDetector detector(std::vector<sp<ERFilter>>());
+    std::vector<Sample> result;
+
+    for (int i = 0; i < _numSamples; i++) {
+        Rectangle bounds = chooseRandomRegion();
+        auto regionImage = std::make_shared<Image>(_image->cropped(bounds));
+        AutoThresholdExtractor extractor(regionImage);
+        std::vector<Sample> extractedSamples = extractor.extractNMHeavySamples();
+        for (Sample sample : extractedSamples) {
+            result.push_back(sample);
+        }
+    }
+
+    return result;
+}

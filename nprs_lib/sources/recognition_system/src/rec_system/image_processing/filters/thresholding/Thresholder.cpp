@@ -4,7 +4,7 @@
 using namespace nprs;
 
 Image Thresholder::threshold(const Image &image, int channel, float thres) {
-    if (thres = -1) {
+    if (thres == -1) {
         thres = _thresFinder.findThreshold(image, channel);
     }
 

@@ -29,6 +29,7 @@ private:
     up<Trainer> _nmLightTrainer;
     up<Trainer> _nmHeavyTrainer;
     up<TrainingSet> _lightTrainData;
+    up<TrainingSet> _heavyTrainData;
 };
 
 }

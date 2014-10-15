@@ -22,16 +22,20 @@ std::vector<float> HogFeatureExtractor::extract(const Image &image, const Rectan
     Image gradients = _sobelOperator->apply(image.cropped(bounds));
 
     std::vector<float> result;
-    std::vector<Rectangle> areas = {
-        Rectangle(bounds.x(), bounds.y(), bounds.width() / 2, bounds.height() / 2),
-        Rectangle(bounds.x() + bounds.width() / 2, bounds.y(), bounds.width() / 2, bounds.height() / 2),
-        Rectangle(bounds.x(), bounds.y() + bounds.height() / 2, bounds.width() / 2, bounds.height() / 2),
-        Rectangle(bounds.x() + bounds.width() / 2, bounds.y() + bounds.height() / 2, bounds.width() / 2, bounds.height() / 2),
-    };
+    std::vector<Rectangle> areas;
+ 
+    areas.push_back(Rectangle(bounds.x(), bounds.y(), bounds.width() / 2, bounds.height() / 2));
+    areas.push_back(Rectangle(bounds.x() + bounds.width() / 2, bounds.y(), bounds.width() / 2, bounds.height() / 2));
+    areas.push_back(Rectangle(bounds.x(), bounds.y() + bounds.height() / 2, bounds.width() / 2, bounds.height() / 2));
+    areas.push_back(Rectangle(bounds.x() + bounds.width() / 2, bounds.y() + bounds.height() / 2, bounds.width() / 2, bounds.height() / 2));
 
     for (Rectangle area : areas) {
         std::vector<float> hist = calcHog(gradients, area);
-        result.insert(result.end(), hist.begin(), hist.end());
+//        result.insert(result.end(), hist.begin(), hist.end());
+
+        for (auto v: hist) {
+            result.push_back(v);
+        }
     }
 
     debugPrintVector(result);

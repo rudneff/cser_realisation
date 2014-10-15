@@ -25,22 +25,6 @@ inline Matrix<T>::Matrix(const T *data, int width, int height)
 }
 
 template <typename T>
-inline Matrix<T>::Matrix(Matrix && other) 
-    : _width(other._width), _height(other._height), _data(std::move(other._data)) 
-{
-}
-
-template <typename T>
-inline nprs::Matrix<T>& Matrix<T>::operator=(Matrix && other) {
-    if (this != &other) {
-        _width = other._width;
-        _height = other._height;
-        _data = std::move(other._data);
-    }
-    return *this;
-}
-
-template <typename T>
 inline T const& Matrix<T>::operator()(int col, int row) const {
     return _data[row * _width + col];
 }

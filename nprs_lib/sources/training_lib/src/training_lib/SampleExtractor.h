@@ -4,10 +4,10 @@
 #include <common/NprsStd.h>
 #include <tuple>
 #include <vector>
+#include "Sample.h"
 
 namespace nprs {
 
-class Sample;
 class InputSample;
 
 class SampleExtractor {
@@ -16,6 +16,7 @@ public:
     virtual ~SampleExtractor();
 
     virtual std::vector<Sample> extractNMLightSamples() = 0;
+    virtual std::vector<Sample> extractNMHeavySamples() = 0;
 };
 
 }

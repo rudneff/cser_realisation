@@ -11,8 +11,6 @@ public:
     Matrix(std::vector<std::vector<T>> rows);
     Matrix(int width, int height);
     Matrix(const T *data, int width, int height);
-    Matrix(Matrix && other);
-    Matrix & operator= (Matrix && other);
 
     T& operator() (int col, int row);
     const T & operator() (int col, int row) const;
