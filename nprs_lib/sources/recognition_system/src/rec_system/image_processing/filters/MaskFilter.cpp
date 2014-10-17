@@ -12,10 +12,6 @@ MaskFilter::MaskFilter(Matrix<float> const& mask)
 //    normalizeMask();
 }
 
-Image MaskFilter::apply(Image const& origin) {
-    return convolveImage(origin, _mask);
-}
-
 void MaskFilter::normalizeMask() {
     float sum = 0.0f;
     for (int x = 0; x < _mask.width(); x++) {
@@ -29,6 +25,10 @@ void MaskFilter::normalizeMask() {
             _mask(x, y) /= sum;
         }
     }
+}
+
+void MaskFilter::applyChannel(Image &outImage, int outChannel, const Image &inImage, int inChannel) {
+    convolveChannel(outImage, outChannel, inImage, inChannel, _mask);
 }
 
 }

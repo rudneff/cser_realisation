@@ -3,17 +3,18 @@
 
 #include <common/NprsStd.h>
 #include <rec_system/image_processing/filters/MaskFilter.h>
+#include "GradientOperator.h"
 
 namespace nprs {
 
 class Image;
 class MaskFilter;
     
-class SobelOperator {
+class SobelOperator: public GradientOperator {
 public:
     SobelOperator();
 
-    Image apply(const Image &image) const;
+    virtual Image perform(const Image &image, int channel, const Rectangle &bounds) const override;
 
 private:
     up<MaskFilter> _gxFilter;

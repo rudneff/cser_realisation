@@ -12,12 +12,12 @@ class HogFeatureExtractor : public FeatureExtractor {
 public:
     HogFeatureExtractor();
 
-    std::vector<float> extract(const Image &image, const Rectangle &bounds) override;
+    std::vector<float> extract(const Image &image, int channel, const Rectangle &bounds) override;
 
 private:
-    up<SobelOperator> _sobelOperator;
+    up<GradientOperator> _gradientOperator;
 
-    std::vector<float> calcHog(const Image &gradients, Rectangle bounds);
+    std::vector<float> calcHog(const Image &gradients, int channel, Rectangle bounds);
 };
 
 }

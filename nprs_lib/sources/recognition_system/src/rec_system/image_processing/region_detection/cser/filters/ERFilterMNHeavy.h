@@ -7,16 +7,18 @@
 namespace nprs {
 
 class Image;
-class ObjectDetector;
+class DecisionMaker;
+class FeatureExtractor;
 
 class ERFilterMNHeavy : public ERFilter {
 public:
-    ERFilterMNHeavy(sp<ObjectDetector> const& symbolDetector);
+    ERFilterMNHeavy(sp<DecisionMaker> const& classifier, sp<FeatureExtractor> const& featureExtractor);
 
     std::vector<ERDescriptor*> perform(const std::vector<ERDescriptor*> &regions, Image const& image) override;
 
 private:
-    sp<ObjectDetector> _symbolDetector;
+    sp<DecisionMaker> _classifier;
+    sp<FeatureExtractor> _featureExtractor;
 };
 
 }

@@ -3,6 +3,8 @@
 
 #include <common/NprsStd.h>
 #include <vector>
+#include <common/image/Image.h>
+#include <common/Rectangle.h>
 
 namespace nprs {
 
@@ -13,7 +15,7 @@ class FeatureExtractor {
 public:
     virtual ~FeatureExtractor() {}
 
-    virtual std::vector<float> extract(const Image &image, const Rectangle &bounds) = 0;
+    virtual std::vector<float> extract(const Image &image, int channel, const Rectangle &bounds) = 0;
 };
 
 }

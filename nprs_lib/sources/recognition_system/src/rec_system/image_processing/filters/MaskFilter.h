@@ -3,15 +3,16 @@
 
 #include <rec_system/image_processing/filters/ImageFilter.h>
 #include <common/Matrix.h>
-#include <common/Point.h>
 
 namespace nprs {
+
+class Image;
     
-class MaskFilter : ImageFilter {
+class MaskFilter : public ImageFilter {
 public:
     explicit MaskFilter(const Matrix<float> &mask);
 
-    Image apply(Image const& origin) override;
+    virtual void applyChannel(Image &outImage, int outChannel, const Image &inImage, int inChannel);
 
 private:
     Matrix<float> _mask;

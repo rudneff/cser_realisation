@@ -62,6 +62,9 @@ std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescrip
 static bool isLocalMaximum(const ERDescriptor *reg, const DecisionMaker &dm) {
     static const double eps = 0.01;
 
+    if (reg->bounds().area() < 15)
+        return false;
+
     double currValue = dm(reg->featureVector());
     if (currValue < ERFilterMNLight::THRESHOLD)
         return false;

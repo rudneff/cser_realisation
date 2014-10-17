@@ -13,6 +13,7 @@ class Image final {
 public:
     Image(int width, int height, ColorInfo colorInfo);
     Image(const Image &other);
+    Image(int width, int height, ColorInfo colorInfo, const void *data);
 
     Image(Image && other);
     Image& operator= (Image && other);
@@ -32,6 +33,8 @@ public:
     Image cropped(const Rectangle &rect) const;
     Image copyChannel(int c) const;
     bool isInside(int x, int y) const;
+    
+    void computeRange(float *outMin, float *outMax, int channel) const;
 
 private:
     int _width;

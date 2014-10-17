@@ -10,6 +10,7 @@
 #include <rec_system/machine_learning/DLibDecisionMaker.h>
 #include <rec_system/image_processing/object_detection/CascadeObjectDetector.h>
 #include <rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.h>
+#include <rec_system/image_processing/feature_extraction/HogFeatureExtractor.h>
 
 namespace nprs {
 
@@ -25,11 +26,12 @@ RecognitionSystem::~RecognitionSystem() {
 RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
     sp<DecisionMaker> dm = DLibDecisionMaker<kernel_type>::load("nm_light_trained.dat");
     sp<ERFilterMNLight> lightFilter = std::make_shared<ERFilterMNLight>(dm);
-    sp<ERFilterMNHeavy> symbolDetector = std::make_shared<ERFilterMNHeavy>(std::make_shared<CascadeObjectDetector>("cascade.xml"));
+    sp<ERFilterMNHeavy> heavyFilter = std::make_shared<ERFilterMNHeavy>(
+        DLibDecisionMaker<kernel_type>::load("nm_heavy_trained.dat"),
+        std::make_shared<HogFeatureExtractor>());
 
 //    std::vector<sp<ERFilter>> filters{ std::make_shared<ERFilterEmpty>() };
-    std::vector<sp<ERFilter>> filters{ lightFilter };
-
+    std::vector<sp<ERFilter>> filters{ lightFilter, heavyFilter };
 
     Image converted = ImageConverter::convertRaw(image);
 

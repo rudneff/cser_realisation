@@ -58,7 +58,7 @@ std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples() {
 
 std::vector<Sample> AutoThresholdExtractor::extractNMHeavySamples() {
     HogFeatureExtractor extractor;
-    std::vector<float> fv = extractor.extract(*_image, Rectangle(0, 0, _image->width(), _image->height()));
+    std::vector<float> fv = extractor.extract(*_image, 0, Rectangle(0, 0, _image->width(), _image->height()));
     return {Sample(fv, SampleType::NMHeavy)};
 }
 

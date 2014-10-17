@@ -1,8 +1,8 @@
 #include "SobelOperator.h"
-
 #include <common/image/Image.h>
 #include <common/math/Math.h>
 #include <common/image/Color.h>
+#include <rec_system/image_processing/filters/IntensityRescaleFilter.h>
 
 //#include <iostream>
 
@@ -24,22 +24,23 @@ SobelOperator::SobelOperator()
     _gyFilter = up<MaskFilter>(new MaskFilter(gyMask));
 }
 
-Image SobelOperator::apply(Image const& image) const {
+Image SobelOperator::perform(Image const& image, int channel, const Rectangle &bounds) const {
     Image result(image.width(), image.height(), ColorInfo(ColorFormat::INTENSITY, 4));
-    Image gx = _gxFilter->apply(image);
-    Image gy = _gxFilter->apply(image);
+    Image gx = _gxFilter->apply(image, channel);
+    Image gy = _gyFilter->apply(image, channel);
 
-    for (int x = 0; x < image.width(); x++) {
-        for (int y = 0; y < image.height(); y++) {
+    for (int x = (int) bounds.x(); x < bounds.x1(); x++) {
+        for (int y = (int) bounds.y(); y < bounds.y1(); y++) {
             result(x, y, 0) = gx(x, y, 0);
             result(x, y, 1) = gy(x, y, 0);
-            result(x, y, 2) = Math::sqrt(Math::sqr(gx(x, y, 0)) * Math::sqr(gy(x, y, 0)));
-            result(x, y, 3) = Math::atan(gy(x, y, 0) / gx(x, y, 0));
+            result(x, y, 2) = (float) (Math::sqrt(Math::sqr(gx(x, y, 0)) + Math::sqr(gy(x, y, 0))));
+            result(x, y, 3) = Math::atan2(gy(x, y, 0), gx(x, y, 0));
 //            std::cout << "[" << x << ", " << y << "]" << " --- " << gx(x, y, 0) << "  " << gy(x, y, 0) << "  " << result(x, y, 2) << result(x, y, 3) << std::endl;
         }
     }
 
-    return result;
+    IntensityRescaleFilter rsFilter(0, 1);
+    return rsFilter.apply(result, 2);
 }
 
 }

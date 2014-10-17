@@ -43,7 +43,7 @@ std::vector<ERDescriptor*> CserAlgorithm::perform() {
 
     std::vector<ERDescriptor*> filteredRegions = _allRegions;
     for (pERFilter const& filter : _filters) {
-        filteredRegions = filter->perform(_allRegions, _image);
+        filteredRegions = filter->perform(filteredRegions, _image);
     }
 
     return filteredRegions;

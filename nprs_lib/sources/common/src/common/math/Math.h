@@ -38,8 +38,18 @@ public:
     }
 
     template <typename Scalar>
+    static Scalar atan2(const Scalar &x, const Scalar &y) {
+        return ::atan2(x, y);
+    }
+
+    template <typename Scalar>
     static Scalar abs(const Scalar &x) {
         return x >= 0 ? x : -x;
+    }
+
+    template <typename Scalar>
+    static Scalar floor(const Scalar &x) {
+        return ::floor(x);
     }
 };
 
