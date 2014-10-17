@@ -58,7 +58,7 @@ Bitmap ImageConverter::imageToRawArgb32(const Image &image) {
 
 
 Image ImageConverter::bgraToInt(const uchar *data, int width, int height) {
-    Image result(width, height, ColorInfo(ColorFormat::INT, 1));
+    Image result(width, height, ColorInfo(ColorFormat::INTENSITY, 1));
     for (int x = 0; x < result.width(); x++) {
         for (int y = 0; y < result.height(); y++) {
             int p = (y * width + x) * 4;
@@ -73,7 +73,7 @@ Image ImageConverter::bgraToInt(const uchar *data, int width, int height) {
 }
 
 Image ImageConverter::rgbToInt(const uchar *data, int width, int height) {
-    Image result(width, height, ColorInfo(ColorFormat::INT, 1));
+    Image result(width, height, ColorInfo(ColorFormat::INTENSITY, 1));
 
     for (int x = 0; x < result.width(); x++) {
         for (int y = 0; y < result.height(); y++) {
@@ -90,7 +90,7 @@ Image ImageConverter::rgbToInt(const uchar *data, int width, int height) {
 }
 
 Image ImageConverter::rgbaToInt(const uchar *data, int width, int height) {
-    Image result(width, height, ColorInfo(ColorFormat::INT, 1));
+    Image result(width, height, ColorInfo(ColorFormat::INTENSITY, 1));
 
     for (int x = 0; x < result.width(); x++) {
         for (int y = 0; y < result.height(); y++) {
@@ -107,7 +107,7 @@ Image ImageConverter::rgbaToInt(const uchar *data, int width, int height) {
 }
 
 Image ImageConverter::argb32ToInt(uchar const* data, int width, int height) {
-    Image result(width, height, ColorInfo(ColorFormat::INT, 1));
+    Image result(width, height, ColorInfo(ColorFormat::INTENSITY, 1));
 
     for (int x = 0; x < result.width(); x++) {
         for (int y = 0; y < result.height(); y++) {

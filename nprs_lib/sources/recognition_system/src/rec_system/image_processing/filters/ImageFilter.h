@@ -8,7 +8,11 @@ class Image;
 class ImageFilter {
 public:
     virtual ~ImageFilter() {}
-    virtual Image apply(const Image &origin) = 0;
+
+    Image apply(const Image &origin);
+    Image apply(const Image &origin, int channel);
+
+    virtual void applyChannel(Image &outImage, int outChannel, const Image &inImage, int inChannel) = 0;
 };
 
 }

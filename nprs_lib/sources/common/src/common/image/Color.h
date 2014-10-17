@@ -4,7 +4,7 @@
 namespace nprs {
 
 enum class ColorFormat {
-    RGB, INT, LUM, RGBA, BGRA, ARGB
+    RGB, INTENSITY, LUM, RGBA, BGRA, ARGB
 };
 
 class ColorInfo {

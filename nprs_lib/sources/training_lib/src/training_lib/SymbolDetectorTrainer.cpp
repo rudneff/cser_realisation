@@ -9,11 +9,13 @@
 #include <training_lib/Sample.h>
 #include <rec_system/machine_learning/DecisionMaker.h>
 
-using namespace nprs;
+namespace nprs {
 
 SymbolDetectorTrainer::SymbolDetectorTrainer()
-    : _nmLightTrainer(new SvmRegressionTrainer()),
-     _lightTrainData(new TrainingSet())
+: _nmLightTrainer(new SvmRegressionTrainer()),
+  _nmHeavyTrainer(new SvmRegressionTrainer()),
+  _lightTrainData(new TrainingSet()),
+  _heavyTrainData(new TrainingSet())
 {
 }
 
@@ -21,16 +23,34 @@ up<DecisionMaker> SymbolDetectorTrainer::createNMLightClassifier() {
     return _nmLightTrainer->train(*_lightTrainData);
 }
 
+up<DecisionMaker> SymbolDetectorTrainer::createNMHeavyClassifier() {
+    return _nmHeavyTrainer->train(*_heavyTrainData);
+}
+
 void SymbolDetectorTrainer::pushPositiveSample(const InputSample &sample) {
-    auto extractedSamples = sample.extractNMLightSamples();
-    for (Sample const& es : extractedSamples) {
-        _lightTrainData->addItem(TrainDataItem(es.featureVector(), 1.0f));
+    std::vector<Sample> lightSamples = sample.extractNMLightSamples();
+    std::vector<Sample> heavySamples = sample.extractNMHeavySamples();
+
+    for (Sample es: lightSamples) {
+         _lightTrainData->addItem(TrainDataItem(es.featureVector(), 1.0f));
+    }
+
+    for (Sample es: heavySamples) {
+        _heavyTrainData->addItem(TrainDataItem(es.featureVector(), 1.0f));
     }
 }
 
 void SymbolDetectorTrainer::pushNegativeSample(const InputSample &sample) {
-    auto extractedSamples = sample.extractNMLightSamples();
-    for (Sample const& es : extractedSamples) {
+    std::vector<Sample> lightSamples = sample.extractNMLightSamples();
+    std::vector<Sample> heavySamples = sample.extractNMHeavySamples();
+
+    for (Sample es: lightSamples) {
         _lightTrainData->addItem(TrainDataItem(es.featureVector(), 0.0f));
     }
+
+    for (Sample es: heavySamples) {
+        _heavyTrainData->addItem(TrainDataItem(es.featureVector(), 0.0f));
+    }
+}
+
 }

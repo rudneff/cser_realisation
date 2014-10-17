@@ -12,20 +12,29 @@ SET (headers
     src/rec_system/common_structures/NumberPlateCharacter.h
     src/rec_system/common_structures/RecognitionResults.h
 
+	src/rec_system/image_processing/SobelOperator.h
+	src/rec_system/image_processing/GradientOperator.h
+	src/rec_system/image_processing/SimpleGradientOperator.h
+	src/rec_system/image_processing/filters/IntensityRescaleFilter.h
+    src/rec_system/image_processing/feature_extraction/FeatureExtractor.h
+    src/rec_system/image_processing/feature_extraction/HogFeatureExtractor.h
+    src/rec_system/image_processing/feature_extraction/HistogramExtractor.h
 	src/rec_system/image_processing/filters/thresholding/OtsuThresholder.h
 	src/rec_system/image_processing/filters/thresholding/Thresholder.h
-
+	src/rec_system/image_processing/filters/MaskFilter.h
+	src/rec_system/image_processing/filters/Convolution.h
+	src/rec_system/image_processing/filters/Convolution.h
+	src/rec_system/image_processing/object_detection/CascadeObjectDetector.h
+	src/rec_system/image_processing/object_detection/ObjectDetector.h
+	src/rec_system/image_processing/object_detection/OcvHelper.h
     src/rec_system/image_processing/region_detection/cser/CSERDetector.h
     src/rec_system/image_processing/region_detection/cser/ExtremalRegion.h
     src/rec_system/image_processing/region_detection/cser/ERFilter.h
     src/rec_system/image_processing/region_detection/cser/ERDescriptor.h
-
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.h
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.h
-
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.h
-
     src/rec_system/image_processing/region_detection/cser/features/ICFeature.h
     src/rec_system/image_processing/region_detection/cser/features/ICAspectRatioFeature.h
     src/rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.h
@@ -47,6 +56,8 @@ SET (headers
 	src/rec_system/machine_learning/SvmRegressionTrainer.h
 	src/rec_system/machine_learning/DLibDecisionMaker.h
 	src/rec_system/machine_learning/DLibHelper.h
+	src/rec_system/machine_learning/CascadeClassifierTrainer.h
+	src/rec_system/machine_learning/HaarCascadeDecisionMaker.h
 )
 
 SET (sources
@@ -57,19 +68,25 @@ SET (sources
     src/rec_system/common_structures/NumberPlateCharacter.cpp
     src/rec_system/common_structures/RecognitionResults.cpp
 
+	src/rec_system/image_processing/SobelOperator.cpp
+	src/rec_system/image_processing/SimpleGradientOperator.cpp
+    src/rec_system/image_processing/feature_extraction/HogFeatureExtractor.cpp
+    src/rec_system/image_processing/feature_extraction/HistogramExtractor.cpp
+	src/rec_system/image_processing/filters/Convolution.cpp
 	src/rec_system/image_processing/filters/thresholding/OtsuThresholder.cpp
 	src/rec_system/image_processing/filters/thresholding/Thresholder.cpp
-
+	src/rec_system/image_processing/filters/IntensityRescaleFilter.cpp
+	src/rec_system/image_processing/filters/MaskFilter.cpp
+	src/rec_system/image_processing/filters/ImageFilter.cpp
+	src/rec_system/image_processing/object_detection/CascadeObjectDetector.cpp
+	src/rec_system/image_processing/object_detection/OcvHelper.cpp
     src/rec_system/image_processing/region_detection/cser/CSERDetector.cpp
     src/rec_system/image_processing/region_detection/cser/ExtremalRegion.cpp
     src/rec_system/image_processing/region_detection/cser/ERDescriptor.cpp
-
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.cpp
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.cpp
     src/rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.cpp
-
     src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.cpp
-
 	src/rec_system/image_processing/region_detection/cser/features/ICFeature.cpp
     src/rec_system/image_processing/region_detection/cser/features/ICAspectRatioFeature.cpp
     src/rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.cpp
@@ -87,6 +104,9 @@ SET (sources
 	src/rec_system/machine_learning/SvmRegressionTrainer.cpp
 	src/rec_system/machine_learning/DLibDecisionMaker.cpp
 	src/rec_system/machine_learning/DLibHelper.cpp
+	src/rec_system/machine_learning/CascadeClassifierTrainer.cpp
+	src/rec_system/machine_learning/HaarCascadeDecisionMaker.cpp
+
 )
 
 INCLUDE_DIRECTORIES(src)
@@ -96,8 +116,10 @@ SET(directories
     src/rec_system/common_structures
 
     src/rec_system/image_processing
+    src/rec_system/image_processing/feature_extraction
 	src/rec_system/image_processing/filters
 	src/rec_system/image_processing/filters/thresholding
+	src/rec_system/image_processing/object_detection
     src/rec_system/image_processing/region_detection/cser
     src/rec_system/image_processing/region_detection/cser/filters
     src/rec_system/image_processing/region_detection/cser/algorithm

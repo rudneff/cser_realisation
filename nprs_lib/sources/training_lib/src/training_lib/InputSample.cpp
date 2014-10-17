@@ -9,8 +9,13 @@ InputSample::~InputSample() {
 }
 
 std::vector<Sample> InputSample::extractNMLightSamples() const {
-    auto extractor = createExtractor();
+    sp<SampleExtractor> extractor = createExtractor();
     return extractor->extractNMLightSamples();
+}
+
+std::vector<Sample> InputSample::extractNMHeavySamples() const {
+    sp<SampleExtractor> extractor = createExtractor();
+    return extractor->extractNMHeavySamples();
 }
 
 }

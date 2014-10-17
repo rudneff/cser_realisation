@@ -16,4 +16,3 @@ public:
 }
 
 #endif // ML_TRAINER_H
-

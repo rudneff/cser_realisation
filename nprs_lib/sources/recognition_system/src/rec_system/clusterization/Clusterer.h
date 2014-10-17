@@ -8,6 +8,8 @@ namespace nprs {
 
 class Clusterer {
 public:
+    virtual ~Clusterer() {}
+
     virtual std::vector<int> divide(
         const std::vector<RealVec> &items,
         std::vector<RealVec> *outCentroids = 0) = 0;

@@ -2,6 +2,7 @@
 #include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
 #include <stack>
 #include <iostream>
+#include <common/image/Image.h>
 
 namespace nprs {
 
@@ -17,7 +18,7 @@ ERFilterMNLight::ERFilterMNLight(sp<DecisionMaker> const& regressor)
 ERFilterMNLight::~ERFilterMNLight() {
 }
 
-std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescriptor *> &regions) {
+std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescriptor *> &regions, Image const &image) {
     std::cout << regions.size() << std::endl;
 
     std::vector<ERDescriptor *> result;
@@ -53,11 +54,16 @@ std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescrip
         }
     }
 
+    std::cout << result.size() << std::endl;
+
     return result;
 }
 
 static bool isLocalMaximum(const ERDescriptor *reg, const DecisionMaker &dm) {
     static const double eps = 0.01;
+
+    if (reg->bounds().area() < 15)
+        return false;
 
     double currValue = dm(reg->featureVector());
     if (currValue < ERFilterMNLight::THRESHOLD)

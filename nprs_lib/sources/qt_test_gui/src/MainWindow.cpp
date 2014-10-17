@@ -9,6 +9,8 @@
 #include <qpainter.h>
 #include <chrono>
 #include <future>
+#include <rec_system/image_processing/SobelOperator.h>
+#include <rec_system/image_processing/SimpleGradientOperator.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -25,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::recognize() {
     performRecognition(ui->widget->frame());
+    //testSobel(ui->widget->frame());
+    //testResize(ui->widget->frame());
 }
 
 void MainWindow::performRecognition(QImage& frame) {
@@ -41,16 +45,40 @@ void MainWindow::performRecognition(QImage& frame) {
 
     QPainter painter;
     nprs::Bitmap resultImage = ImageConverter::imageToRawRgb(results.resultImage());
-    QImage result(resultImage.data(), results.resultImage().width(), results.resultImage().height(), QImage::Format_RGB888);
+    QImage result = QImage(resultImage.data(), resultImage.width(), resultImage.height(), QImage::Format_RGB888).copy();
     painter.begin(&result);
     painter.setPen(QPen(QColor::fromRgb(255, 0, 0)));
-    for (pNumberPlate np : results.numberPlates()) {
+    for (sp<NumberPlate> np : results.numberPlates()) {
         nprs::Rectangle bounds = np->bounds();
         painter.drawRect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
     }
     painter.end();
     ui->widget->newFrame(result.copy());
 }
+
+void MainWindow::testSobel(QImage& frame) {
+    using namespace nprs;
+
+    Bitmap rawImage(frame.bits(), frame.width(), frame.height(), nprs::ColorInfo(nprs::ColorFormat::RGB, 3));
+    Image image = ImageConverter::convertRaw(rawImage);
+    SobelOperator sobel;
+    Image gradients = sobel.perform(image, 2, Rectangle(0, 0, image.width(), image.height())).copyChannel(2);
+    Bitmap resultRaw = ImageConverter::imageToRawRgb(gradients);
+
+    QImage resultImage = QImage(resultRaw.data(), resultRaw.width(), resultRaw.height(), QImage::Format_RGB888).copy();
+    ui->widget->newFrame(resultImage);
+}
+
+void MainWindow::testResize(QImage &frame) {
+    using namespace nprs;
+
+    Bitmap rawImage(frame.bits(), frame.width(), frame.height(), nprs::ColorInfo(nprs::ColorFormat::RGB, 3));
+    Image image = ImageConverter::convertRaw(rawImage);
+    Bitmap resultRaw = ImageConverter::imageToRawRgb(image.resized(100, 100));
+    QImage resultImage = QImage(resultRaw.data(), resultRaw.width(), resultRaw.height(), QImage::Format_RGB888).copy();
+    ui->widget->newFrame(resultImage);
+}
+
 
 void MainWindow::exit() {
     close();
@@ -71,7 +99,6 @@ void MainWindow::loadFile() {
     newFrame(frame);
 }
 
-void MainWindow::on_pushButton_2_clicked()
-{
+void MainWindow::on_pushButton_2_clicked() {
     loadFile();
 }

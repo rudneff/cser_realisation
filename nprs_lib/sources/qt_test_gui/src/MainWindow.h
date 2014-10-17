@@ -30,6 +30,8 @@ private:
     nprs::RecognitionSystem _recSystem;
 
     void performRecognition(QImage &frame);
+    void testSobel(QImage &frame);
+    void testResize(QImage &frame);
 };
 
 #endif // MAINWINDOW_H

@@ -23,10 +23,13 @@ public:
     void pushNegativeSample(const InputSample &sample);
 
     up<DecisionMaker> createNMLightClassifier();
+    up<DecisionMaker> createNMHeavyClassifier();
 
 private:
     up<Trainer> _nmLightTrainer;
+    up<Trainer> _nmHeavyTrainer;
     up<TrainingSet> _lightTrainData;
+    up<TrainingSet> _heavyTrainData;
 };
 
 }

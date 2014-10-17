@@ -14,6 +14,7 @@ public:
     ~AutoThresholdExtractor();
 
     std::vector<Sample> extractNMLightSamples() override;
+    std::vector<Sample> extractNMHeavySamples() override;
 
 private:
     sp<const Image> _image;
@@ -22,4 +23,3 @@ private:
 }
 
 #endif // TRAININGLIB_POSITIVESYMBOLSAMPLEEXTRACTOR_H
-

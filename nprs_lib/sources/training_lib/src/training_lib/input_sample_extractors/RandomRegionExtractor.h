@@ -20,6 +20,7 @@ public:
             const Size &maxSize = 0);
 
     std::vector<Sample> extractNMLightSamples() override;
+    std::vector<Sample> extractNMHeavySamples() override;
 
 private:
     sp<const Image> _image;
