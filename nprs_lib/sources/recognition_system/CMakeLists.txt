@@ -46,8 +46,8 @@ SET (headers
 	src/rec_system/machine_learning/CascadeClassifierTrainer.h
 	src/rec_system/machine_learning/HaarCascadeDecisionMaker.h
 
+    src/rec_system/plate_detection/PlateDetector.h
 	src/rec_system/plate_detection/HoughLineDetector.h
-
     src/rec_system/plate_detection/region_detection/cser/CSERDetector.h
     src/rec_system/plate_detection/region_detection/cser/ExtremalRegion.h
     src/rec_system/plate_detection/region_detection/cser/ERFilter.h
@@ -100,6 +100,7 @@ SET (sources
 
 	src/rec_system/plate_detection/HoughLineDetector.cpp
 
+    src/rec_system/plate_detection/PlateDetector.cpp
     src/rec_system/plate_detection/region_detection/cser/CSERDetector.cpp
     src/rec_system/plate_detection/region_detection/cser/ExtremalRegion.cpp
     src/rec_system/plate_detection/region_detection/cser/ERDescriptor.cpp

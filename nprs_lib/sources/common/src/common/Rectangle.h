@@ -25,6 +25,8 @@ public:
     float y1() const;
     float area() const;
 
+    Point middlePoint() const;
+
 private:
     float _x;
     float _y;

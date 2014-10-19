@@ -2,6 +2,7 @@
 #define COMMON_MATRIX_H
 
 #include <vector>
+#include <functional>
 
 namespace nprs {
 
@@ -11,6 +12,7 @@ public:
     Matrix(std::vector<std::vector<T>> rows);
     Matrix(int width, int height);
     Matrix(const T *data, int width, int height);
+    Matrix(int width, int height, std::function<T (int, int)> filler);
 
     T& operator() (int col, int row);
     const T & operator() (int col, int row) const;

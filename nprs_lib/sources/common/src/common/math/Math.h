@@ -7,6 +7,8 @@ namespace nprs {
 
 class Math {
 public:
+    static const double PI;
+
     template <typename Scalar>
     static double pow(const Scalar value, double p) {
         return ::pow((double) value, p);
@@ -50,6 +52,18 @@ public:
     template <typename Scalar>
     static Scalar floor(const Scalar &x) {
         return ::floor(x);
+    }
+
+    static double cos(double x) {
+        return ::cos(x);
+    }
+
+    static double sin(double x) {
+        return ::sin(x);
+    }
+
+    static double rescaleValue(double x, double lowBound, double upBound, double minValue, double maxValue) {
+        return (upBound - lowBound) * (x - minValue) / (maxValue - minValue) + lowBound;
     }
 };
 

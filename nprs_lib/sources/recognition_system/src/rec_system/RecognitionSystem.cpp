@@ -11,6 +11,7 @@
 #include <rec_system/image_processing/object_detection/CascadeObjectDetector.h>
 #include <rec_system/plate_detection/region_detection/cser/filters/ERFilterMNHeavy.h>
 #include <rec_system/image_processing/feature_extraction/HogFeatureExtractor.h>
+#include <rec_system/plate_detection/PlateDetector.h>
 
 namespace nprs {
 
@@ -36,15 +37,12 @@ RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
     Image converted = ImageConverter::convertRaw(image);
 
     CSERDetector detector(filters);
-    auto results = detector.detect(converted);
+    auto symbols = detector.detect(converted);
 
-    std::vector<sp<NumberPlate>> numberPlates;
-    for (auto res : results) {
-        sp<NumberPlate> np = std::make_shared<NumberPlate>(std::vector<sp<NumberPlateCharacter>>(), res.bounds());
-        numberPlates.push_back(np);
-    }
+    PlateDetector plateDetector;
+    auto numberPlates = plateDetector.detectPlate(symbols);
 
-    return std::move(RecognitionResults(std::move(numberPlates), std::move(converted)));
+    return RecognitionResults(numberPlates, converted);
 }
 
 }

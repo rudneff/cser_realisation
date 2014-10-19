@@ -29,3 +29,7 @@ inline float Rectangle::y1() const {
 inline float Rectangle::area() const {
     return _width * _height;
 }
+
+inline Point Rectangle::middlePoint() const {
+    return Point((x() + x1()) * 0.5f, (y() + y1()) * 0.5f);
+}

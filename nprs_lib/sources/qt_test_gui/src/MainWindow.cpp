@@ -49,8 +49,13 @@ void MainWindow::performRecognition(QImage& frame) {
     painter.begin(&result);
     painter.setPen(QPen(QColor::fromRgb(255, 0, 0)));
     for (sp<NumberPlate> np : results.numberPlates()) {
-        nprs::Rectangle bounds = np->bounds();
-        painter.drawRect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
+        nprs::Quad bounds = np->bounds();
+        QPolygon qPolygon(4);
+        qPolygon.setPoint(0, bounds.p1().x(), bounds.p1().y());
+        qPolygon.setPoint(0, bounds.p2().x(), bounds.p2().y());
+        qPolygon.setPoint(0, bounds.p3().x(), bounds.p3().y());
+        qPolygon.setPoint(0, bounds.p4().x(), bounds.p4().y());
+        painter.drawPolygon(qPolygon);
     }
     painter.end();
     ui->widget->newFrame(result.copy());

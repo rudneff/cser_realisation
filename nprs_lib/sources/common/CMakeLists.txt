@@ -23,6 +23,7 @@ SET (headers
 	src/common/Matrix.inl
 	src/common/Size.h
 	src/common/Size.inl
+	src/common/Quad.h
 
 	src/common/math/Vector.h
 	src/common/math/Math.h
@@ -38,6 +39,8 @@ SET (sources
     src/common/image/ImageConverter.cpp
     src/common/image/Color.cpp
 	src/common/image/Bitmap.cpp
+
+	src/common/math/Math.cpp
 
     src/common/exceptions/NprsException.cpp
     src/common/exceptions/CommonExceptions.cpp

@@ -10,7 +10,11 @@ public:
     float x() const { return _x; }
     float y() const  { return _y; }
 
-    Point operator+ (const Point &p1) const;
+    inline Point operator+ (const Point &p1) const;
+
+    inline bool operator< (const Point &other) const;
+    inline bool operator== (const Point &other) const;
+    inline bool operator> (const Point &other) const;
 
 private:
     float _x;
