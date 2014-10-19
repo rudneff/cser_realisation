@@ -3,6 +3,7 @@
 #include <common/exceptions/CommonExceptions.h>
 #include <common/math/Math.h>
 #include <opencv2/opencv.hpp>
+#include <memory>
 
 using namespace nprs;
 
@@ -20,7 +21,7 @@ Image::Image(int width, int height, ColorInfo colorInfo, const void *data)
   _colorInfo(colorInfo),
   _data(width * height * colorInfo.numChannels())
 {
-    std::memcpy(&(_data[0]), data, _width * _height * _colorInfo.numChannels() * sizeof(float));
+    memcpy(&(_data[0]), data, _width * _height * _colorInfo.numChannels() * sizeof(float));
 }
 
 Image::Image(const Image &other) 

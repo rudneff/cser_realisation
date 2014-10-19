@@ -1,5 +1,5 @@
 #include <iostream>
-#include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
+#include <rec_system/plate_detection/region_detection/cser/ERDescriptor.h>
 #include <common/math/Vector.h>
 #include <common/image/Image.h>
 

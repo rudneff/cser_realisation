@@ -1,13 +1,13 @@
 #include "CserAlgorithm.h"
-#include "rec_system/image_processing/region_detection/cser/ERDescriptor.h"
+#include "rec_system/plate_detection/region_detection/cser/ERDescriptor.h"
 #include <common/Point.h>
 #include <tuple>
-#include "rec_system/image_processing/region_detection/cser/features/ICFeature.h"
-#include <rec_system/image_processing/region_detection/cser/features/ICAspectRatioFeature.h>
-#include <rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.h>
-#include <rec_system/image_processing/region_detection/cser/ERFilter.h>
-#include <rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.h>
-#include <rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.h>
+#include "rec_system/plate_detection/region_detection/cser/features/ICFeature.h"
+#include <rec_system/plate_detection/region_detection/cser/features/ICAspectRatioFeature.h>
+#include <rec_system/plate_detection/region_detection/cser/features/ICCompactnessFeature.h>
+#include <rec_system/plate_detection/region_detection/cser/ERFilter.h>
+#include <rec_system/plate_detection/region_detection/cser/features/ICHCrossingsFeature.h>
+#include <rec_system/plate_detection/region_detection/cser/features/ICNumHolesFeature.h>
 #include <memory.h>
 
 using namespace nprs;

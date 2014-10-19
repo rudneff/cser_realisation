@@ -6,9 +6,9 @@
 #include <ctime>
 #include <training_lib/Sample.h>
 #include <rec_system/image_processing/filters/thresholding/Thresholder.h>
-#include <rec_system/image_processing/region_detection/cser/CSERDetector.h>
-#include <rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.h>
-#include <rec_system/image_processing/region_detection/cser/ExtremalRegion.h>
+#include <rec_system/plate_detection/region_detection/cser/CSERDetector.h>
+#include <rec_system/plate_detection/region_detection/cser/filters/ERFilterEmpty.h>
+#include <rec_system/plate_detection/region_detection/cser/ExtremalRegion.h>
 #include <iostream>
 
 using namespace nprs;

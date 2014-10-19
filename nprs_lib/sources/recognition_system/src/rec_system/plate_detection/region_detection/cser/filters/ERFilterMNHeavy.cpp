@@ -1,5 +1,5 @@
 #include "ERFilterMNHeavy.h"
-#include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
+#include <rec_system/plate_detection/region_detection/cser/ERDescriptor.h>
 #include <rec_system/machine_learning/DecisionMaker.h>
 #include <common/image/Image.h>
 #include <rec_system/image_processing/feature_extraction/HogFeatureExtractor.h>

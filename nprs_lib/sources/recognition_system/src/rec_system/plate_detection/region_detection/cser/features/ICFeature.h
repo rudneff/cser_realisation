@@ -1,7 +1,7 @@
 #ifndef RECSYSTEM_ERFEATURE_H
 #define RECSYSTEM_ERFEATURE_H
 
-#include "rec_system/image_processing/region_detection/cser/ERDescriptor.h"
+#include "rec_system/plate_detection/region_detection/cser/ERDescriptor.h"
 #include "common/NprsStd.h"
 #include "common/image/Image.h"
 

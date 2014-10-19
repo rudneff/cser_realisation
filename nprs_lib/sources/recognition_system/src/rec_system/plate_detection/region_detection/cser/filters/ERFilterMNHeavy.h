@@ -2,7 +2,7 @@
 #define RECSYSTEM_ERFILTER_HEAVY
 
 #include <common/NprsStd.h>
-#include <rec_system/image_processing/region_detection/cser/ERFilter.h>
+#include <rec_system/plate_detection/region_detection/cser/ERFilter.h>
 
 namespace nprs {
 

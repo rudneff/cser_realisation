@@ -1,5 +1,5 @@
 #include "ERFilterMNLight.h"
-#include <rec_system/image_processing/region_detection/cser/ERDescriptor.h>
+#include <rec_system/plate_detection/region_detection/cser/ERDescriptor.h>
 #include <stack>
 #include <iostream>
 #include <common/image/Image.h>
