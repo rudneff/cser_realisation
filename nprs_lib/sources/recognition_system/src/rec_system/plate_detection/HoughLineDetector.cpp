@@ -4,6 +4,7 @@
 #include <common/image/Image.h>
 #include <common/Matrix.h>
 #include <common/math/Math.h>
+#include <iostream>
 
 namespace nprs {
 
@@ -23,15 +24,18 @@ std::vector<LineDetectorResult> HoughLineDetector::perform(const std::vector<Poi
     for (int x = 0; x < accumulator.width(); x++) {
         for (int y = 0; y < accumulator.height(); y++) {
             if (accumulator(x, y).first > 4) {
-                Point topLeft = *std::min(
-                    accumulator(x, y).second.begin(), accumulator(x, y).second.end());
+                std::vector<Point> pts = accumulator(x, y).second;
 
-                Point btmRight = *std::max(
-                    accumulator(x, y).second.begin(), accumulator(x, y).second.end());
+                Point left = *std::min_element(
+                    pts.begin(), pts.end(),
+                    [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
+
+                Point right = *std::max_element(
+                    pts.begin(), pts.end(),
+                    [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
 
                 result.push_back(LineDetectorResult(
-                    Line(topLeft.x(), topLeft.y(), btmRight.x(), btmRight.y()),
-                    accumulator(x, y).second));
+                    Line(left.x(), left.y(), right.x(), right.y()), pts));
             }
         }
     }
@@ -46,16 +50,21 @@ AccumulatorMatrix HoughLineDetector::accumulatePoints(
 {
     AccumulatorMatrix accumulator(
         _params.angleResolution(),
-        _params.distResolution(),
+        _params.distResolution(),   
         [] (int x, int y) { return std::make_pair(0, std::vector<Point>()); });
 
-    double maxDist = Math::sqrt(Math::sqr(bounds.x1()) + Math::sqr(bounds.y1()));
+    double maxDist = 1.5 * Math::sqrt(Math::sqr(bounds.x1()) + Math::sqr(bounds.y1()));
     for (Point p: points) {
         for (double angle = 0; angle < Math::PI; angle += Math::PI / (double) _params.angleResolution()) {
             double dist = distFromAngle(p, angle);
             Point accCoords = mapToAccumulatorCoords(HoughPoint(angle, dist), maxDist);
-            accumulator((int) accCoords.x(), (int) accCoords.y()).first += 1;
-            accumulator((int) accCoords.x(), (int) accCoords.y()).second.push_back(p);
+            if (accumulator.isInBounds(accCoords.x(), accCoords.y())) {
+                accumulator((int)accCoords.x(), (int)accCoords.y()).first += 1;
+                accumulator((int)accCoords.x(), (int)accCoords.y()).second.push_back(p);
+            }
+            else {
+                std::cout << "WARNING: point [" << accCoords.x() << ", " << accCoords.y() << "] was outside of bounds of accumulator matrix" << std::endl;
+            }
         }
     }
 
@@ -80,7 +89,7 @@ Point HoughLineDetector::mapToAccumulatorCoords(const HoughPoint &point, double 
         0, _params.distResolution(),
         0, maxDist);
 
-    return Point((int) angle, (int) dist);
+    return Point((int) Math::floor(angle), (int) Math::floor(dist));
 }
 
 HoughPoint HoughLineDetector::mapFromAccumulatorCoords(const Point &point, double maxDist) {

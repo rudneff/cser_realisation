@@ -39,6 +39,9 @@ std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
         Point leftPoint = *std::max_element(
             points.begin(), points.end(), [] (Point &p1, Point &p2) { return p1.x() < p2.x(); });
 
+        ExtremalRegion const* region1 = regionMap[rightPoint];
+        ExtremalRegion const* region2 = regionMap[leftPoint];
+
         Quad boundingQuad = buildBoundingQuad(regionMap[rightPoint]->bounds(), regionMap[leftPoint]->bounds());
 
         results.push_back(sp<NumberPlate>(new NumberPlate(chars, boundingQuad)));

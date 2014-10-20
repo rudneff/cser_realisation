@@ -31,5 +31,5 @@ inline float Rectangle::area() const {
 }
 
 inline Point Rectangle::middlePoint() const {
-    return Point((x() + x1()) * 0.5f, (y() + y1()) * 0.5f);
+    return Point(_x + _width / 2.0f, _y + _height / 2.0f);
 }
