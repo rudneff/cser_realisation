@@ -43,6 +43,8 @@ std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
 
         results.push_back(sp<NumberPlate>(new NumberPlate(chars, boundingQuad)));
     }
+
+    return results;
 }
 
 Quad PlateDetector::buildBoundingQuad(const Rectangle &rightSymbol, const Rectangle &leftSymbol) const {

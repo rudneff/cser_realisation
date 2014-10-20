@@ -1,8 +1,9 @@
 #include "HogFeatureExtractor.h"
-#include <opencv2/opencv.hpp>
+//#include <opencv2/opencv.hpp>
 #include <rec_system/image_processing/object_detection/OcvHelper.h>
 #include <rec_system/image_processing/SimpleGradientOperator.h>
 #include <common/functional/ListProcessing.h>
+#include <iostream>
 
 namespace nprs {
 

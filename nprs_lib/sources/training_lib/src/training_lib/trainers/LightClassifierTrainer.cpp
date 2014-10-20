@@ -8,24 +8,24 @@
 
 using namespace nprs;
 
-LightClassifierTrainer::LightClassifierTrainer()
-{
-}
-
-up<Classifier> LightClassifierTrainer::train() {
-    if (_trainingSet.size() == 0) {
-        throw WrongStateException("LightClassifierTrainer::train(): training set is empty");
-    }
-
-    up<Classifier> classifier = up<AdaboostClassifier>(new AdaboostClassifier());
-    classifier->train(_trainingSet);
-    return classifier;
-}
-
-void LightClassifierTrainer::pushSample(const InputSample &sample, bool isPositive) {
-    std::vector<Sample> samples = sample.extractNMLightSamples();
-
-    for (Sample sample : samples) {
-        _trainingSet.addItem(TrainDataItem(sample.featureVector(), isPositive ? 1.0f : -1.0f));
-    }
-}
+//LightClassifierTrainer::LightClassifierTrainer()
+//{
+//}
+//
+//up<Classifier> LightClassifierTrainer::train() {
+//    if (_trainingSet.size() == 0) {
+//        throw WrongStateException("LightClassifierTrainer::train(): training set is empty");
+//    }
+//
+//    up<Classifier> classifier = up<AdaboostClassifier>(new AdaboostClassifier());
+//    classifier->train(_trainingSet);
+//    return classifier;
+//}
+//
+//void LightClassifierTrainer::pushSample(const InputSample &sample, bool isPositive) {
+//    std::vector<Sample> samples = sample.extractNMLightSamples();
+//
+//    for (Sample sample : samples) {
+//        _trainingSet.addItem(TrainDataItem(sample.featureVector(), isPositive ? 1.0f : -1.0f));
+//    }
+//}

@@ -150,9 +150,9 @@ FOREACH(dep ${dependencies})
 	INCLUDE_DIRECTORIES("../${dep}/src")
 ENDFOREACH()
 
-FIND_PACKAGE(OpenCV REQUIRED)
-INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
+#FIND_PACKAGE(OpenCV REQUIRED)
+#INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
 
 ADD_LIBRARY(${projname} ${headers} ${sources})
-TARGET_LINK_LIBRARIES(${projname} ${dependencies} ${OpenCV_LIBS})
+#TARGET_LINK_LIBRARIES(${projname} ${dependencies} ${OpenCV_LIBS})
 INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

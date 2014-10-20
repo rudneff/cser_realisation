@@ -2,7 +2,7 @@
 #include <iostream>
 #include <common/exceptions/CommonExceptions.h>
 #include <common/math/Math.h>
-#include <opencv2/opencv.hpp>
+//#include <opencv2/opencv.hpp>
 #include <memory>
 
 using namespace nprs;

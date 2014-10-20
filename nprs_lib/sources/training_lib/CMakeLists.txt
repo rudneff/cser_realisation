@@ -62,8 +62,8 @@ ENDFOREACH()
 # --
 
 # opencv
-FIND_PACKAGE(OpenCV REQUIRED)
-INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
+#FIND_PACKAGE(OpenCV REQUIRED)
+#INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
 # --
 
 ADD_LIBRARY(${projname} ${headers} ${sources})

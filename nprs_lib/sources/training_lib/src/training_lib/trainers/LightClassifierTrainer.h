@@ -8,19 +8,19 @@
 
 namespace nprs {
 
-class Classifier;
-class InputSample;
+//class Classifier;
+//class InputSample;
 
-class LightClassifierTrainer : public IClassifierTrainer {
-public:
-    LightClassifierTrainer();
-
-    up<Classifier> train() override;
-    void pushSample(const InputSample &sample, bool isPositive) override;
-
-private:
-    TrainingSet _trainingSet;
-};
+//class LightClassifierTrainer : public IClassifierTrainer {
+//public:
+//    LightClassifierTrainer();
+//
+//    up<Classifier> train() override;
+//    void pushSample(const InputSample &sample, bool isPositive) override;
+//
+//private:
+//    TrainingSet _trainingSet;
+//};
 
 }
 
