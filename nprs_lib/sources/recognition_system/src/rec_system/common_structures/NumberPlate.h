@@ -17,7 +17,8 @@ public:
     NumberPlate(
         const std::vector<sp<NumberPlateCharacter>> &characters, 
         const Quad &bounds, 
-        const Line& line);
+        const Line& line,
+        Rectangle rect = Rectangle());
 
     NumberPlate(NumberPlate && other);
     NumberPlate & operator= (NumberPlate && other);
@@ -25,11 +26,13 @@ public:
     const std::vector<sp<NumberPlateCharacter>> & characters() const { return _characters; }
     const Quad & bounds() const { return _bounds; }
     const Line & line() const { return _line; }
+    const Rectangle & boundingRect() const { return _boundingRect; }
 
 private:
     std::vector<sp<NumberPlateCharacter>> _characters;
     Quad _bounds;
     Line _line;
+    Rectangle _boundingRect;
 };
 
 }

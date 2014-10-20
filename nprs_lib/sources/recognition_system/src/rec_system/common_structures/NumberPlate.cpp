@@ -7,10 +7,12 @@ using namespace nprs;
 NumberPlate::NumberPlate(
     const std::vector<sp<NumberPlateCharacter>> &characters, 
     const Quad &bounds,
-    const Line &line)
+    const Line &line,
+    Rectangle rect)
     : _bounds(bounds), 
       _characters(characters),
-      _line(line)
+      _line(line),
+      _boundingRect(rect)
 {
 }
 

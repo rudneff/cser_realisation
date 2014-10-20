@@ -20,7 +20,7 @@ std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
         regionMap[s.bounds().middlePoint()] = s.bounds();
     }
 
-    LineDetectorParameters lineDetectorParameters(0, 0, 18, 200, 10, 0);
+    LineDetectorParameters lineDetectorParameters(0, 0, 180, 500, 10, 0);
     HoughLineDetector lineDetector(lineDetectorParameters);
 
     std::vector<LineDetectorResult> detectedLines = lineDetector.perform(symbolCenters);
@@ -51,11 +51,17 @@ std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
 }
 
 Quad PlateDetector::buildBoundingQuad(const Rectangle &rightSymbol, const Rectangle &leftSymbol) const {
+//    return Quad(
+//        Point(rightSymbol.x(), rightSymbol.y() < leftSymbol.y() ? rightSymbol.y() : rightSymbol.y1()),
+//        Point(rightSymbol.x(), rightSymbol.y() < leftSymbol.y() ? rightSymbol.y1() : rightSymbol.y()),
+//        Point(leftSymbol.x1(), leftSymbol.y() > rightSymbol.y() ? leftSymbol.y1() : leftSymbol.y()),
+//        Point(leftSymbol.x1(), leftSymbol.y() > rightSymbol.y() ? leftSymbol.y() : leftSymbol.y1()));
+
     return Quad(
-        Point(rightSymbol.x(), rightSymbol.y() < leftSymbol.y() ? rightSymbol.y() : rightSymbol.y1()),
-        Point(rightSymbol.x(), rightSymbol.y() < leftSymbol.y() ? rightSymbol.y1() : rightSymbol.y()),
-        Point(leftSymbol.x1(), leftSymbol.y() > rightSymbol.y() ? leftSymbol.y1() : leftSymbol.y()),
-        Point(leftSymbol.x1(), leftSymbol.y() > rightSymbol.y() ? leftSymbol.y() : leftSymbol.y1()));
+        Point(rightSymbol.x(), rightSymbol.y()),
+        Point(rightSymbol.x(), rightSymbol.y1()),
+        Point(leftSymbol.x1(), leftSymbol.y1()),
+        Point(leftSymbol.x1(), leftSymbol.y()));
 }
 
 }

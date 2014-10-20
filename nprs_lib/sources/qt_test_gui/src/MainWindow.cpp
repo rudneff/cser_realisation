@@ -13,6 +13,7 @@
 #include <future>
 #include <rec_system/image_processing/SobelOperator.h>
 #include <rec_system/image_processing/SimpleGradientOperator.h>
+#include <random>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -24,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionRecognize, SIGNAL(triggered()), this, SLOT(recognize()));
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(recognize()));
     connect(ui->pushButton_2, SIGNAL(clicked), this, SLOT(loadFile()));
-    newFrame(QImage("Y:\\Pictures\\cars\\images00013.png"));
+    newFrame(QImage("/Users/vardan/Pictures/cars/images00013.png"));
 }
 
 void MainWindow::recognize() {
@@ -49,19 +50,24 @@ void MainWindow::performRecognition(QImage& frame) {
     nprs::Bitmap resultImage = ImageConverter::imageToRawRgb(results.resultImage());
     QImage result = QImage(resultImage.data(), resultImage.width(), resultImage.height(), QImage::Format_RGB888).copy();
     painter.begin(&result);
-    
+
+    std::default_random_engine e(std::chrono::system_clock::now().time_since_epoch().count());
+    std::uniform_int_distribution<> colorDist(0, 255);
+
     for (sp<NumberPlate> np : results.numberPlates()) {
+        painter.setPen(QPen(QColor::fromRgb(colorDist(e), colorDist(e), colorDist(e))));
+
         nprs::Quad bounds = np->bounds();
         QPolygon qPolygon(4);
         qPolygon.setPoint(0, bounds.p1().x(), bounds.p1().y());
-        qPolygon.setPoint(0, bounds.p2().x(), bounds.p2().y());
-        qPolygon.setPoint(0, bounds.p3().x(), bounds.p3().y());
-        qPolygon.setPoint(0, bounds.p4().x(), bounds.p4().y());
+        qPolygon.setPoint(1, bounds.p2().x(), bounds.p2().y());
+        qPolygon.setPoint(2, bounds.p3().x(), bounds.p3().y());
+        qPolygon.setPoint(3, bounds.p4().x(), bounds.p4().y());
+        qPolygon.setPoint(3, bounds.p1().x(), bounds.p1().y());
 
-        painter.setPen(QPen(QColor::fromRgb(255, 0, 0)));
-        painter.drawPolygon(qPolygon);
+//        painter.setPen(QPen(QColor::fromRgb(255, 0, 0)));
+//        painter.drawPolygon(qPolygon);
 
-        painter.setPen(QPen(QColor::fromRgb(0, 0, 255)));
         for (sp<NumberPlateCharacter> npch: np->characters()) {
             painter.drawRect(npch->bounds().x(), npch->bounds().y(), npch->bounds().width(), npch->bounds().height());
         }
