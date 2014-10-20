@@ -4,13 +4,20 @@
 
 using namespace nprs;
 
-NumberPlate::NumberPlate(const std::vector<sp<NumberPlateCharacter>> &characters, const Quad &bounds)
-    : _bounds(bounds), _characters(characters)
+NumberPlate::NumberPlate(
+    const std::vector<sp<NumberPlateCharacter>> &characters, 
+    const Quad &bounds,
+    const Line &line)
+    : _bounds(bounds), 
+      _characters(characters),
+      _line(line)
 {
 }
 
 NumberPlate::NumberPlate(NumberPlate && other)
-    : _bounds(other._bounds), _characters(std::move(other._characters))
+    : _bounds(other._bounds), 
+      _characters(std::move(other._characters)),
+      _line(other._line)
 {
 }
 
@@ -18,6 +25,7 @@ NumberPlate& NumberPlate::operator=(NumberPlate && other) {
     if (this != &other) {
         _bounds = other._bounds;
         _characters = std::move(other.characters());
+        _line = other._line;
     }
     return *this;
 }

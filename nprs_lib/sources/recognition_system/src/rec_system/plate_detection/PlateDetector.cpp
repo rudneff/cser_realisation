@@ -13,14 +13,14 @@ std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
     const std::vector<ExtremalRegion> &detectedSymbols) const
 {
     std::vector<Point> symbolCenters;
-    std::map<Point, const ExtremalRegion*> regionMap;
+    std::map<Point, Rectangle> regionMap;
 
-    for (auto s: detectedSymbols) {
+    for (auto const& s: detectedSymbols) {
         symbolCenters.push_back(s.bounds().middlePoint());
-        regionMap[s.bounds().middlePoint()] = &s;
+        regionMap[s.bounds().middlePoint()] = s.bounds();
     }
 
-    LineDetectorParameters lineDetectorParameters(0, 0, 10, 50, 10, 0);
+    LineDetectorParameters lineDetectorParameters(0, 0, 18, 200, 10, 0);
     HoughLineDetector lineDetector(lineDetectorParameters);
 
     std::vector<LineDetectorResult> detectedLines = lineDetector.perform(symbolCenters);
@@ -30,7 +30,7 @@ std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
         auto points = line.points();
 
         for (auto p: line.points()) {
-            chars.push_back(std::make_shared<NumberPlateCharacter>(0, regionMap[p]->bounds()));
+            chars.push_back(std::make_shared<NumberPlateCharacter>(0, regionMap[p]));
         };
 
         Point rightPoint = *std::min_element(
@@ -39,12 +39,12 @@ std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
         Point leftPoint = *std::max_element(
             points.begin(), points.end(), [] (Point &p1, Point &p2) { return p1.x() < p2.x(); });
 
-        ExtremalRegion const* region1 = regionMap[rightPoint];
-        ExtremalRegion const* region2 = regionMap[leftPoint];
+        Rectangle region1 = regionMap[rightPoint];
+        Rectangle region2 = regionMap[leftPoint];
 
-        Quad boundingQuad = buildBoundingQuad(regionMap[rightPoint]->bounds(), regionMap[leftPoint]->bounds());
+        Quad boundingQuad = buildBoundingQuad(regionMap[rightPoint], regionMap[leftPoint]);
 
-        results.push_back(sp<NumberPlate>(new NumberPlate(chars, boundingQuad)));
+        results.push_back(sp<NumberPlate>(new NumberPlate(chars, boundingQuad, line.line())));
     }
 
     return results;

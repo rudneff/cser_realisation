@@ -20,24 +20,45 @@ std::vector<LineDetectorResult> HoughLineDetector::perform(const std::vector<Poi
     Rectangle bounds = findBounds(points);
     AccumulatorMatrix accumulator = accumulatePoints(points, bounds);
 
+    //std::vector<LineDetectorResult> result;
+    //for (int x = 0; x < accumulator.width(); x++) {
+    //    for (int y = 0; y < accumulator.height(); y++) {
+    //        if (accumulator(x, y).first > 10) {
+    //            std::vector<Point> pts = accumulator(x, y).second;
+
+    //            Point left = *std::min_element(
+    //                pts.begin(), pts.end(),
+    //                [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
+
+    //            Point right = *std::max_element(
+    //                pts.begin(), pts.end(),
+    //                [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
+
+    //            result.push_back(LineDetectorResult(
+    //                Line(left.x(), left.y(), right.x(), right.y()), pts));
+    //        }
+    //    }
+    //}
+
     std::vector<LineDetectorResult> result;
-    for (int x = 0; x < accumulator.width(); x++) {
-        for (int y = 0; y < accumulator.height(); y++) {
-            if (accumulator(x, y).first > 4) {
-                std::vector<Point> pts = accumulator(x, y).second;
+    auto flatAccumulator = accumulator.flat();
+    std::sort(
+        flatAccumulator.begin(), flatAccumulator.end(),
+        [] (std::pair<int, std::vector<Point>> const&e1, std::pair<int, std::vector<Point>> const& e2) { return e1.first > e2.first; });
 
-                Point left = *std::min_element(
-                    pts.begin(), pts.end(),
-                    [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
+    for (int i = 0; i < 10 && i < flatAccumulator.size(); i++) {
+        std::vector<Point> pts = flatAccumulator[i].second;
 
-                Point right = *std::max_element(
-                    pts.begin(), pts.end(),
-                    [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
+        Point left = *std::min_element(
+            pts.begin(), pts.end(),
+            [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
 
-                result.push_back(LineDetectorResult(
-                    Line(left.x(), left.y(), right.x(), right.y()), pts));
-            }
-        }
+        Point right = *std::max_element(
+            pts.begin(), pts.end(),
+            [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
+
+        result.push_back(LineDetectorResult(
+            Line(left.x(), left.y(), right.x(), right.y()), pts));
     }
 
     return result;
@@ -59,8 +80,8 @@ AccumulatorMatrix HoughLineDetector::accumulatePoints(
             double dist = distFromAngle(p, angle);
             Point accCoords = mapToAccumulatorCoords(HoughPoint(angle, dist), maxDist);
             if (accumulator.isInBounds(accCoords.x(), accCoords.y())) {
-                accumulator((int)accCoords.x(), (int)accCoords.y()).first += 1;
-                accumulator((int)accCoords.x(), (int)accCoords.y()).second.push_back(p);
+                accumulator((int) accCoords.x(), (int) accCoords.y()).first += 1;
+                accumulator((int) accCoords.x(), (int) accCoords.y()).second.push_back(p);
             }
             else {
                 std::cout << "WARNING: point [" << accCoords.x() << ", " << accCoords.y() << "] was outside of bounds of accumulator matrix" << std::endl;

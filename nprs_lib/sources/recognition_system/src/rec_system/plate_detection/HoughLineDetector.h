@@ -53,7 +53,7 @@ private:
 
 class HoughLineDetector {
 public:
-    HoughLineDetector(const LineDetectorParameters &params);
+    explicit HoughLineDetector(const LineDetectorParameters &params);
 
     std::vector<LineDetectorResult> perform(const std::vector<Point> &points) const;
 

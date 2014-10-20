@@ -24,6 +24,8 @@ public:
     bool isInBounds(int x, int y) const;
     T* data();
 
+    const std::vector<T> & flat() const { return _data; }
+
 private:
     int _width;
     int _height;

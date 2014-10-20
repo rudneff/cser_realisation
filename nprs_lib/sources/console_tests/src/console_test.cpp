@@ -2,6 +2,8 @@
 #include <rec_system/plate_detection/region_detection/cser/ERDescriptor.h>
 #include <common/math/Vector.h>
 #include <common/image/Image.h>
+#include <common/Point.h>
+#include <map>
 
 void conditionsTest();
 void imageTest();
@@ -9,24 +11,29 @@ void arrayTest();
 void matrixMoveTest();
 
 int main(int argc, char** argv) {
-//    conditionsTest();
-//    imageTest();
-//    arrayTest();
-//    matrixMoveTest();
-//    std::cin.get();
+    //    conditionsTest();
+    //    imageTest();
+    //    arrayTest();
+    //    matrixMoveTest();
+    //    std::cin.get();
 
-    std::vector<int> list = {1, 1};
-    auto res = nprs::fold<int>(list, [] (const int &prev, const int &curr) { return (int) prev * curr; });
-    auto res2 = nprs::map<int, double>(list, [] (const int &v) { return v + 1; });
+    nprs::Point p1(50, 50);
+    nprs::Point p2(20, 20);
+    nprs::Point p3(10, 20);
+    nprs::Point p4(60, 60);
+    nprs::Point p5(10, 5);
+    nprs::Point p6(70, 80);
 
-    nprs::Vector<int> v(list);
+    std::vector<nprs::Point> points {
+        p1, p2, p3, p4, p5, p6 };
 
-    printf("%d %f\n", res, v.length());
+    std::map<nprs::Point, int> m{{ p1, 1 }, { p2, 2 }, { p3, 3 }, { p4, 4 }, { p5, 5 }, { p6, 6 }};
 
-    nprs::Vector<float> v1 = {0, 0};
-    nprs::Vector<float> v2 = {4, 3};
+    std::sort(points.begin(), points.end());
 
-    printf("%f", v1.distanceTo(v2));
+    for (auto p : points) {
+        std::cout << "[" << p.x() << ", " << p.y() << "] - " << m[p] << std::endl;
+    }
 }
 
 void conditionsTest() {
