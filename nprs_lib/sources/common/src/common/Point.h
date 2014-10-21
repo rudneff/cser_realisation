@@ -5,6 +5,7 @@ namespace nprs {
 
 class Point final {
 public:
+    Point();
     Point(float x, float y);
 
     float x() const { return _x; }
@@ -22,6 +23,11 @@ private:
 };
 
 #include "Point.inl"
+
+inline Point::Point()
+: _x(0), _y(0)
+{
+}
 
 }
 

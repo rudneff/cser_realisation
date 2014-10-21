@@ -27,6 +27,9 @@ public:
 
     Point middlePoint() const;
 
+    bool operator < (const Rectangle &other) const;
+    bool operator == (const Rectangle &other) const;
+
 private:
     float _x;
     float _y;
@@ -35,6 +38,14 @@ private:
 };
 
 #include "Rectangle.inl"
+
+inline bool Rectangle::operator< (const Rectangle &other) const {
+    return middlePoint() < other.middlePoint();
+}
+
+inline bool Rectangle::operator== (const Rectangle &other) const {
+    return _x == other._x && _y == other._y && _width == other._width && _height == other._height;
+}
 
 }
 

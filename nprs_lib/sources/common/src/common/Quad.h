@@ -7,6 +7,8 @@ namespace nprs {
 
 class Quad {
 public:
+    Quad();
+
     Quad(
         const Point &p1,
         const Point &p2,
@@ -36,6 +38,8 @@ inline Quad::Quad(
 : _p1(p1), _p2(p2), _p3(p3), _p4(p4)
 {
 }
+
+inline Quad::Quad() {}
 
 }
 
