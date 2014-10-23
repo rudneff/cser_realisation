@@ -49,6 +49,8 @@ void MainWindow::performRecognition(QImage& frame) {
     QPainter painter;
     nprs::Bitmap resultImage = ImageConverter::imageToRawRgb(results.resultImage());
     QImage result = QImage(resultImage.data(), resultImage.width(), resultImage.height(), QImage::Format_RGB888).copy();
+    result.save("test.bmp", "bmp", 100);
+
     painter.begin(&result);
 
     std::default_random_engine e(std::chrono::system_clock::now().time_since_epoch().count());
@@ -72,7 +74,7 @@ void MainWindow::performRecognition(QImage& frame) {
             painter.drawRect(npch->bounds().x(), npch->bounds().y(), npch->bounds().width(), npch->bounds().height());
         }
 
-        painter.setPen(QPen(QColor::fromRgb(0, 255, 0)));
+//        painter.setPen(QPen(QColor::fromRgb(0, 255, 0)));
         painter.drawLine(np->line().x0(), np->line().y0(), np->line().x1(), np->line().y1());
     }
     painter.end();

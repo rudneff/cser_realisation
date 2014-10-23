@@ -31,9 +31,10 @@ public:
 private:
     Quad buildBoundingQuad(const Rectangle &rightSymbol, const Rectangle &leftSymbol) const;
 
-    std::vector<Rectangle> groupNestedRegions(std::vector<Rectangle> const& regions) const;
-
 public:
+    std::vector<std::vector<Rectangle>> findRegionsOnLine(const std::vector<Rectangle> &regions) const;
+
+    std::vector<Rectangle> groupNestedRegions(std::vector<Rectangle> const& regions) const;
     std::vector<std::vector<Rectangle>> groupRegions(const std::vector<Rectangle> &rects) const;
     std::vector<std::vector<Rectangle>> groupBySize(const std::vector<Rectangle> &rects) const;
     std::vector<std::vector<Rectangle>> groupByDistance(const std::vector<Rectangle> &rects) const;

@@ -45,6 +45,8 @@ SET (headers
 	src/rec_system/machine_learning/DLibHelper.h
 	src/rec_system/machine_learning/CascadeClassifierTrainer.h
 	src/rec_system/machine_learning/HaarCascadeDecisionMaker.h
+	src/rec_system/machine_learning/OneVsOneTrainer.h
+	src/rec_system/machine_learning/OneVsOneDecisionFunction.h
 
     src/rec_system/plate_detection/PlateDetector.h
 	src/rec_system/plate_detection/HoughLineDetector.h
@@ -61,6 +63,8 @@ SET (headers
     src/rec_system/plate_detection/region_detection/cser/features/ICCompactnessFeature.h
     src/rec_system/plate_detection/region_detection/cser/features/ICHCrossingsFeature.h
     src/rec_system/plate_detection/region_detection/cser/features/ICNumHolesFeature.h
+
+    src/rec_system/symbol_recognition/SymbolRecognizer.h
 )
 
 SET (sources
@@ -97,6 +101,8 @@ SET (sources
 	src/rec_system/machine_learning/DLibHelper.cpp
 	src/rec_system/machine_learning/CascadeClassifierTrainer.cpp
 	src/rec_system/machine_learning/HaarCascadeDecisionMaker.cpp
+	src/rec_system/machine_learning/OneVsOneTrainer.cpp
+	src/rec_system/machine_learning/OneVsOneDecisionFunction.cpp
 
 	src/rec_system/plate_detection/HoughLineDetector.cpp
 
@@ -113,6 +119,8 @@ SET (sources
     src/rec_system/plate_detection/region_detection/cser/features/ICCompactnessFeature.cpp
     src/rec_system/plate_detection/region_detection/cser/features/ICHCrossingsFeature.cpp
     src/rec_system/plate_detection/region_detection/cser/features/ICNumHolesFeature.cpp
+
+    src/rec_system/symbol_recognition/SymbolRecognizer.cpp
 )
 
 INCLUDE_DIRECTORIES(src)

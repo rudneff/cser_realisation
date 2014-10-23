@@ -16,7 +16,7 @@ class NumberPlate {
 public:
     NumberPlate(
         const std::vector<sp<NumberPlateCharacter>> &characters, 
-        const Quad &bounds, 
+        const Quad& bounds,
         const Line& line,
         Rectangle rect = Rectangle());
 

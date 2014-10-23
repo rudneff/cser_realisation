@@ -39,10 +39,15 @@ RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
     CSERDetector detector(filters);
     auto symbols = detector.detect(converted);
 
+    Image bin(converted.width(), converted.height(), ColorInfo(ColorFormat::INTENSITY, 1));
+    for (ExtremalRegion symbol: symbols) {
+        bin.setValue(symbol.bounds().middlePoint().x(), symbol.bounds().middlePoint().y(), 0, 1.0f);
+    }
+
     PlateDetector plateDetector;
     auto numberPlates = plateDetector.detectPlate(symbols);
 
-    return RecognitionResults(numberPlates, converted);
+    return RecognitionResults(numberPlates, bin);
 }
 
 }

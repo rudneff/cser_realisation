@@ -92,8 +92,8 @@ void testGroupBy() {
 
     std::vector<Rectangle> plates  {
         Rectangle(21, 28, 5, 15),
-        Rectangle(25, 28, 4, 6),
-        Rectangle(29, 28, 6, 4),
+        Rectangle(25, 28, 5, 5),
+        Rectangle(24, 29, 5, 5),
         Rectangle(33, 28, 5, 4),
         Rectangle(37, 29, 12, 5),
         Rectangle(41, 30, 11, 12),
@@ -138,6 +138,8 @@ void testGroupBy() {
     auto groupFinal = pt.groupRegions(plates);
 
     std::vector<Rectangle> intersection = pt.intersect(groupedByWidth[0], groupedByHeight[0]);
+
+    std::vector<Rectangle> nestedRemoved = pt.groupNestedRegions(plates);
 
     for (auto group: groups) {
         std::cout << "{";
@@ -194,4 +196,12 @@ void testGroupBy() {
         }
         std::cout << "}" << std::endl;
     }
+
+    std::cout << "------------------" << std::endl;
+
+    std::cout << "{";
+    for (auto rect: nestedRemoved) {
+        std::cout << regMap[rect] << " ";
+    }
+    std::cout << "}" << std::endl;
 }

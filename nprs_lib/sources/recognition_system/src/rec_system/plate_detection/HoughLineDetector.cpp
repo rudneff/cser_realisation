@@ -47,18 +47,20 @@ std::vector<LineDetectorResult> HoughLineDetector::perform(const std::vector<Poi
         [] (std::pair<int, std::vector<Point>> const&e1, std::pair<int, std::vector<Point>> const& e2) { return e1.first > e2.first; });
 
     for (int i = 0; i < 10 && i < flatAccumulator.size(); i++) {
-        std::vector<Point> pts = flatAccumulator[i].second;
+        if (flatAccumulator[i].first > 4) {
+            std::vector<Point> pts = flatAccumulator[i].second;
 
-        Point left = *std::min_element(
-            pts.begin(), pts.end(),
-            [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
+            Point left = *std::min_element(
+                pts.begin(), pts.end(),
+                [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
 
-        Point right = *std::max_element(
-            pts.begin(), pts.end(),
-            [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
+            Point right = *std::max_element(
+                pts.begin(), pts.end(),
+                [](const Point &p1, const Point &p2) { return p1.x() < p2.x(); });
 
-        result.push_back(LineDetectorResult(
-            Line(left.x(), left.y(), right.x(), right.y()), pts));
+            result.push_back(LineDetectorResult(
+                Line(left.x(), left.y(), right.x(), right.y()), pts));
+        }
     }
 
     return result;

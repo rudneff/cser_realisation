@@ -8,8 +8,25 @@
 #include <common/math/Math.h>
 #include <common/exceptions/CommonExceptions.h>
 #include "HoughLineDetector.h"
+#include <iostream>
 
 namespace nprs {
+
+static void dbgPrintGroup(std::vector<Rectangle> const& group) {
+    std::cout << "{" << std::endl;
+    for (Rectangle rect: group) {
+        std::cout << "    {x: " << rect.x() << " y: " << rect.y() << " w: " << rect.width() << " h: " << rect.height() << "}" << std::endl;
+    }
+    std::cout << "}" << std::endl;
+}
+
+static void dbgPrintGroups(std::vector<std::vector<Rectangle>> const& groups) {
+    std::cout << "------------------------" << std::endl;
+    for (auto group: groups) {
+        dbgPrintGroup(group);
+    }
+    std::cout << std::endl;
+}
 
 std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
     const std::vector<ExtremalRegion> &detectedSymbols) const
@@ -18,58 +35,68 @@ std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
     for (ExtremalRegion er: detectedSymbols) {
         regions.push_back(er.bounds());
     }
+//
+//    auto groupedSymbols = groupRegions(groupNestedRegions(regions));
+//
+//    std::vector<sp<NumberPlate>> plates;
+//    for (auto group: groupedSymbols) {
+//        std::vector<sp<NumberPlateCharacter>> characters;
+//        std::sort(
+//            group.begin(), group.end(),
+//            [] (const Rectangle &r1, const Rectangle &r2) {
+//                return r1.middlePoint().x() < r2.middlePoint().x();
+//            });
+//
+//        for (auto reg: group) {
+//            if (group.size() > 4) {
+//                sp<NumberPlateCharacter> character = sp<NumberPlateCharacter>(new NumberPlateCharacter(0, reg));
+//                characters.push_back(character);
+//            }
+//        }
+//        plates.push_back(sp<NumberPlate>(new NumberPlate(characters, Quad(), Line(), Rectangle())));
+//    }
+//
+//    return plates;
 
-    auto groupedSymbols = groupRegions(regions);
+//    std::vector<std::vector<Rectangle>> groupsBySize = groupBySize(regions);
 
-    std::vector<sp<NumberPlate>> plates;
-    for (auto group: groupedSymbols) {
-        std::vector<sp<NumberPlateCharacter>> characters;
-        for (auto reg: group) {
-            if (group.size() > 4) {
-                sp<NumberPlateCharacter> character = sp<NumberPlateCharacter>(new NumberPlateCharacter(0, reg));
-                characters.push_back(character);
-            }
+    std::vector<std::vector<Rectangle>> groups = findRegionsOnLine(regions);
+
+    std::vector<sp<NumberPlate>> numberPlates;
+    for (std::vector<Rectangle> const& group : groups) {
+        std::vector<sp<NumberPlateCharacter>> chars;
+        for (Rectangle rec: group) {
+            chars.push_back(sp<NumberPlateCharacter>(new NumberPlateCharacter(0, rec)));
         }
-        plates.push_back(sp<NumberPlate>(new NumberPlate(characters, Quad(), Line(), Rectangle())));
+        numberPlates.push_back(sp<NumberPlate>(new NumberPlate(chars, Quad(), Line())));
     }
 
-    return plates;
+    return numberPlates;
+}
 
-//    std::vector<Point> symbolCenters;
-//    std::map<Point, Rectangle> regionMap;
-//
-//    for (auto const& s: detectedSymbols) {
-//        symbolCenters.push_back(s.bounds().middlePoint());
-//        regionMap[s.bounds().middlePoint()] = s.bounds();
-//    }
-//    LineDetectorParameters lineDetectorParameters(0, 0, 10, 50, 10, 0);
-//    HoughLineDetector lineDetector(lineDetectorParameters);
-//
-//    std::vector<LineDetectorResult> detectedLines = lineDetector.perform(symbolCenters);
-//    std::vector<sp<NumberPlate>> results;
-//    for (auto line: detectedLines) {
-//        std::vector<sp<NumberPlateCharacter>> chars;
-//        auto points = line.points();
-//
-//        for (auto p: line.points()) {
-//            chars.push_back(std::make_shared<NumberPlateCharacter>(0, regionMap[p]));
-//        };
-//
-//        Point rightPoint = *std::min_element(
-//            points.begin(), points.end(), [] (Point &p1, Point &p2) { return p1.x() < p2.x(); });
-//
-//        Point leftPoint = *std::max_element(
-//            points.begin(), points.end(), [] (Point &p1, Point &p2) { return p1.x() < p2.x(); });
-//
-//        Rectangle region1 = regionMap[rightPoint];
-//        Rectangle region2 = regionMap[leftPoint];
-//
-//        Quad boundingQuad = buildBoundingQuad(regionMap[rightPoint], regionMap[leftPoint]);
-//
-//        results.push_back(sp<NumberPlate>(new NumberPlate(chars, boundingQuad, line.line())));
-//    }
-//
-//    return results;
+std::vector<std::vector<Rectangle>> PlateDetector::findRegionsOnLine(const std::vector<Rectangle> &regions) const {
+    std::vector<Point> symbolCenters;
+    std::map<Point, Rectangle> regionMap;
+    std::vector<Rectangle> filtered = regions;
+    for (Rectangle const& s: filtered) {
+        symbolCenters.push_back(s.middlePoint());
+        regionMap[s.middlePoint()] = s;
+    }
+    
+    LineDetectorParameters lineDetectorParameters(0, 0, 180, 300, 0, 0);
+    HoughLineDetector lineDetector(lineDetectorParameters);
+
+    std::vector<LineDetectorResult> detectedLines = lineDetector.perform(symbolCenters);
+    std::vector<std::vector<Rectangle>> results;
+    for (LineDetectorResult line: detectedLines) {
+        std::vector<Rectangle> groupedRects;
+        for (Point p: line.points()) {
+            groupedRects.push_back(regionMap[p]);
+        };
+        results.push_back(groupedRects);
+    }
+
+    return results;
 }
 
 Quad PlateDetector::buildBoundingQuad(const Rectangle &rightSymbol, const Rectangle &leftSymbol) const {
@@ -81,15 +108,54 @@ Quad PlateDetector::buildBoundingQuad(const Rectangle &rightSymbol, const Rectan
 }
 
 std::vector<Rectangle> PlateDetector::groupNestedRegions(std::vector<Rectangle> const &regions) const {
-    throw NotImplementedException("PlateDetector::groupNestedRegions()");
+//    throw NotImplementedException("PlateDetector::groupNestedRegions()");
+
+    std::vector<Rectangle> sorted = regions;
+
+    std::sort(
+        sorted.begin(),
+        sorted.end(),
+        [] (const Rectangle &r1, const Rectangle &r2) { return r1.middlePoint().x() < r2.middlePoint().x(); }
+    );
+
+    std::vector<Rectangle> result;
+    for (int i = 0; i < sorted.size(); i++) {
+        Rectangle r1 = sorted[i];
+        result.push_back(sorted[i]);
+
+        bool shouldStop = false;
+        for (int j = i + 1; j < sorted.size() && !shouldStop; j++) {
+            Rectangle r2 = sorted[j];
+            if (Math::abs(r2.middlePoint().x() - r1.middlePoint().x()) < 5) {
+                if (Math::abs(r2.middlePoint().y() - r1.middlePoint().y()) < 5 &&
+                    Math::max(r1.width(), r2.width()) / Math::min(r1.width(), r2.width()) < 1.5 &&
+                    Math::max(r1.height(), r2.height()) / Math::min(r1.height(), r2.height()) < 1.5)
+                {
+                    i += 1;
+                }
+            }
+            else {
+                shouldStop = true;
+            }
+        }
+    }
+
+    return result;
 }
 
 std::vector<std::vector<Rectangle>> PlateDetector::groupRegions(const std::vector<Rectangle> &rects) const {
     auto regionsGroupedBySize = groupBySize(rects);
+    
+    std::cout << "groups by size: " << std::endl;
+    dbgPrintGroups(regionsGroupedBySize);
 
     std::vector<std::vector<Rectangle>> result;
     for (auto sizeGroup: regionsGroupedBySize) {
         auto distGroups = groupByDistance(sizeGroup);
+        
+        std::cout << "group by distance (intersection)" << std::endl;
+        dbgPrintGroups(distGroups);
+        
         result.insert(result.end(), distGroups.begin(), distGroups.end());
     }
 
@@ -97,17 +163,31 @@ std::vector<std::vector<Rectangle>> PlateDetector::groupRegions(const std::vecto
 }
 
 std::vector<std::vector<Rectangle>> PlateDetector::groupByDistance(const std::vector<Rectangle> &rects) const {
+    std::cout << "group by distance:" << std::endl;
+
     auto horizontalGroups = groupBy(
         rects,
-        [] (const Rectangle &r1, const Rectangle &r2) { return r1.x() < r2.x(); },
-        [] (const Rectangle &r1, const Rectangle &r2) { return Math::abs(r1.x() - r2.x()) < r1.width() * 2; }
+        [] (const Rectangle &r1, const Rectangle &r2) { return r1.middlePoint().x() < r2.middlePoint().x(); },
+        [] (const Rectangle &r1, const Rectangle &r2) {
+            return (Math::abs(r1.middlePoint().x() - r2.middlePoint().x()) < r1.width() * 2) &&
+                   (r1.middlePoint().distanceTo(r2.middlePoint()) < r1.width() * 2);
+        }
     );
+    
+    std::cout << "horizontal groups" << std::endl;
+    dbgPrintGroups(horizontalGroups);
 
     auto verticalGroups = groupBy(
         rects,
-        [] (const Rectangle &r1, const Rectangle &r2) { return r1.y() < r2.y(); },
-        [] (const Rectangle &r1, const Rectangle &r2) { return Math::abs(r1.y() - r2.y()) < r1.height() * 2; }
+        [] (const Rectangle &r1, const Rectangle &r2) { return r1.middlePoint().y() < r2.middlePoint().y(); },
+        [] (const Rectangle &r1, const Rectangle &r2) {
+            return (Math::abs(r1.middlePoint().y() - r2.middlePoint().y()) < r1.height() * 2) &&
+                   (r1.middlePoint().distanceTo(r2.middlePoint()) < r1.height() * 2);
+        }
     );
+    
+    std::cout << "vertical groups" << std::endl;
+    dbgPrintGroups(verticalGroups);
 
     return findIntersections(verticalGroups, horizontalGroups);
 }
