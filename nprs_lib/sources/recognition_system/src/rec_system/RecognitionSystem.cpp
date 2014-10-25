@@ -25,10 +25,16 @@ RecognitionSystem::~RecognitionSystem() {
 }
 
 RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
-    sp<DecisionMaker> dm = DLibDecisionMaker<kernel_type>::load("good_classifiers/nm_light_trained_171014.dat");
+//    sp<DecisionMaker> dm = DLibDecisionMaker<kernel_type>::load("good_classifiers/nm_light_trained_171014.dat");
+
+    sp<DecisionMaker> dm = DLibDecisionMaker<kernel_type>::load("nm_light_trained.dat");
     sp<ERFilterMNLight> lightFilter = std::make_shared<ERFilterMNLight>(dm);
+//    sp<ERFilterMNHeavy> heavyFilter = std::make_shared<ERFilterMNHeavy>(
+//        DLibDecisionMaker<kernel_type>::load("good_classifiers/nm_heavy_trained_171014.dat"),
+//        std::make_shared<HogFeatureExtractor>());
+
     sp<ERFilterMNHeavy> heavyFilter = std::make_shared<ERFilterMNHeavy>(
-        DLibDecisionMaker<kernel_type>::load("good_classifiers/nm_heavy_trained_171014.dat"),
+        DLibDecisionMaker<kernel_type>::load("nm_heavy_trained.dat"),
         std::make_shared<HogFeatureExtractor>());
 
 //    std::vector<sp<ERFilter>> filters{ std::make_shared<ERFilterEmpty>() };
@@ -47,7 +53,7 @@ RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
     PlateDetector plateDetector;
     auto numberPlates = plateDetector.detectPlate(symbols);
 
-    return RecognitionResults(numberPlates, bin);
+    return RecognitionResults(numberPlates, converted);
 }
 
 }

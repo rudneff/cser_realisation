@@ -15,8 +15,7 @@ public:
     SampleExtractor();
     virtual ~SampleExtractor();
 
-    virtual std::vector<Sample> extractNMLightSamples() = 0;
-    virtual std::vector<Sample> extractNMHeavySamples() = 0;
+    virtual std::vector<Sample> extractSamples() = 0;
 };
 
 }

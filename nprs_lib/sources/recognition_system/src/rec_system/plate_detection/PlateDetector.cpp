@@ -8,8 +8,8 @@
 #include <common/math/Math.h>
 #include <common/exceptions/CommonExceptions.h>
 #include "HoughLineDetector.h"
+#include "SimpleRegionGrouper.h"
 #include <iostream>
-
 namespace nprs {
 
 static void dbgPrintGroup(std::vector<Rectangle> const& group) {
@@ -35,43 +35,45 @@ std::vector<sp<NumberPlate>> PlateDetector::detectPlate(
     for (ExtremalRegion er: detectedSymbols) {
         regions.push_back(er.bounds());
     }
-//
-//    auto groupedSymbols = groupRegions(groupNestedRegions(regions));
-//
-//    std::vector<sp<NumberPlate>> plates;
-//    for (auto group: groupedSymbols) {
-//        std::vector<sp<NumberPlateCharacter>> characters;
-//        std::sort(
-//            group.begin(), group.end(),
-//            [] (const Rectangle &r1, const Rectangle &r2) {
-//                return r1.middlePoint().x() < r2.middlePoint().x();
-//            });
-//
-//        for (auto reg: group) {
+
+    SimpleRegionGrouper grouper;
+
+    std::vector<std::vector<ExtremalRegion>> groupedSymbols = grouper.groupRegions(detectedSymbols);
+
+    std::vector<sp<NumberPlate>> plates;
+    for (auto group: groupedSymbols) {
+        std::vector<sp<NumberPlateCharacter>> characters;
+        std::sort(
+            group.begin(), group.end(),
+            [] (const ExtremalRegion &r1, const ExtremalRegion &r2) {
+                return r1.bounds().middlePoint().x() < r2.bounds().middlePoint().x();
+            });
+
+        for (auto reg: group) {
 //            if (group.size() > 4) {
-//                sp<NumberPlateCharacter> character = sp<NumberPlateCharacter>(new NumberPlateCharacter(0, reg));
-//                characters.push_back(character);
+                sp<NumberPlateCharacter> character = sp<NumberPlateCharacter>(new NumberPlateCharacter(0, reg.bounds()));
+                characters.push_back(character);
 //            }
-//        }
-//        plates.push_back(sp<NumberPlate>(new NumberPlate(characters, Quad(), Line(), Rectangle())));
-//    }
-//
-//    return plates;
+        }
+        plates.push_back(sp<NumberPlate>(new NumberPlate(characters, Quad(), Line(), Rectangle())));
+    }
+
+    return plates;
 
 //    std::vector<std::vector<Rectangle>> groupsBySize = groupBySize(regions);
 
-    std::vector<std::vector<Rectangle>> groups = findRegionsOnLine(regions);
+//    std::vector<std::vector<Rectangle>> groups = findRegionsOnLine(regions);
 
-    std::vector<sp<NumberPlate>> numberPlates;
-    for (std::vector<Rectangle> const& group : groups) {
-        std::vector<sp<NumberPlateCharacter>> chars;
-        for (Rectangle rec: group) {
-            chars.push_back(sp<NumberPlateCharacter>(new NumberPlateCharacter(0, rec)));
-        }
-        numberPlates.push_back(sp<NumberPlate>(new NumberPlate(chars, Quad(), Line())));
-    }
-
-    return numberPlates;
+//    std::vector<sp<NumberPlate>> numberPlates;
+//    for (std::vector<Rectangle> const& group : groups) {
+//        std::vector<sp<NumberPlateCharacter>> chars;
+//        for (Rectangle rec: group) {
+//            chars.push_back(sp<NumberPlateCharacter>(new NumberPlateCharacter(0, rec)));
+//        }
+//        numberPlates.push_back(sp<NumberPlate>(new NumberPlate(chars, Quad(), Line())));
+//    }
+//
+//    return numberPlates;
 }
 
 std::vector<std::vector<Rectangle>> PlateDetector::findRegionsOnLine(const std::vector<Rectangle> &regions) const {
@@ -282,7 +284,10 @@ PlateDetectorParams::PlateDetectorParams(int minSymbols)
 {
 }
 
-std::vector<Rectangle> PlateDetector::intersect(const std::vector<Rectangle> &one, const std::vector<Rectangle> &another) const {
+std::vector<Rectangle> PlateDetector::intersect(
+        const std::vector<Rectangle> &one,
+        const std::vector<Rectangle> &another) const
+{
     std::vector<Rectangle> res;
 
     for (Rectangle oneRec: one) {

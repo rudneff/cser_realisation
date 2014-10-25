@@ -18,6 +18,8 @@ public:
     const std::vector<float> & lightFeatures() const { return _lightFeatures; }
     int threshold() const { return _threshold; }
 
+    bool operator== (const ExtremalRegion &other) const;
+
 private:
     Rectangle _bounds;
     std::vector<float> _lightFeatures;

@@ -11,6 +11,7 @@ namespace nprs {
 
 class Image final {
 public:
+    Image();
     Image(int width, int height, ColorInfo colorInfo);
     Image(const Image &other);
     Image(int width, int height, ColorInfo colorInfo, const void *data);

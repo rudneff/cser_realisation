@@ -20,7 +20,8 @@ private:
     Size _minSize;
     Size _maxSize;
 
-    up<SampleExtractor> createExtractor() const override;
+    up<SampleExtractor> createLightSampleExtractor() const override;
+    up<SampleExtractor> createHeavySampleExtractor() const override;
 };
 
 }

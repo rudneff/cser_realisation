@@ -13,8 +13,7 @@ public:
     explicit AutoThresholdExtractor(sp<const Image> image);
     ~AutoThresholdExtractor();
 
-    std::vector<Sample> extractNMLightSamples() override;
-    std::vector<Sample> extractNMHeavySamples() override;
+    std::vector<Sample> extractSamples() override;
 
 private:
     sp<const Image> _image;

@@ -5,6 +5,8 @@
 
 namespace nprs {
 
+const double PI = 3.141592653589793;
+
 class Math {
 public:
     static const double PI;
@@ -12,7 +14,7 @@ public:
     template <typename Scalar>
     static double pow(const Scalar value, double p) {
         return ::pow((double) value, p);
-    };
+    }
 
     template <typename Scalar>
     static double sqr(const Scalar &value) {

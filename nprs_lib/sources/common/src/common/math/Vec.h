@@ -7,7 +7,7 @@
 
 namespace nprs {
 
-template <int DimCount, typename Scalar = double >
+template <int DimCount, typename Scalar = double>
 class Vec {
 public:
     Vec(std::array<Scalar, DimCount> const& coords)

@@ -14,7 +14,7 @@
 using namespace nprs;
 
 RandomRegionExtractor::RandomRegionExtractor(
-        sp<const Image> image,
+        sp<const Image> const& image,
         int numSamples,
         const Size &minSize,
         const Size &maxSize)
@@ -22,28 +22,12 @@ RandomRegionExtractor::RandomRegionExtractor(
   _numSamples(numSamples),
   _minSize(minSize),
   _maxSize(maxSize),
-  _rng(std::time(0)),
+  _rng(std::chrono::system_clock::now().time_since_epoch().count()),
   _widthDist(minSize.width(), maxSize.width()),
   _heightDist(minSize.height(), maxSize.height())
 {
 }
 
-std::vector<Sample> RandomRegionExtractor::extractNMLightSamples() {
-    CSERDetector detector(std::vector<sp<ERFilter>> {});
-    std::vector<Sample> result;
-
-    for (int i = 0; i < _numSamples; i++) {
-        Rectangle bounds = chooseRandomRegion();
-        auto regionImage = std::make_shared<Image>(_image->cropped(bounds));
-        AutoThresholdExtractor extractor(regionImage);
-        std::vector<Sample> extractedSamples = extractor.extractNMLightSamples();
-        for (auto sample : extractedSamples) {
-            result.push_back(sample);
-        }
-    }
-
-    return result;
-}
 
 Rectangle RandomRegionExtractor::chooseRandomRegion() {
     int width = _widthDist(_rng);
@@ -59,21 +43,4 @@ bool RandomRegionExtractor::checkConstraints(const ExtremalRegion &reg) {
            reg.bounds().height() >= _minSize.height() &&
            reg.bounds().width() <= _maxSize.width() &&
            reg.bounds().height() <= _maxSize.height();
-}
-
-std::vector<Sample> RandomRegionExtractor::extractNMHeavySamples() {
-    CSERDetector detector(std::vector<sp<ERFilter>>());
-    std::vector<Sample> result;
-
-    for (int i = 0; i < _numSamples; i++) {
-        Rectangle bounds = chooseRandomRegion();
-        auto regionImage = std::make_shared<Image>(_image->cropped(bounds));
-        AutoThresholdExtractor extractor(regionImage);
-        std::vector<Sample> extractedSamples = extractor.extractNMHeavySamples();
-        for (Sample sample : extractedSamples) {
-            result.push_back(sample);
-        }
-    }
-
-    return result;
 }

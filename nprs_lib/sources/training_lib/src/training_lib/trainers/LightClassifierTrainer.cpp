@@ -23,7 +23,7 @@ using namespace nprs;
 //}
 //
 //void LightClassifierTrainer::pushSample(const InputSample &sample, bool isPositive) {
-//    std::vector<Sample> samples = sample.extractNMLightSamples();
+//    std::vector<Sample> samples = sample.extractSamples();
 //
 //    for (Sample sample : samples) {
 //        _trainingSet.addItem(TrainDataItem(sample.featureVector(), isPositive ? 1.0f : -1.0f));

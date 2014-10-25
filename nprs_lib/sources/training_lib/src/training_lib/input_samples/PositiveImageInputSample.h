@@ -10,7 +10,8 @@ public:
     explicit PositiveImageInputSample(sp<const Image> image);
 
 private:
-    up<SampleExtractor> createExtractor() const override;
+    up<SampleExtractor> createLightSampleExtractor() const override;
+    up<SampleExtractor> createHeavySampleExtractor() const override;
 };
 
 }

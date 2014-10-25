@@ -13,7 +13,12 @@ ExtremalRegion::ExtremalRegion(const Rectangle &bounds, const std::vector<float>
 ExtremalRegion::ExtremalRegion(const ERDescriptor *erd)
     : _bounds(erd->bounds()), _lightFeatures(erd->featureVector()), _threshold(erd->threshold())
 {
+}
 
+bool ExtremalRegion::operator==(const ExtremalRegion &other) const {
+    return _bounds == other.bounds() &&
+           _threshold == other._threshold &&
+           _lightFeatures == other._lightFeatures;
 }
 
 }

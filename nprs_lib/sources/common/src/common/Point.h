@@ -13,7 +13,7 @@ public:
     float x() const { return _x; }
     float y() const  { return _y; }
     
-    float distanceTo(const Point &other);
+    double distanceTo(const Point &other);
 
     inline Point operator+ (const Point &p1) const;
 
@@ -33,7 +33,7 @@ inline Point::Point()
 {
 }
 
-inline float Point::distanceTo(const nprs::Point &other) {
+inline double Point::distanceTo(const nprs::Point &other) {
     return Math::sqrt(Math::sqr(_x - other._x) + Math::sqr(_y - other._y));
 }
 

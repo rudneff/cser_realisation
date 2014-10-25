@@ -2,8 +2,8 @@
 #include <iostream>
 #include <common/exceptions/CommonExceptions.h>
 #include <common/math/Math.h>
-//#include <opencv2/opencv.hpp>
 #include <memory>
+#include <string.h>
 
 using namespace nprs;
 
@@ -52,18 +52,41 @@ Image& Image::operator=(Image&& other) {
 }
 
 Image Image::resized(int newWidth, int newHeight) const {
+//    Image result(newWidth, newHeight, _colorInfo);
+//
+//    float xRatio = _width / (float) newWidth;
+//    float yRatio = _height / (float) newHeight;
+//
+//    for (int x = 0; x < newWidth; x++) {
+//        for (int y = 0; y < newHeight; y++) {
+//            for (int ch = 0; ch < _colorInfo.numChannels(); ch++) {
+//                float px = Math::floor(x * xRatio);
+//                float py = Math::floor(y * yRatio);
+//
+//                result(x, y, ch) = getValue((int) px, (int) py, ch);
+//            }
+//        }
+//    }
+//
+//    return result;
+
     Image result(newWidth, newHeight, _colorInfo);
-
-    float xRatio = _width / (float) newWidth;
-    float yRatio = _height / (float) newHeight;
-
     for (int x = 0; x < newWidth; x++) {
         for (int y = 0; y < newHeight; y++) {
             for (int ch = 0; ch < _colorInfo.numChannels(); ch++) {
-                float px = Math::floor(x * xRatio);
-                float py = Math::floor(y * yRatio);
+                int px = (int) Math::floor(
+                    Math::rescaleValue(
+                        x,
+                        0, _width,
+                        0, newWidth));
 
-                result(x, y, ch) = getValue((int) px, (int) py, ch);
+                int py = (int) Math::floor(
+                    Math::rescaleValue(
+                        y,
+                        0, _height,
+                        0, newHeight));
+
+                result(x, y, ch) = getValue(px, py, ch);
             }
         }
     }
@@ -120,4 +143,10 @@ void Image::computeRange(float *outMin, float *outMax, int channel) const {
     
     *outMin = min;
     *outMax = max;
+}
+
+Image::Image()
+: _colorInfo(ColorFormat::INTENSITY, 0)
+{
+
 }

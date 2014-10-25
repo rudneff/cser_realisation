@@ -18,7 +18,7 @@ AutoThresholdExtractor::AutoThresholdExtractor(sp<const Image> image)
 AutoThresholdExtractor::~AutoThresholdExtractor() {
 }
 
-std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples() {
+std::vector<Sample> nprs::AutoThresholdExtractor::extractSamples() {
     std::vector<Sample> result;
 
     std::vector<sp<ERFilter>> filters;
@@ -32,12 +32,12 @@ std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples() {
         });
 
     OtsuThresholder otsu;
-    int otsuThres = otsu.findThreshold(*_image) * 255;
-    auto first = std::find_if(regions.begin(), regions.end(),
+    int otsuThres = (int) (otsu.findThreshold(*_image) * 255);
+    auto first = std::find_if(
+        regions.begin(), regions.end(),
         [&](const ExtremalRegion &a) {
             return (a.threshold() > otsuThres - 5 && a.threshold() < otsuThres + 5);
-        }
-    );
+        });
 
     if (first != regions.end()) {
         auto maxSquare = first;
@@ -48,18 +48,16 @@ std::vector<Sample> nprs::AutoThresholdExtractor::extractNMLightSamples() {
         }
 
         Thresholder thresholder;
-        Image regImage = thresholder.threshold(_image->cropped(maxSquare->bounds().x(), maxSquare->bounds().y(), maxSquare->bounds().width(), maxSquare->bounds().height()));
+        Image regImage = thresholder.threshold(_image->cropped(
+                (int) maxSquare->bounds().x(),
+                (int) maxSquare->bounds().y(),
+                (int) maxSquare->bounds().width(),
+                (int) maxSquare->bounds().height()));
 
         result.push_back(Sample(maxSquare->lightFeatures(), SampleType::NMLight, std::make_shared<Image>(regImage)));
     }
 
     return result;
-}
-
-std::vector<Sample> AutoThresholdExtractor::extractNMHeavySamples() {
-    HogFeatureExtractor extractor;
-    std::vector<float> fv = extractor.extract(*_image, 0, Rectangle(0, 0, _image->width(), _image->height()));
-    return {Sample(fv, SampleType::NMHeavy)};
 }
 
 }

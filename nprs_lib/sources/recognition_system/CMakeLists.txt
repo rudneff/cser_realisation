@@ -50,6 +50,9 @@ SET (headers
 
     src/rec_system/plate_detection/PlateDetector.h
 	src/rec_system/plate_detection/HoughLineDetector.h
+	src/rec_system/plate_detection/RegionGrouper.h
+	src/rec_system/plate_detection/SimpleRegionGrouper.h
+	src/rec_system/plate_detection/HoughRegionGrouper.h
     src/rec_system/plate_detection/region_detection/cser/CSERDetector.h
     src/rec_system/plate_detection/region_detection/cser/ExtremalRegion.h
     src/rec_system/plate_detection/region_detection/cser/ERFilter.h
@@ -107,6 +110,9 @@ SET (sources
 	src/rec_system/plate_detection/HoughLineDetector.cpp
 
     src/rec_system/plate_detection/PlateDetector.cpp
+    src/rec_system/plate_detection/RegionGrouper.cpp
+    src/rec_system/plate_detection/SimpleRegionGrouper.cpp
+    src/rec_system/plate_detection/HoughRegionGrouper.cpp
     src/rec_system/plate_detection/region_detection/cser/CSERDetector.cpp
     src/rec_system/plate_detection/region_detection/cser/ExtremalRegion.cpp
     src/rec_system/plate_detection/region_detection/cser/ERDescriptor.cpp
@@ -158,9 +164,9 @@ FOREACH(dep ${dependencies})
 	INCLUDE_DIRECTORIES("../${dep}/src")
 ENDFOREACH()
 
-#FIND_PACKAGE(OpenCV REQUIRED)
-#INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
+FIND_PACKAGE(OpenCV REQUIRED)
+INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
 
 ADD_LIBRARY(${projname} ${headers} ${sources})
-#TARGET_LINK_LIBRARIES(${projname} ${dependencies} ${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES(${projname} ${dependencies} ${OpenCV_LIBS})
 INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

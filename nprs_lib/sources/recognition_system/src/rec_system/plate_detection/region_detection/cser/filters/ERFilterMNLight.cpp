@@ -3,12 +3,13 @@
 #include <stack>
 #include <iostream>
 #include <common/image/Image.h>
+#include <map>
 
 namespace nprs {
 
 const double ERFilterMNLight::THRESHOLD = 0.3;
 
-static bool isLocalMaximum(const ERDescriptor *reg, const DecisionMaker &dm);
+static bool isLocalMaximum(const ERDescriptor *reg, const std::map<const ERDescriptor*, float> &dm);
 
 ERFilterMNLight::ERFilterMNLight(sp<DecisionMaker> const& regressor)
 : _regressor(regressor)
@@ -34,6 +35,11 @@ std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescrip
 //        }
 //    }
 
+    std::map<const ERDescriptor*, float> responseMap;
+    for (ERDescriptor * er: regions) {
+        responseMap[er] = (*_regressor)(er->featureVector());
+    }
+
     const ERDescriptor *root = regions[regions.size() - 1];
 
     std::stack<ERDescriptor const*> uncheckedRoots;
@@ -44,7 +50,7 @@ std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescrip
         uncheckedRoots.pop();
 
         while (reg->parent1() != nullptr) {
-            if (isLocalMaximum(reg, *_regressor)) {
+            if (isLocalMaximum(reg, responseMap)) {
                 result.push_back(const_cast<ERDescriptor *>(reg));
             }
             if (reg->parent2() != nullptr) {
@@ -59,19 +65,19 @@ std::vector<ERDescriptor *> ERFilterMNLight::perform(const std::vector<ERDescrip
     return result;
 }
 
-static bool isLocalMaximum(const ERDescriptor *reg, const DecisionMaker &dm) {
+static bool isLocalMaximum(const ERDescriptor *reg, const std::map<const ERDescriptor*, float> &dm) {
     static const double eps = 0.01;
 
     if (reg->bounds().area() < 15)
         return false;
 
-    double currValue = dm(reg->featureVector());
+    double currValue = dm.at(reg);
     if (currValue < ERFilterMNLight::THRESHOLD)
         return false;
 
-    double childValue = !reg->child() ? -1 : dm(reg->child()->featureVector());
-    double parent1Value = !reg->parent1() ? -1 : dm(reg->parent1()->featureVector());
-    double parent2Value = !reg->parent2() ? -1 : dm(reg->parent2()->featureVector());
+    double childValue = !reg->child() ? -1 : dm.at(reg->child());
+    double parent1Value = !reg->parent1() ? -1 : dm.at(reg->parent1());
+    double parent2Value = !reg->parent2() ? -1 : dm.at(reg->parent2());
 
     return (currValue - childValue > eps && currValue - parent1Value > eps) ||
            (currValue - childValue > eps && currValue - parent2Value > eps);

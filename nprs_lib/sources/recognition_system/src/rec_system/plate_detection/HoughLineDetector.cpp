@@ -78,7 +78,7 @@ AccumulatorMatrix HoughLineDetector::accumulatePoints(
 
     double maxDist = 1.5 * Math::sqrt(Math::sqr(bounds.x1()) + Math::sqr(bounds.y1()));
     for (Point p: points) {
-        for (double angle = 0; angle < Math::PI; angle += Math::PI / (double) _params.angleResolution()) {
+        for (double angle = 0; angle < PI; angle += PI / (double) _params.angleResolution()) {
             double dist = distFromAngle(p, angle);
             Point accCoords = mapToAccumulatorCoords(HoughPoint(angle, dist), maxDist);
             if (accumulator.isInBounds(accCoords.x(), accCoords.y())) {
@@ -105,7 +105,7 @@ Point HoughLineDetector::mapToAccumulatorCoords(const HoughPoint &point, double 
     double angle = Math::rescaleValue(
         point.angle(),
         0, _params.angleResolution(),
-        0, Math::PI);
+        0, PI);
 
     double dist = Math::rescaleValue(
         point.dist(),
@@ -118,7 +118,7 @@ Point HoughLineDetector::mapToAccumulatorCoords(const HoughPoint &point, double 
 HoughPoint HoughLineDetector::mapFromAccumulatorCoords(const Point &point, double maxDist) {
     double angle = Math::rescaleValue(
         point.x(),
-        0, Math::PI,
+        0, PI,
         0, _params.angleResolution());
 
     double dist = Math::rescaleValue(

@@ -97,9 +97,10 @@ void MainWindow::testSobel(QImage& frame) {
 void MainWindow::testResize(QImage &frame) {
     using namespace nprs;
 
+    qDebug() << frame.width() << frame.height();
     Bitmap rawImage(frame.bits(), frame.width(), frame.height(), nprs::ColorInfo(nprs::ColorFormat::RGB, 3));
     Image image = ImageConverter::convertRaw(rawImage);
-    Bitmap resultRaw = ImageConverter::imageToRawRgb(image.resized(100, 100));
+    Bitmap resultRaw = ImageConverter::imageToRawRgb(image.resized(500, 500));
     QImage resultImage = QImage(resultRaw.data(), resultRaw.width(), resultRaw.height(), QImage::Format_RGB888).copy();
     ui->widget->newFrame(resultImage);
 }
