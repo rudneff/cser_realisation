@@ -11,6 +11,7 @@ namespace nprs {
 
 class Image final {
 public:
+    Image();
     Image(int width, int height, ColorInfo colorInfo);
     Image(const Image &other);
     Image(int width, int height, ColorInfo colorInfo, const void *data);
@@ -33,6 +34,8 @@ public:
     Image cropped(const Rectangle &rect) const;
     Image copyChannel(int c) const;
     bool isInside(int x, int y) const;
+
+    void save(const std::string &fileName);
     
     void computeRange(float *outMin, float *outMax, int channel) const;
 

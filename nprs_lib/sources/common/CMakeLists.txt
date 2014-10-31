@@ -23,6 +23,7 @@ SET (headers
 	src/common/Matrix.inl
 	src/common/Size.h
 	src/common/Size.inl
+	src/common/Quad.h
 
 	src/common/math/Vector.h
 	src/common/math/Math.h
@@ -39,6 +40,8 @@ SET (sources
     src/common/image/Color.cpp
 	src/common/image/Bitmap.cpp
 
+	src/common/math/Math.cpp
+
     src/common/exceptions/NprsException.cpp
     src/common/exceptions/CommonExceptions.cpp
 )
@@ -49,9 +52,18 @@ SET (directories
     src/common/exceptions
 )
 
+SET(dependencies
+    dlib
+)
+
 GROUP_FILES("${directories}")
 
 INCLUDE_DIRECTORIES(src)
 
+FOREACH(dep ${dependencies})
+	INCLUDE_DIRECTORIES("../${dep}/src")
+ENDFOREACH()
+
 ADD_LIBRARY(${projname} ${headers} ${sources})
+TARGET_LINK_LIBRARIES(${projname} ${dependencies})
 INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

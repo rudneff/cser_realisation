@@ -25,6 +25,17 @@ inline Matrix<T>::Matrix(const T *data, int width, int height)
 }
 
 template <typename T>
+inline Matrix<T>::Matrix(int width, int height, std::function<T (int, int)> filler)
+: _width(width), _height(height), _data(width * height)
+{
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            setValue(x, y, filler(x, y));
+        }
+    }
+}
+
+template <typename T>
 inline T const& Matrix<T>::operator()(int col, int row) const {
     return _data[row * _width + col];
 }

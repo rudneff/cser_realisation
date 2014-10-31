@@ -39,8 +39,7 @@ Image SobelOperator::perform(Image const& image, int channel, const Rectangle &b
         }
     }
 
-    IntensityRescaleFilter rsFilter(0, 1);
-    return rsFilter.apply(result, 2);
+    return result;
 }
 
 }

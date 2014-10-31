@@ -27,19 +27,6 @@ SET (headers
 	src/rec_system/image_processing/object_detection/CascadeObjectDetector.h
 	src/rec_system/image_processing/object_detection/ObjectDetector.h
 	src/rec_system/image_processing/object_detection/OcvHelper.h
-    src/rec_system/image_processing/region_detection/cser/CSERDetector.h
-    src/rec_system/image_processing/region_detection/cser/ExtremalRegion.h
-    src/rec_system/image_processing/region_detection/cser/ERFilter.h
-    src/rec_system/image_processing/region_detection/cser/ERDescriptor.h
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.h
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.h
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.h
-    src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.h
-    src/rec_system/image_processing/region_detection/cser/features/ICFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ICAspectRatioFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.h
-    src/rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.h
 	
 	src/rec_system/image_processing/filters/ImageFilter.h
 
@@ -58,6 +45,29 @@ SET (headers
 	src/rec_system/machine_learning/DLibHelper.h
 	src/rec_system/machine_learning/CascadeClassifierTrainer.h
 	src/rec_system/machine_learning/HaarCascadeDecisionMaker.h
+	src/rec_system/machine_learning/OneVsOneTrainer.h
+	src/rec_system/machine_learning/OneVsOneDecisionFunction.h
+
+    src/rec_system/plate_detection/PlateDetector.h
+	src/rec_system/plate_detection/HoughLineDetector.h
+	src/rec_system/plate_detection/RegionGrouper.h
+	src/rec_system/plate_detection/SimpleRegionGrouper.h
+	src/rec_system/plate_detection/HoughRegionGrouper.h
+    src/rec_system/plate_detection/region_detection/cser/CSERDetector.h
+    src/rec_system/plate_detection/region_detection/cser/ExtremalRegion.h
+    src/rec_system/plate_detection/region_detection/cser/ERFilter.h
+    src/rec_system/plate_detection/region_detection/cser/ERDescriptor.h
+    src/rec_system/plate_detection/region_detection/cser/filters/ERFilterMNLight.h
+    src/rec_system/plate_detection/region_detection/cser/filters/ERFilterMNHeavy.h
+    src/rec_system/plate_detection/region_detection/cser/filters/ERFilterEmpty.h
+    src/rec_system/plate_detection/region_detection/cser/algorithm/CserAlgorithm.h
+    src/rec_system/plate_detection/region_detection/cser/features/ICFeature.h
+    src/rec_system/plate_detection/region_detection/cser/features/ICAspectRatioFeature.h
+    src/rec_system/plate_detection/region_detection/cser/features/ICCompactnessFeature.h
+    src/rec_system/plate_detection/region_detection/cser/features/ICHCrossingsFeature.h
+    src/rec_system/plate_detection/region_detection/cser/features/ICNumHolesFeature.h
+
+    src/rec_system/symbol_recognition/SymbolRecognizer.h
 )
 
 SET (sources
@@ -80,18 +90,6 @@ SET (sources
 	src/rec_system/image_processing/filters/ImageFilter.cpp
 	src/rec_system/image_processing/object_detection/CascadeObjectDetector.cpp
 	src/rec_system/image_processing/object_detection/OcvHelper.cpp
-    src/rec_system/image_processing/region_detection/cser/CSERDetector.cpp
-    src/rec_system/image_processing/region_detection/cser/ExtremalRegion.cpp
-    src/rec_system/image_processing/region_detection/cser/ERDescriptor.cpp
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNLight.cpp
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterMNHeavy.cpp
-    src/rec_system/image_processing/region_detection/cser/filters/ERFilterEmpty.cpp
-    src/rec_system/image_processing/region_detection/cser/algorithm/CserAlgorithm.cpp
-	src/rec_system/image_processing/region_detection/cser/features/ICFeature.cpp
-    src/rec_system/image_processing/region_detection/cser/features/ICAspectRatioFeature.cpp
-    src/rec_system/image_processing/region_detection/cser/features/ICCompactnessFeature.cpp
-    src/rec_system/image_processing/region_detection/cser/features/ICHCrossingsFeature.cpp
-    src/rec_system/image_processing/region_detection/cser/features/ICNumHolesFeature.cpp
 
 	src/rec_system/classification/adaboost/AdaboostClassifier.cpp
 	src/rec_system/machine_learning/TrainingSet.cpp
@@ -106,7 +104,29 @@ SET (sources
 	src/rec_system/machine_learning/DLibHelper.cpp
 	src/rec_system/machine_learning/CascadeClassifierTrainer.cpp
 	src/rec_system/machine_learning/HaarCascadeDecisionMaker.cpp
+	src/rec_system/machine_learning/OneVsOneTrainer.cpp
+	src/rec_system/machine_learning/OneVsOneDecisionFunction.cpp
 
+	src/rec_system/plate_detection/HoughLineDetector.cpp
+
+    src/rec_system/plate_detection/PlateDetector.cpp
+    src/rec_system/plate_detection/RegionGrouper.cpp
+    src/rec_system/plate_detection/SimpleRegionGrouper.cpp
+    src/rec_system/plate_detection/HoughRegionGrouper.cpp
+    src/rec_system/plate_detection/region_detection/cser/CSERDetector.cpp
+    src/rec_system/plate_detection/region_detection/cser/ExtremalRegion.cpp
+    src/rec_system/plate_detection/region_detection/cser/ERDescriptor.cpp
+    src/rec_system/plate_detection/region_detection/cser/filters/ERFilterMNLight.cpp
+    src/rec_system/plate_detection/region_detection/cser/filters/ERFilterMNHeavy.cpp
+    src/rec_system/plate_detection/region_detection/cser/filters/ERFilterEmpty.cpp
+    src/rec_system/plate_detection/region_detection/cser/algorithm/CserAlgorithm.cpp
+    src/rec_system/plate_detection/region_detection/cser/features/ICFeature.cpp
+    src/rec_system/plate_detection/region_detection/cser/features/ICAspectRatioFeature.cpp
+    src/rec_system/plate_detection/region_detection/cser/features/ICCompactnessFeature.cpp
+    src/rec_system/plate_detection/region_detection/cser/features/ICHCrossingsFeature.cpp
+    src/rec_system/plate_detection/region_detection/cser/features/ICNumHolesFeature.cpp
+
+    src/rec_system/symbol_recognition/SymbolRecognizer.cpp
 )
 
 INCLUDE_DIRECTORIES(src)
@@ -120,16 +140,17 @@ SET(directories
 	src/rec_system/image_processing/filters
 	src/rec_system/image_processing/filters/thresholding
 	src/rec_system/image_processing/object_detection
-    src/rec_system/image_processing/region_detection/cser
-    src/rec_system/image_processing/region_detection/cser/filters
-    src/rec_system/image_processing/region_detection/cser/algorithm
-    src/rec_system/image_processing/region_detection/cser/features
+    src/rec_system/plate_detection/region_detection/cser
+    src/rec_system/plate_detection/region_detection/cser/filters
+    src/rec_system/plate_detection/region_detection/cser/algorithm
+    src/rec_system/plate_detection/region_detection/cser/features
 
 	src/rec_system/classification
 	src/rec_system/classification/adaboost
 	src/rec_system/clusterization/fuzzy_fcmeans
 
 	src/rec_system/machine_learning
+	src/rec_system/plate_detection
 )
 
 GROUP_FILES( "${directories}" )
@@ -143,9 +164,9 @@ FOREACH(dep ${dependencies})
 	INCLUDE_DIRECTORIES("../${dep}/src")
 ENDFOREACH()
 
-FIND_PACKAGE(OpenCV REQUIRED)
-INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
+#FIND_PACKAGE(OpenCV REQUIRED)
+#INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
 
 ADD_LIBRARY(${projname} ${headers} ${sources})
-TARGET_LINK_LIBRARIES(${projname} ${dependencies} ${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES(${projname} ${dependencies})
 INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)

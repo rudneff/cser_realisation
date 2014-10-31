@@ -20,6 +20,9 @@
 #include <functional>
 #include <rec_system/machine_learning/DecisionMaker.h>
 #include <rec_system/machine_learning/Trainer.h>
+#include <training_lib/input_sample_extractors/LightRandomRegionExtractor.h>
+#include <training_lib/input_sample_extractors/HogSampleExtractor.h>
+#include <training_lib/input_sample_extractors/HeavyRandomRegionExtractor.h>
 
 static void pushPositiveSamples(const QString &dir, nprs::SymbolDetectorTrainer &trainer);
 static void pushNegativeSamples(const QString &dir, nprs::SymbolDetectorTrainer &trainer);
@@ -37,6 +40,7 @@ int main(int argc, char **argv) {
 
         auto nmLightClassifier = trainer.createNMLightClassifier();
         auto heavyClassifier = trainer.createNMHeavyClassifier();
+
         showNegativeResponses(*nmLightClassifier, *heavyClassifier, "training_samples/negative/scene_images");
         showResponses(*nmLightClassifier, "training_samples/positive", *heavyClassifier);
 
@@ -57,20 +61,15 @@ static void pushPositiveSamples(const QString &dir, nprs::SymbolDetectorTrainer 
         auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
         nprs::PositiveImageInputSample sample(image);
 
-        // debug code
-//      {
-//           static int c = 0;
-//           nprs::AutoThresholdExtractor extractor(sample.image());
-//           auto s = extractor.extractNMLightSamples()[0];
-//           QString fn = QString::number(c++) + "_";
-//           for (float v : s.featureVector()) {
-//               fn += QString::number(v) + "_";
-//           }
-//
-//           toQImage(*s.image()).save("out/pos/" + fn + ".bmp");
-//      }
+        trainer.pushNMLightPositiveSample(sample);
+    });
 
-        trainer.pushPositiveSample(sample);
+    performOnImages(dir,[&] (const QFileInfo &fileInfo) {
+        qDebug() << fileInfo.filePath();
+        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+        nprs::PositiveImageInputSample sample(image);
+
+        trainer.pushNMHeavyPositiveSample(sample);
     });
 }
 
@@ -78,43 +77,51 @@ static void pushNegativeSamples(const QString &dir, nprs::SymbolDetectorTrainer 
     performOnImages(dir, [&] (const QFileInfo &fileInfo) {
         qDebug() << fileInfo.filePath();
         auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
-        nprs::NegativeImageInputSample sample(image, 15, 5, 50);
-        trainer.pushNegativeSample(sample);
+        nprs::NegativeImageInputSample sample(image, 10, 5, 100);
+        trainer.pushNMLightNegativeSample(sample);
+    });
 
-        // debug code
-//      {
-//          static int c = 0;
-//          nprs::RandomRegionExtractorfileInfo.isFile() extractor(sample.image(), 10, 15, 100);
-//          auto ss = extractor.extractNMLightSamples();
-//
-//          for (auto s : ss) {
-//              QString fn = QString::number(c++) + "_";
-//              for (float v : s.featureVector()) {
-//                  fn += QString::number(v) + "_";
-//              }
-//
-//              toQImage(*s.image()).save("out/neg/" + fn + ".bmp");
-//          }
-//      }
+    performOnImages(dir, [&] (const QFileInfo &fileInfo) {
+        qDebug() <<  fileInfo.filePath();
+        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+        nprs::NegativeImageInputSample sample(image, 20, 5, 15);
+        trainer.pushNMHeavyNegativeSample(sample);
+    });
+
+    performOnImages(dir, [&] (const QFileInfo &fileInfo) {
+        qDebug() <<  fileInfo.filePath();
+        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+        nprs::NegativeImageInputSample sample(image, 15, 10, 50);
+        trainer.pushNMHeavyNegativeSample(sample);
+    });
+
+    performOnImages(dir, [&] (const QFileInfo &fileInfo) {
+        qDebug() <<  fileInfo.filePath();
+        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+        nprs::NegativeImageInputSample sample(image, 10, 50, 150);
+        trainer.pushNMHeavyNegativeSample(sample);
     });
 }
 
-static void createNegativeSamples(const QString &dir) {
-    performOnImages(
-        dir,
-        [&] (const QFileInfo &fileInfo) {
-            auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
-            nprs::RandomRegionExtractor extractor(image, 15, 5, 50);
-        }
-    );
-}
+//static void createNegativeSamples(const QString &dir) {
+//    performOnImages(
+//        dir,
+//        [&] (const QFileInfo &fileInfo) {
+//            auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+//            nprs::HeavyRandomRegionExtractor extractor(image, 15, 5, 50);
+//        }
+//    );
+//}
 
 static void showResponses(const nprs::DecisionMaker &classifier, const QString &dir, nprs::DecisionMaker const &heavyClassifier) {
     performOnImages(dir, [&] (const QFileInfo& fileInfo) {
         auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
         nprs::AutoThresholdExtractor extractor(image);
-        auto samples = extractor.extractNMLightSamples();
-        auto heavySamples = extractor.extractNMHeavySamples();
+        nprs::HogSampleExtractor heavyExtractor(image);
+
+        auto samples = extractor.extractSamples();
+        auto heavySamples = heavyExtractor.extractSamples();
+
         std::cout << fileInfo.fileName().toStdString() <<
             " - " << classifier(samples[0].featureVector())
             << " - " << heavyClassifier(heavySamples[0].featureVector()) << std::endl;
@@ -124,9 +131,10 @@ static void showResponses(const nprs::DecisionMaker &classifier, const QString &
 static void showNegativeResponses(const nprs::DecisionMaker &classifier, const nprs::DecisionMaker &heavyClassifier, const QString &dir) {
     performOnImages(dir, [&] (const QFileInfo& fileInfo) {
         auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
-        nprs::RandomRegionExtractor extractor(image, 15, 5, 50);
-        auto samples = extractor.extractNMLightSamples();
-        auto heavySamples = extractor.extractNMHeavySamples();
+        nprs::LightRandomRegionExtractor extractor(image, 15, 5, 50);
+        nprs::HeavyRandomRegionExtractor heavyExtractor(image, 5, 5, 50);
+        auto samples = extractor.extractSamples();
+        auto heavySamples = heavyExtractor.extractSamples();
 
         std::cout << fileInfo.fileName().toStdString() << ": " << classifier(samples[0].featureVector())
             << " - " << heavyClassifier(heavySamples[0].featureVector()) << std::endl;

@@ -18,7 +18,8 @@ public:
     std::vector<Sample> extractNMHeavySamples() const;
 
 private:
-    virtual up<SampleExtractor> createExtractor() const = 0;
+    virtual up<SampleExtractor> createLightSampleExtractor() const = 0;
+    virtual up<SampleExtractor> createHeavySampleExtractor() const = 0;
 };
 
 }

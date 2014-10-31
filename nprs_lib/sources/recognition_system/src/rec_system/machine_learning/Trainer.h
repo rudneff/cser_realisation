@@ -10,6 +10,8 @@ class TrainingSet;
 
 class Trainer {
 public:
+    virtual ~Trainer() {}
+
     virtual up<DecisionMaker> train(const TrainingSet &dataSet) = 0;
 };
 

@@ -14,13 +14,18 @@ class ExtremalRegion;
 class RandomRegionExtractor : public SampleExtractor {
 public:
     RandomRegionExtractor(
-            sp<const Image> image,
+            sp<const Image> const& image,
             int numSamples,
             const Size &minSize = 0,
             const Size &maxSize = 0);
 
-    std::vector<Sample> extractNMLightSamples() override;
-    std::vector<Sample> extractNMHeavySamples() override;
+    sp<const Image> const& image() const { return _image; }
+    int numSamples() const { return _numSamples; }
+    Size minSize() const { return _minSize; }
+    Size maxSize() const { return _maxSize; }
+
+protected:
+    Rectangle chooseRandomRegion();
 
 private:
     sp<const Image> _image;
@@ -28,7 +33,6 @@ private:
     Size _minSize;
     Size _maxSize;
 
-    Rectangle chooseRandomRegion();
     bool checkConstraints(const ExtremalRegion &reg);
     
     std::default_random_engine _rng;

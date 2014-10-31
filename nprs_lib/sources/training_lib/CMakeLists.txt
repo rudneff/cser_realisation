@@ -16,10 +16,12 @@ SET (headers
 	src/training_lib/input_samples/PositiveImageInputSample.h
 	src/training_lib/input_samples/NegatvieRegionInputSample.h
 	src/training_lib/input_samples/NegativeImageInputSample.h
-	
-	src/training_lib/input_sample_extractors/MultiThresholdExtractor.h
+
 	src/training_lib/input_sample_extractors/AutoThresholdExtractor.h
 	src/training_lib/input_sample_extractors/RandomRegionExtractor.h
+	src/training_lib/input_sample_extractors/LightRandomRegionExtractor.h
+	src/training_lib/input_sample_extractors/HeavyRandomRegionExtractor.h
+	src/training_lib/input_sample_extractors/HogSampleExtractor.h
 )
 
 SET (sources
@@ -33,10 +35,12 @@ SET (sources
 	src/training_lib/input_samples/PositiveImageInputSample.cpp
 	src/training_lib/input_samples/NegatvieRegionInputSample.cpp
 	src/training_lib/input_samples/NegativeImageInputSample.cpp
-	
-	src/training_lib/input_sample_extractors/MultiThresholdExtractor.cpp
+
 	src/training_lib/input_sample_extractors/AutoThresholdExtractor.cpp
 	src/training_lib/input_sample_extractors/RandomRegionExtractor.cpp
+	src/training_lib/input_sample_extractors/LightRandomRegionExtractor.cpp
+	src/training_lib/input_sample_extractors/HeavyRandomRegionExtractor.cpp
+	src/training_lib/input_sample_extractors/HogSampleExtractor.cpp
 )
 
 INCLUDE_DIRECTORIES(src)
@@ -62,8 +66,8 @@ ENDFOREACH()
 # --
 
 # opencv
-FIND_PACKAGE(OpenCV REQUIRED)
-INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
+#FIND_PACKAGE(OpenCV REQUIRED)
+#INCLUDE_DIRECTORIES("${OpenCV_DIR}/include")
 # --
 
 ADD_LIBRARY(${projname} ${headers} ${sources})
