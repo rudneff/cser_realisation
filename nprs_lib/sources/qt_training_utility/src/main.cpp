@@ -40,6 +40,7 @@ int main(int argc, char **argv) {
 
         auto nmLightClassifier = trainer.createNMLightClassifier();
         auto heavyClassifier = trainer.createNMHeavyClassifier();
+
         showNegativeResponses(*nmLightClassifier, *heavyClassifier, "training_samples/negative/scene_images");
         showResponses(*nmLightClassifier, "training_samples/positive", *heavyClassifier);
 
@@ -60,7 +61,15 @@ static void pushPositiveSamples(const QString &dir, nprs::SymbolDetectorTrainer 
         auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
         nprs::PositiveImageInputSample sample(image);
 
-        trainer.pushPositiveSample(sample);
+        trainer.pushNMLightPositiveSample(sample);
+    });
+
+    performOnImages(dir,[&] (const QFileInfo &fileInfo) {
+        qDebug() << fileInfo.filePath();
+        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+        nprs::PositiveImageInputSample sample(image);
+
+        trainer.pushNMHeavyPositiveSample(sample);
     });
 }
 
@@ -68,20 +77,41 @@ static void pushNegativeSamples(const QString &dir, nprs::SymbolDetectorTrainer 
     performOnImages(dir, [&] (const QFileInfo &fileInfo) {
         qDebug() << fileInfo.filePath();
         auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
-        nprs::NegativeImageInputSample sample(image, 50, 5, 100);
-        trainer.pushNegativeSample(sample);
+        nprs::NegativeImageInputSample sample(image, 10, 5, 100);
+        trainer.pushNMLightNegativeSample(sample);
+    });
+
+    performOnImages(dir, [&] (const QFileInfo &fileInfo) {
+        qDebug() <<  fileInfo.filePath();
+        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+        nprs::NegativeImageInputSample sample(image, 20, 5, 15);
+        trainer.pushNMHeavyNegativeSample(sample);
+    });
+
+    performOnImages(dir, [&] (const QFileInfo &fileInfo) {
+        qDebug() <<  fileInfo.filePath();
+        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+        nprs::NegativeImageInputSample sample(image, 15, 10, 50);
+        trainer.pushNMHeavyNegativeSample(sample);
+    });
+
+    performOnImages(dir, [&] (const QFileInfo &fileInfo) {
+        qDebug() <<  fileInfo.filePath();
+        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+        nprs::NegativeImageInputSample sample(image, 10, 50, 150);
+        trainer.pushNMHeavyNegativeSample(sample);
     });
 }
 
-static void createNegativeSamples(const QString &dir) {
-    performOnImages(
-        dir,
-        [&] (const QFileInfo &fileInfo) {
-            auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
-            nprs::HeavyRandomRegionExtractor extractor(image, 15, 5, 50);
-        }
-    );
-}
+//static void createNegativeSamples(const QString &dir) {
+//    performOnImages(
+//        dir,
+//        [&] (const QFileInfo &fileInfo) {
+//            auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+//            nprs::HeavyRandomRegionExtractor extractor(image, 15, 5, 50);
+//        }
+//    );
+//}
 
 static void showResponses(const nprs::DecisionMaker &classifier, const QString &dir, nprs::DecisionMaker const &heavyClassifier) {
     performOnImages(dir, [&] (const QFileInfo& fileInfo) {

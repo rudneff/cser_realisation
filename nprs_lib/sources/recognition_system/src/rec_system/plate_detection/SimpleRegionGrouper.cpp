@@ -3,6 +3,7 @@
 #include "region_detection/cser/ExtremalRegion.h"
 #include <common/Point.h>
 #include <vector>
+#include <functional>
 
 using std::vector;
 

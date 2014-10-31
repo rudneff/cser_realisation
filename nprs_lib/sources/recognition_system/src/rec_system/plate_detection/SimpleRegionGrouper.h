@@ -3,6 +3,7 @@
 
 #include <rec_system/plate_detection/region_detection/cser/ExtremalRegion.h>
 #include "RegionGrouper.h"
+#include <functional>
 
 namespace nprs {
 

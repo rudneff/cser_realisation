@@ -15,7 +15,7 @@ const char NUM_PLATE_CLASS_NAME[] = "com/nprs/app/recognition/common_structures/
 using namespace nprs;
 
 static jobject createRecResultsInstance(JNIEnv *env, const RecognitionResults &results);
-static jobject createNumberPlateInstance(JNIEnv *env, const pNumberPlate &numPlate);
+static jobject createNumberPlateInstance(JNIEnv *env, const sp<NumberPlate> &numPlate);
 
 jobject JNICALL Java_com_nprs_app_recognition_jni_RecognizerJNI_recognize(JNIEnv *env, jobject object, jintArray pixels, jint width, jint height) {
     RecognitionSystem recognitionSystem;
@@ -42,19 +42,15 @@ static jobject createRecResultsInstance(JNIEnv *env, const RecognitionResults &r
         if (count > 250)
             break;
 
-        if (numPlate->bounds().width() > 5 && numPlate->bounds().width() < 30 &&
-            numPlate->bounds().height() > 5 && numPlate->bounds().height() < 30)
-        {
-            count++;
-            jobject numPlateJava = createNumberPlateInstance(env, numPlate);
-            env->CallVoidMethod(result, recResultsAdd, numPlateJava);
-        }
+        count++;
+        jobject numPlateJava = createNumberPlateInstance(env, numPlate);
+        env->CallVoidMethod(result, recResultsAdd, numPlateJava);
     }
 
     return result;
 }
 
-static jobject createNumberPlateInstance(JNIEnv *env, const pNumberPlate &numPlate) {
+static jobject createNumberPlateInstance(JNIEnv *env, const sp<NumberPlate> &numPlate) {
     jclass nprCls = env->FindClass(NUM_PLATE_CLASS_NAME);
     jmethodID npInit = env->GetMethodID(
             nprCls,
@@ -62,7 +58,7 @@ static jobject createNumberPlateInstance(JNIEnv *env, const pNumberPlate &numPla
             "(FFFF)V"
     );
 
-    Rectangle bounds = numPlate->bounds();
+    Rectangle bounds = numPlate->boundingRect();
     jobject nprObject = env->NewObject(nprCls, npInit, npInit, bounds.x(), bounds.y(), bounds.width(), bounds.height());
     jmethodID npAddChar = env->GetMethodID(nprCls, "addCharacter", "(FFFFS)V");
 

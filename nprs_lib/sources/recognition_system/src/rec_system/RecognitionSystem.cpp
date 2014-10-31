@@ -18,6 +18,12 @@ namespace nprs {
 typedef dlib::matrix<double> sample_type;
 typedef dlib::radial_basis_kernel<sample_type> kernel_type;
 
+//static void dumpAllRegions(const std::string &folder, std::vector<ExtremalRegion> const& regions) {
+//    for (ExtremalRegion const& reg: regions) {
+//
+//    }
+//}
+
 RecognitionSystem::RecognitionSystem() {
 }
 
@@ -26,8 +32,8 @@ RecognitionSystem::~RecognitionSystem() {
 
 RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
 //    sp<DecisionMaker> dm = DLibDecisionMaker<kernel_type>::load("good_classifiers/nm_light_trained_171014.dat");
-
     sp<DecisionMaker> dm = DLibDecisionMaker<kernel_type>::load("nm_light_trained.dat");
+
     sp<ERFilterMNLight> lightFilter = std::make_shared<ERFilterMNLight>(dm);
 //    sp<ERFilterMNHeavy> heavyFilter = std::make_shared<ERFilterMNHeavy>(
 //        DLibDecisionMaker<kernel_type>::load("good_classifiers/nm_heavy_trained_171014.dat"),

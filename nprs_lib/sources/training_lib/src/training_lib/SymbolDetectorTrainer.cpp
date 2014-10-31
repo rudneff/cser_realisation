@@ -28,27 +28,39 @@ up<DecisionMaker> SymbolDetectorTrainer::createNMHeavyClassifier() {
 }
 
 void SymbolDetectorTrainer::pushPositiveSample(const InputSample &sample) {
-    std::vector<Sample> lightSamples = sample.extractNMLightSamples();
-    std::vector<Sample> heavySamples = sample.extractNMHeavySamples();
+    pushNMLightPositiveSample(sample);
+    pushNMHeavyPositiveSample(sample);
+}
 
-    for (Sample es: lightSamples) {
-         _lightTrainData->addItem(TrainDataItem(es.featureVector(), 1.0f));
+void SymbolDetectorTrainer::pushNegativeSample(const InputSample &sample) {
+    pushNMLightNegativeSample(sample);
+    pushNMHeavyNegativeSample(sample);
+}
+
+void SymbolDetectorTrainer::pushNMLightPositiveSample(const InputSample &sample) {
+    std::vector<Sample> samples = sample.extractNMLightSamples();
+    for (Sample const& es: samples) {
+        _lightTrainData->addItem(TrainDataItem(es.featureVector(), 1.0f));
     }
+}
 
-    for (Sample es: heavySamples) {
+void SymbolDetectorTrainer::pushNMHeavyPositiveSample(const InputSample &sample) {
+    std::vector<Sample> samples = sample.extractNMHeavySamples();
+    for (Sample const& es: samples) {
         _heavyTrainData->addItem(TrainDataItem(es.featureVector(), 1.0f));
     }
 }
 
-void SymbolDetectorTrainer::pushNegativeSample(const InputSample &sample) {
-    std::vector<Sample> lightSamples = sample.extractNMLightSamples();
-    std::vector<Sample> heavySamples = sample.extractNMHeavySamples();
-
-    for (Sample es: lightSamples) {
+void SymbolDetectorTrainer::pushNMLightNegativeSample(const InputSample &sample) {
+    std::vector<Sample> samples = sample.extractNMLightSamples();
+    for (Sample const& es: samples) {
         _lightTrainData->addItem(TrainDataItem(es.featureVector(), 0.0f));
     }
+}
 
-    for (Sample es: heavySamples) {
+void SymbolDetectorTrainer::pushNMHeavyNegativeSample(const InputSample &sample) {
+    std::vector<Sample> samples = sample.extractNMHeavySamples();
+    for (Sample const& es: samples) {
         _heavyTrainData->addItem(TrainDataItem(es.featureVector(), 0.0f));
     }
 }

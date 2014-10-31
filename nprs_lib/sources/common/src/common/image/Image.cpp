@@ -4,6 +4,7 @@
 #include <common/math/Math.h>
 #include <memory>
 #include <string.h>
+#include <dlib/image_io.h>
 
 using namespace nprs;
 
@@ -149,4 +150,15 @@ Image::Image()
 : _colorInfo(ColorFormat::INTENSITY, 0)
 {
 
+}
+
+void Image::save(const std::string &fileName) {
+    dlib::array2d<float> dlibImg(_height, _width);
+    for (int x = 0; x < _width; x++) {
+        for (int y = 0; y < _height; y++) {
+            dlibImg[y][x] = getValue(x, y, 0);
+        }
+    }
+
+    dlib::save_bmp(dlibImg, fileName);
 }

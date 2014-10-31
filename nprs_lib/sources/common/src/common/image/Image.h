@@ -34,6 +34,8 @@ public:
     Image cropped(const Rectangle &rect) const;
     Image copyChannel(int c) const;
     bool isInside(int x, int y) const;
+
+    void save(const std::string &fileName);
     
     void computeRange(float *outMin, float *outMax, int channel) const;
 

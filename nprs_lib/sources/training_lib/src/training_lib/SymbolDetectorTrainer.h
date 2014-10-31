@@ -22,6 +22,11 @@ public:
     void pushPositiveSample(const InputSample &sample);
     void pushNegativeSample(const InputSample &sample);
 
+    void pushNMLightPositiveSample(const InputSample &sample);
+    void pushNMHeavyPositiveSample(const InputSample &sample);
+    void pushNMLightNegativeSample(const InputSample &sample);
+    void pushNMHeavyNegativeSample(const InputSample &sample);
+
     up<DecisionMaker> createNMLightClassifier();
     up<DecisionMaker> createNMHeavyClassifier();
 

@@ -52,9 +52,18 @@ SET (directories
     src/common/exceptions
 )
 
+SET(dependencies
+    dlib
+)
+
 GROUP_FILES("${directories}")
 
 INCLUDE_DIRECTORIES(src)
 
+FOREACH(dep ${dependencies})
+	INCLUDE_DIRECTORIES("../${dep}/src")
+ENDFOREACH()
+
 ADD_LIBRARY(${projname} ${headers} ${sources})
+TARGET_LINK_LIBRARIES(${projname} ${dependencies})
 INSTALL(TARGETS ${projname} DESTINATION ${CMAKE_BINARY_DIR}/../bin/)
