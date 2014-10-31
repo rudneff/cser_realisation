@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionRecognize, SIGNAL(triggered()), this, SLOT(recognize()));
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(recognize()));
     connect(ui->pushButton_2, SIGNAL(clicked), this, SLOT(loadFile()));
-    newFrame(QImage("/Users/vardan/Pictures/cars/images00013.png"));
+    newFrame(QImage("/Users/vardan/numberplates/images00035.png"));
 }
 
 void MainWindow::recognize() {
