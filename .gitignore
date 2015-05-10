@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+
+#idea files
+nprs_lib/sources/.idea/
