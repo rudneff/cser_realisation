@@ -5,8 +5,6 @@
 #include "Color.h"
 #include <common/Rectangle.h>
 
-using uchar = unsigned char;
-
 namespace nprs {
 
 class Image final {
