@@ -20,8 +20,8 @@ std::vector<float> HistogramExtractor::extract(const Image &image, int channel, 
             float pixValue = image(x, y, channel);
             int bin = (int) (pixValue * _numBins);
             
-//            if (bin >= bins.size())
-//                std::cout << "HistogramExtractor::extract(): bin was greater than bins count. bin - " << bin << " pix value - " << pixValue << std::endl;
+            if (bin >= bins.size() || bin < 0)
+                std::cout << "HistogramExtractor::extract(): bin was greater than bins count. bin - " << bin << " pix value - " << pixValue << std::endl;
             
             bins[bin] = bins[bin] + 1.0f;
         }

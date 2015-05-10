@@ -17,7 +17,7 @@ Image ImageConverter::convertRaw(const Bitmap &raw) {
 
 Bitmap ImageConverter::imageToRawBgra(const Image &image) {
     Bitmap result(image.width(), image.height(), ColorInfo(ColorFormat::BGRA, 4));
-    uchar *data = result.data();
+    uint8_t *data = result.data();
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height(); y++) {
             data[(y * image.width() + x) * 4 + 0] = image(x, y, 0) * 255;
@@ -66,7 +66,7 @@ Image ImageConverter::bgraToInt(const uchar *data, int width, int height) {
             uchar g = data[p + 1];
             uchar b = data[p + 0];
 
-            result(x, y, 0) = 0.333 * r / 255.0 + 0.333 * g / 255.0 + 0.333 * b / 255.0;
+            result(x, y, 0) = 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0;
         }
     }
     return result;
@@ -82,7 +82,7 @@ Image ImageConverter::rgbToInt(const uchar *data, int width, int height) {
             uchar g = data[p + 1];
             uchar b = data[p + 2];
 
-            result(x, y, 0) = 0.333 * r / 255.0 + 0.333 * g / 255.0 + 0.333 * b / 255.0;
+            result(x, y, 0) = 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0;
         }
     }
 
@@ -99,7 +99,7 @@ Image ImageConverter::rgbaToInt(const uchar *data, int width, int height) {
             uchar g = data[p + 1];
             uchar b = data[p + 2];
 
-            result(x, y, 0) = 0.333 * r / 255.0 + 0.333 * g / 255.0 + 0.333 * b / 255.0;
+            result(x, y, 0) = 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0;
         }
     }
 
@@ -116,7 +116,7 @@ Image ImageConverter::argb32ToInt(uchar const* data, int width, int height) {
             uchar g = data[p + 2];
             uchar b = data[p + 3];
 
-            result(x, y, 0) = 0.333 * r / 255.0 + 0.333 * g / 255.0 + 0.333 * b / 255.0;
+            result(x, y, 0) = 0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0;
         }
     }
 
