@@ -19,11 +19,13 @@ std::vector<float> HistogramExtractor::extract(const Image &image, int channel, 
         for (int y = (int) bounds.y(); y < bounds.y1(); y++) {
             float pixValue = image(x, y, channel);
             int bin = (int) (pixValue * _numBins);
-            
-//            if (bin >= bins.size())
-//                std::cout << "HistogramExtractor::extract(): bin was greater than bins count. bin - " << bin << " pix value - " << pixValue << std::endl;
-            
-            bins[bin] = bins[bin] + 1.0f;
+
+            if (bin >= bins.size() && bin < 0) {
+//                std::cout << "HistogramExtractor::extract(): bin was greater than bins count. bin - " <<
+//                             bin << " pix value - " << pixValue << std::endl;
+            } else {
+                bins[bin] = bins[bin] + 1.0f;
+            }
         }
     }
 

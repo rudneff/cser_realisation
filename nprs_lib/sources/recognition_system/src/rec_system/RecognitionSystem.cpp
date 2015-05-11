@@ -44,7 +44,7 @@ RecognitionResults RecognitionSystem::recognize(const Bitmap &image) const {
         std::make_shared<HogFeatureExtractor>());
 
 //    std::vector<sp<ERFilter>> filters{ std::make_shared<ERFilterEmpty>() };
-    std::vector<sp<ERFilter>> filters{ lightFilter, heavyFilter };
+    std::vector<sp<ERFilter>> filters{ lightFilter };
 
     Image converted = ImageConverter::convertRaw(image);
 

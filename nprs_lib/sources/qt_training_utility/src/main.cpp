@@ -74,12 +74,12 @@ static void pushPositiveSamples(const QString &dir, nprs::SymbolDetectorTrainer 
 }
 
 static void pushNegativeSamples(const QString &dir, nprs::SymbolDetectorTrainer &trainer) {
-    performOnImages(dir, [&] (const QFileInfo &fileInfo) {
-        qDebug() << fileInfo.filePath();
-        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
-        nprs::NegativeImageInputSample sample(image, 10, 5, 100);
-        trainer.pushNMLightNegativeSample(sample);
-    });
+    // performOnImages(dir, [&] (const QFileInfo &fileInfo) {
+    //     qDebug() << fileInfo.filePath();
+    //     auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+    //     nprs:: sample(image, 10, 5, 100);
+    //     trainer.pushNMLightNegativeSample(sample);
+    // });
 
     performOnImages(dir, [&] (const QFileInfo &fileInfo) {
         qDebug() <<  fileInfo.filePath();
@@ -94,13 +94,13 @@ static void pushNegativeSamples(const QString &dir, nprs::SymbolDetectorTrainer 
         nprs::NegativeImageInputSample sample(image, 15, 10, 50);
         trainer.pushNMHeavyNegativeSample(sample);
     });
-
-    performOnImages(dir, [&] (const QFileInfo &fileInfo) {
-        qDebug() <<  fileInfo.filePath();
-        auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
-        nprs::NegativeImageInputSample sample(image, 10, 50, 150);
-        trainer.pushNMHeavyNegativeSample(sample);
-    });
+//
+    // performOnImages(dir, [&] (const QFileInfo &fileInfo) {
+    //     qDebug() <<  fileInfo.filePath();
+    //     auto image = std::make_shared<nprs::Image>(qImageToNprsImage(QImage(fileInfo.filePath())));
+    //     nprs::NegativeImageInputSample sample(image, 10, 50, 150);
+    //     trainer.pushNMHeavyNegativeSample(sample);
+    // });
 }
 
 //static void createNegativeSamples(const QString &dir) {
@@ -154,7 +154,7 @@ static void performOnImages(const QString &dir, std::function<void(const QFileIn
 static nprs::Image qImageToNprsImage(const QImage &image) {
     QImage converted = image.convertToFormat(QImage::Format_RGBA8888);
     nprs::Bitmap bmp(converted.bits(), converted.width(), converted.height(), nprs::ColorInfo(nprs::ColorFormat::RGBA, 4));
-    
+
     return nprs::ImageConverter::convertRaw(bmp);
 }
 
